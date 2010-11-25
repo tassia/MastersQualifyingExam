@@ -1,0 +1,445 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url,fancybox,wrapfig}
+\usepackage{multirow,tabularx}
+%\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+
+\sloppy
+
+\title{Sistema que Recomenda Sistema:\\
+       uma Solução para Recomendação\\
+       de Componentes de Software}
+
+\author{Tássia Camões Araújo \inst{1} }
+
+\address{Instituto de Matemática e Estatística \\
+Universidade de São Paulo (USP)}
+
+\begin{document}
+
+\maketitle
+\vspace{1mm}
+\begin{center}
+%Exame de Qualificação de Mestrado\\
+EXAME DE QUALIFICAÇÃO DE MESTRADO\\
+Programa: Ciência da Computação\\
+Orientador: Prof. Dr. Arnaldo Mandel
+\end{center}
+
+\begin{abstract}
+  This meta-paper describes the style to be used in articles and short papers
+  for SBC conferences. For papers in English, you should add just an abstract
+  while for the papers in Portuguese, we also ask for an abstract in
+  Portuguese (``resumo''). In both cases, abstracts should not have more than
+  10 lines and must be in the first page of the paper.
+\end{abstract}
+
+\begin{resumo}
+  Este meta-artigo descreve o estilo a ser usado na confecção de artigos e
+  resumos de artigos para publicação nos anais das conferências organizadas
+  pela SBC. É solicitada a escrita de resumo e abstract apenas para os artigos
+  escritos em português. Artigos em inglês deverão apresentar apenas abstract.
+  Nos dois casos, o autor deve tomar cuidado para que o resumo (e o abstract)
+  não ultrapassem 10 linhas cada, sendo que ambos devem estar na primeira
+  página do artigo.
+\end{resumo}
+
+
+\section{Introdução} \label{sec:intro}
+
+A popularização de recursos computacionais e do acesso à Internet nas
+últimas décadas proporcionou um aumento expressivo na quantidade de serviços e
+conteúdo à disposição dos usuários. Um dos fatores para este aumento é que
+os usuários, que anteriormente eram considerados meros consumidores,
+apresentam-se atualmente como produtores de conteúdo. \cite{Castells:06} analisa
+este fenômeno e afirma que a maioria da população acredita que pode influenciar
+outras pessoas, atuando no mundo através da sua força de vontade e
+utilizando seus próprios meios. Isto pode ser observado no surgimento e
+proliferação de serviços criados e mantidos pelos usuários: blogs, enciclopédias
+colaborativas, como a Wikipedia\footnote{http://wikipedia.org}, repositórios
+para compartilhamento de fotografia e vídeo, como Flickr
+\footnote{http://flickr.com} e Youtube\footnote{http://youtube.com}, entre
+outros. Considerando a produção em termos de software, observa-se o exemplo das
+comunidades de software livre, que propiciam a construção coletiva de uma ampla
+gama de softwares de qualidade, em constante atualização e evolução, e
+organizado na forma de um rossio \cite{Simon:08}.
+
+A grande diversidade de opções disponíveis nestes ambientes, apesar de positiva,
+representa uma sobrecarga de informações que pode confundir o usuário comum. O
+indivíduo muitas vezes possui pouca ou nenhuma experiência pessoal para
+realizar escolhas em determinado contexto \cite{Cazella:10}. Sendo assim,
+recomendações de outras pessoas são de grande utilidade, pois reduzem as
+dúvidas e auxiliam o processo de escolha dentre as muitas alternativas
+apresentadas. No entanto, diante do número de usuários e o volume de conteúdo
+que comumente deve ser considerado, recomendações no estilo "boca a boca"
+tornam-se ineficientes, pois exigem a comunicação direta entre os pares. Deste
+modo, a tecnologia passa a ter papel fundamental neste processo \cite{Shardanand:95}.
+
+Estratégias para a automatização de recomendações começaram a ser apresentadas
+pela comunidade acadêmica em meados da década de 90. O tema ganhou destaque
+com o crescimento do comércio eletrônico, onde apresentar o que o usuário tem
+interesse pode significar conquistar o cliente. Os Sistemas de Recomendação
+fazem a associação entre objetos de interesse e pessoas neles interessadas,
+filtrando as informações de forma a apresentar somente o que é relevante
+para o usuário \cite{Adomavicius:05}. Além da agilidade para encontrar o que
+se deseja, tais sistemas possibilitam a personalização de serviços e conteúdos,
+que são apresentados de maneiras distintas para usuários diferentes, a partir
+da identificação de interesses pessoais.
+
+Este trabalho se insere no contexto de desenvolvimento de componentes de
+software, no qual os usuários são modelados como clientes e os componentes
+desenvolvidos como itens pelos quais os usuários têm interesse ou não. Assume-se
+que cada usuário tem um sistema operacional instalado e deve escolher quais
+aplicativos extras deseja obter para suprir suas necessidades pessoais. Diante
+da enorme quantidade de software disponíveis, nas mais diversas áreas de
+aplicação, configura-se um cenário onde um sistema de recomendação traria
+benefícios imediatos ao usuário, por auxiliá-lo a tomar decisões acerca da
+configuração do seu ambiente de trabalho.
+
+Distribuições GNU/Linux, como Debian, Fedora, Mandriva e Ubuntu são sistemas
+operacionais constituídos pelo kernel Linux e um conjunto de aplicativos básicos,
+numa configuração projetada para atrair determinado perfil de usuário.
+A seleção e configuração dos aplicativos básicos são de responsabilidade da
+empresa ou comunidade que desenvolve a distribuição, onde observa-se claramente
+o fenômeno do consumidor produtor descrito anteriormente. Os softwares adicionais
+devem ser instalados pelo usuário do sistema. Para facilitar este processo, as
+distribuições organizam e disponibilizam componentes de softwares prontos para
+instalação, que neste contexto são chamados de pacotes.
+
+No decorrer deste trabalho são apresentadas soluções existentes para
+recomendação de pacotes em distribuições GNU/Linux, seguidas por propostas de
+melhorias e novas implementações, com o intuito de aproximar os serviços
+atualmente disponíveis à comunidade de usuários ao estado da arte em sistemas
+de recomendação.
+
+
+%\section{Conceitos Importantes} \label{sec:conceitos}
+
+\section{Sistemas de Recomendação}
+
+Os Sistemas de Recomendação aumentam a capacidade e eficácia do processo de
+indicação, bastante popular nas relações sociais \cite{Resnick:97}.
+Tradicionalmente, as recomendações eram produzidas exclusivamente por
+especialistas na área em que se pretendia recomendar. Um exemplo muito comum
+é a recomendação de filmes em cartaz, publicada por críticos de arte nos
+principais jornais e revistas do país. Nos últimos anos, porém, percebeu-se que
+a opinião e o comportamento de usuários não especializados agregam valor às
+recomendações, que passaram a considerá-los amplamente. Seja explicitamente,
+quando o próprio usuário escreve sua opinião ou comentário, ou implicitamente,
+quando técnicas de recuperação da informação são utilizadas para analisar
+preferências e comportamento dos usuários, e partir destes gerar recomendações.
+
+Segundo \cite{Adomavicius:05}, o problema da recomendação pode ser formalizado
+da seguinte maneira: Seja $C$ o conjunto de todos os usuários e $S$ o conjunto
+de todos os itens que podem ser recomendados, como livros, filmes ou
+restaurantes. O espaço $S$ de itens possíveis pode ser muito grande, variando
+de centenas de milhares até milhões de itens em algumas aplicações.
+Similarmente, o espaço de usuários também pode ser muito grande, milhões em
+alguns casos. Seja $u$ uma função que mede a utilidade do item $s$ para o
+usuário $c$, isto é, $u: C x S \rightarrow R$, onde $R$ é um conjunto ordenado
+(por e\-xemplo, inteiros não negativos ou números reais num determinado
+intervalo). Então, para cada usuário $c \in C$, deve-se escolher o item $s' \in
+S$ que maximiza a função de utilidade. Mais formalmente, $\forall c \in C, s'_c = arg_{s \in S} max u(c,s)$
+
+\subsection{Estratégias}
+
+\subsubsection{Reputação do produto}
+
+Bastante popular entre serviços de venda, como livrarias, sites de leilão e
+lojas de modo geral, esta estratégia consiste no armazenamento de avaliações
+dos produtos escritas por usuários e apresentação das mesmas no momento e
+local apropriado \cite{Cazella:10}. A implementação desta solução é simples,
+visto que exige apenas a manutenção dos dados originais, não sendo necessária
+análise posterior alguma. No entanto, tem-se como premissa a imparcialiadade
+dos usuários em suas opiniões, o que não pode ser verificado devido a seu
+caráter subjetivo e estritamente pessoal. Atualmente existem serviços
+especializados em reputação de produtos, que não têm venda associada, apenas
+disponibilizam as avaliações. É o caso do \emph{Internet Mobie Database}
+\footnote{http://www.imdb.com/}.
+
+\subsubsection{Recomendação por associação}
+
+A partir da análise de uma base de dados que relaciona clientes e itens
+selecionados pelos mesmos, utiliza-se diversas técnicas para inferir
+associações entre os itens, como por e\-xemplo: "Clientes que selecionaram os
+itens A, B e C também selecionaram o item D". As associações são caracterizadas
+por um suporte mínimo, que diz respeito à confiabilidade das mesmas. Portanto,
+quando uma associação é extraída, não significa que ela pode ser verificada em
+todos os casos, e sim numa porcentagem mínima, definida pelo suporte. A
+implementação desta estratégia é mais complexa, pois exige técnicas mais
+sofisticadas para identificação de padrões no comportamento dos usuários,
+principalmente quando se trata de um grande volume de dados.
+
+\subsubsection{Filtragem baseada em conteúdo}
+
+Este método parte do princípio de que os usuários tendem a se interessar por
+itens semelhantes aos que eles já se interessaram no passado \cite{Herlocker:2000}.
+O ponto chave desta estratégia é a classificação dos itens, por exemplo, através
+da identificação de atributos (autores e temas de livros, por exemplo). A partir
+dos atributos dos itens, aplica-se técnicas de recuperação da informação para
+definir a semelhança entre os mesmos. No caso de uma livraria, por exemplo,
+sugerir ao cliente outros livros do mesmo autor de livros previamente
+selecionados é uma boa estratégia.
+
+Pelo fato de se apoiar na classificação dos itens, os resultados da
+recomendação são prejudicados nos casos em que os atributos não podem ser
+identificados de forma automatizada. Outro problema indicado por 
+\cite{Adomavicius:05} é o da superespecialização, onde apenas itens similares
+aos já escolhidos pelos usuários são recomendados.
+
+\subsubsection{Filtragem colaborativa}
+ (baseada em avaliação de itens semelhantes de usuários mais próximos)
+
+\subsubsection{Filtragem híbrida}
+
+
+\subsubsection{Filtragem baseada em outros contextos}
+ (uso de perfis)
+
+\subsection{Técnicas}
+. Tf-idf\\
+. Classificador Bayesiano\\
+. Vizinhos mais próximos (knn)\\
+. Clustering\\
+. Modelos probabilísticos
+
+\subsection{Perfis de Usuário}
+. Identidade\\
+. Geração e manutenção de perfil\\
+. Reputação
+
+\subsection{Privacidade}
+
+
+\section{Distribuições linux}
+
+A escolha pela distribuição que guiaria o estudo foi pautada pelos seguintes
+critérios: (1) Existência de dados sobre o uso de pacotes por usuários; (2)
+Possibilidade de acesso aos dados existentes; (3) Facilidade de integração dos
+resultados do trabalho com os serviços da distribuição; (4) Popularidade da
+distribuição.
+
+[Destrinchar a vantagem do Debian para cada ponto dos critérios adotados]
+
+Optou-se pelo desenvolvimento para o Debian, todavia, os resultados alcançados
+poderão facilmente ser adaptados para outros ambientes, desde que as
+informações necessárias estejam disponíveis.
+
+\subsection{Debian}
+
+De maneira geral, quando o projeto Debian é mencionado trata-se não
+somente do sistema operacinal, mas de toda a infra-estrutura de desenvolvimento
+e coordenação que dá suporte ao trabalho de cerca de 1500 desenvolvedores
+oficiais, além de outros milhares de colaboradores ao redor do globo. O trabalho
+é realizado de forma colaborativa, afinado pelo objetivo comum de produzir e
+disponibilizar livremente um sistema operacional de qualidade para seus usuários
+\cite{Jackson:98}. A interação entre os desenvolvedores acontece
+majoritariamente através da Internet, por meio de canais IRC e listas de
+discussão púlicas. Não existe uma entidade formal ou qualquer tipo de
+organização que concentre, coordene ou defina as atividades do projeto
+\cite{Ferraro:07}.
+
+\subsection{Pacotes Debian}
+. Binários e fontes\\
+. upstream, maintainer, uploader\\
+. Prioridade: required, important, standard, optional, extra\\
+. Base system = required or important (muitos são marcados como essenciais)\\
+. Essenciais: o gerenciador de pacotes se recusa a remover, a menos que seja forçado\\
+
+\subsection{Relação entre pacotes}
+. Dependência: Pre-depends, Depends, Recommends, Suggests, Enhances\\
+. Anti-dependência: Breaks, Conflicts, Replaces\\
+. Pacotes virtuais: Provides\\
+. Entre fontes e binários: Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep
+
+\subsection{O Repositório de Pacotes}
+. The Debian Archive,\\
+. Áreas: main, contrib, non-free\\
+. Seções\\
+
+\section{Soluções existentes}\label{sec:correlatos}
+
+Em face da complexa e crescente estrutura do Projeto
+Debian, verifica-se um esforço por parte de alguns contribuidores, ainda que
+incipiente, de organizar e tornar disponível de maneira organizada, as
+informações presentes nesta estrutura. Destacam-se o Debtags e o UDD como
+iniciativas recentes que já se firmaram na comunidade.
+
+Nesta seção são apresentadas outras iniciativas que de alguma forma estão relacionadas com este
+trabalho, seja dentro ou fora do Projeto Debian.
+
+\subsection{Iniciativas relacionadas ao Debian}
+. Popcon\\
+. Debtags\\
+. UDD\\
+
+\begin{table}
+  \centering
+  \caption{Recomendação no Debian}
+  \label{tab:recDebian}
+  \begin{tabularx}{\textwidth}{| c | c | X |}
+    \hline
+    \emph{Estratégia de recomendação} & \emph{Solução} & \emph{Descrição}\\
+    \hline
+    \multirow{2}{*}{Reputação de pacotes} & BTS & Sistema de rastreamento de
+    bugs, que é alimentado pelos usuários\\
+    \cline{2-3}
+    & Packages.qa & Criado pelo time de qualidade, reune informações relativas
+    à manutenção do pacote \\
+    \hline
+    Por associação & Debtags & No cadastro de tags para pacotes, novas tags são
+    sugeridas a partir das tags já associadas ao pacote\\
+    \hline
+    Baseada em conteúdo & Debtags & Classificação de pacotes em produção, porém,
+    sem esquema de recomendação\\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{Iniciativas externas ao Debian}
+
+
+\section{Metodologia}
+A execução deste trabalho será guiada pelo método de resolução de problemas de
+[Polya 1944], descrito passoa-a-passo nas seções seguintes.
+
+\subsection{Compreensão do Problema}
+
+%\begin{wrapfigure}{l}{0.5\textwidth}
+%  \vspace{-10pt}
+%  \begin{center}
+%  \shadowbox{
+%    \begin{Bflushleft}
+%      Qual é a incógnita?\\
+%      Quais são os dados?\\
+%      Qual é a condicionante?\\
+%      Trace uma figura.\\
+%      Adopte uma notação adequada.\\
+%    \end{Bflushleft}
+%  }
+%  \end{center}
+%  \vspace{-10pt}
+%\end{wrapfigure}
+
+%\begin{center}
+%\shadowbox{
+%  \begin{Bflushleft}
+%    Qual é a incógnita? Quais são os dados? Qual é a condicionante?\\
+%    Trace uma figura. Adopte uma notação adequada.
+%  \end{Bflushleft}
+%}
+%\end{center}
+
+Os dados de entrada de um sistema de recomendação são associações entre
+clientes e itens, como num carrinho de compras de supermercado. No contexto do
+projeto Debian, os itens são os pacotes de software e os clientes são os
+usuários da distribuição. O problema tratado pode então ser formalizado da
+seguinte maneira: Dada a lista de pacotes de um usuário específico
+(destinatário da recomendação), a partir da análise de listas de pacotes de
+outros usuários reais, deve-se retornar uma lista de pacotes recomendados, que
+indiquem pacotes de interesse para o usuário destinatário. 
+
+Os dados de usuários reais foram coletados pelo
+popcon\footnote{\url{http://popcon.debian.org}}, para realização do concurso de
+popularidade entre pacotes que acontece diariamente. Os usuários enviam
+periodicamente a lista de pacotes instalados em seu sistema, que são
+armazenados no servidor do popcon.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{fig/recommendation.png}
+\caption{Cenário de uma Recomendação}
+\label{fig:recommendation}
+\end{figure}
+
+
+\subsection{Estabelecimento de um Plano}
+
+%\begin{center}
+%\shadowbox{
+%  \begin{Bflushleft}
+%Encontre a conexão entre os dados e a incógnita.
+%É possível que seja obrigado a considerar problemas auxiliares se
+%não puder encontrar uma conexão imediata. É preciso chegar afinal a
+%um plano para a resolução.
+%
+%Já o viu antes? Ou já viu o mesmo problema apresentado sob uma
+%forma ligeiramente diferente?
+%Conhece um problema do mesmo tipo ou sobre o mesmo assunto?
+%Conhece um problema que lhe poderia ser útil?
+%Considere a incógnita! E procure pensar num problema do mesmo
+%tipo que tenha a mesma incógnita ou outra semelhante.
+%Eis um problema do mesmo tipo e já resolvido anteriormente. É
+%possível utilizá-lo? É possível utilizar o seu resultado? É possível
+%utilizar o seu método? Deve-se introduzir algum elemento auxiliar
+%para tornar possível a sua utilização?
+%É possível reformular o problema? É possível reformulá-lo ainda de
+%outra maneira? Volte às definições.
+%Se não puder resolver o problema proposto, procure antes resolver
+%algum problema do mesmo tipo. É possível imaginar um problema
+%parecido mais acessível? Um problema mais genérico? Um problema
+%mais específico? Um problema análogo? É possível resolver uma
+%parte do problema? Mantenha apenas uma parte da condicionante,
+%deixe a outra de lado; até que ponto fica assim determinada a
+%incógnita? Como pode ela variar? É possível obter dos dados
+%alguma coisa de útil? É possível pensar em outros dados apropriados
+%para determinar a incógnita? É possível variar a incógnita ou os
+%dados, ou todos eles, se necessário, de tal maneira que fiquem mais
+%próximos entre si?
+%Utilizou todos os dados? Utilizou toda a condicionante? Levou em
+%conta todas as noções essenciais implicadas no problema?
+%  \end{Bflushleft}
+%}
+%\end{center}
+
+Os dados do popcon devem ser pré-processados antes de serem considerados para o
+sistema de recomendação. Isso porque as listas de pacotes enviadas pelos
+usuários contém todos os pacotes do sistema, desde aplicativos, ao kernel linux
+e bibliotecas. Para este estudo, apenas os aplicativos para usuário final são
+relevantes, visto que só deseja-se recomendar aplicativos. Os pacotes que fazem
+parte do sistema básico, que são essenciais para o funcionamento do sistema
+também devem ser desconsiderados, pois em tese todos os usuários já os possuem.
+
+Após esta etapa, pretende-se diminuir consideravelmente a ordem de grandeza das listas de pacotes, o que contribuirá para a eficiência do sistema.
+
+Para o cálculo da recomendação pretende-se utilizar as seguiontes técnicas e avaliar sua viabilidade em produção:
+\begin{itemize}
+  \item
+  \item
+  \item
+\end{itemize}
+
+
+\subsection{Execução do Plano}
+
+%\begin{center}
+%\shadowbox{
+%  \begin{Bflushleft}
+%Ao executar o plano de resolução, verifique cada passo.\\
+%É possível demonstrar que a solução está correta?
+%  \end{Bflushleft}
+%}
+%\end{center}
+
+\subsection{Retrospectiva}
+
+%\begin{center}
+%\shadowbox{
+%  \begin{Bflushleft}
+%Examine a solução obtida. É possível verificar o resultado?\\
+%É possível chegar ao resultado por um caminho diferente?\\
+%É possível utilizar o resultado, ou o método, em algum outro
+%problema?
+%  \end{Bflushleft}
+%}
+%\end{center}
+
+\section{Conclusão}
+
+\bibliographystyle{sbc}
+\bibliography{quali-tassia}
+
+\end{document}
