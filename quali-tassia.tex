@@ -4,7 +4,7 @@
 
 \usepackage{graphicx,url,fancybox,wrapfig}
 \usepackage{multirow,tabularx}
-%\usepackage[brazil]{babel}
+\usepackage[brazil]{babel}
 \usepackage[latin1]{inputenc}
 
 \sloppy
@@ -23,7 +23,6 @@ Universidade de São Paulo (USP)}
 \maketitle
 \vspace{1mm}
 \begin{center}
-%Exame de Qualificação de Mestrado\\
 EXAME DE QUALIFICAÇÃO DE MESTRADO\\
 Programa: Ciência da Computação\\
 Orientador: Prof. Dr. Arnaldo Mandel
@@ -76,7 +75,8 @@ dúvidas e auxiliam o processo de escolha dentre as muitas alternativas
 apresentadas. No entanto, diante do número de usuários e o volume de conteúdo
 que comumente deve ser considerado, recomendações no estilo "boca a boca"
 tornam-se ineficientes, pois exigem a comunicação direta entre os pares. Deste
-modo, a tecnologia passa a ter papel fundamental neste processo \cite{Shardanand:95}.
+modo, a tecnologia passa a ter papel fundamental neste processo
+\cite{Shardanand:95}.
 
 Estratégias para a automatização de recomendações começaram a ser apresentadas
 pela comunidade acadêmica em meados da década de 90. O tema ganhou destaque
@@ -91,23 +91,23 @@ da identificação de interesses pessoais.
 
 Este trabalho se insere no contexto de desenvolvimento de componentes de
 software, no qual os usuários são modelados como clientes e os componentes
-desenvolvidos como itens pelos quais os usuários têm interesse ou não. Assume-se
-que cada usuário tem um sistema operacional instalado e deve escolher quais
-aplicativos extras deseja obter para suprir suas necessidades pessoais. Diante
-da enorme quantidade de software disponíveis, nas mais diversas áreas de
+desenvolvidos como itens pelos quais os usuários têm interesse ou não.
+Assume-se que cada usuário tem um sistema operacional instalado e deve escolher
+quais aplicativos extras deseja obter para suprir suas necessidades pessoais.
+Diante da enorme quantidade de software disponíveis, nas mais diversas áreas de
 aplicação, configura-se um cenário onde um sistema de recomendação traria
 benefícios imediatos ao usuário, por auxiliá-lo a tomar decisões acerca da
 configuração do seu ambiente de trabalho.
 
 Distribuições GNU/Linux, como Debian, Fedora, Mandriva e Ubuntu são sistemas
-operacionais constituídos pelo kernel Linux e um conjunto de aplicativos básicos,
-numa configuração projetada para atrair determinado perfil de usuário.
+operacionais constituídos pelo kernel Linux e um conjunto de aplicativos
+básicos, numa configuração projetada para atrair determinado perfil de usuário.
 A seleção e configuração dos aplicativos básicos são de responsabilidade da
 empresa ou comunidade que desenvolve a distribuição, onde observa-se claramente
-o fenômeno do consumidor produtor descrito anteriormente. Os softwares adicionais
-devem ser instalados pelo usuário do sistema. Para facilitar este processo, as
-distribuições organizam e disponibilizam componentes de softwares prontos para
-instalação, que neste contexto são chamados de pacotes.
+o fenômeno do consumidor produtor descrito anteriormente. Os softwares
+adicionais devem ser instalados pelo usuário do sistema. Para facilitar este
+processo, as distribuições organizam e disponibilizam componentes de softwares
+prontos para instalação, que neste contexto são chamados de pacotes.
 
 No decorrer deste trabalho são apresentadas soluções existentes para
 recomendação de pacotes em distribuições GNU/Linux, seguidas por propostas de
@@ -115,10 +115,7 @@ melhorias e novas implementações, com o intuito de aproximar os serviços
 atualmente disponíveis à comunidade de usuários ao estado da arte em sistemas
 de recomendação.
 
-
-%\section{Conceitos Importantes} \label{sec:conceitos}
-
-\section{Sistemas de Recomendação}
+\section{Sistemas de Recomendação}\label{sec:rec}
 
 Os Sistemas de Recomendação aumentam a capacidade e eficácia do processo de
 indicação, bastante popular nas relações sociais \cite{Resnick:97}.
@@ -142,7 +139,8 @@ alguns casos. Seja $u$ uma função que mede a utilidade do item $s$ para o
 usuário $c$, isto é, $u: C x S \rightarrow R$, onde $R$ é um conjunto ordenado
 (por e\-xemplo, inteiros não negativos ou números reais num determinado
 intervalo). Então, para cada usuário $c \in C$, deve-se escolher o item $s' \in
-S$ que maximiza a função de utilidade. Mais formalmente, $\forall c \in C, s'_c = arg_{s \in S} max u(c,s)$
+S$ que maximiza a função de utilidade. Mais formalmente,
+$\forall c \in C, s'_c = arg_{s \in S} max u(c,s)$
 
 \subsection{Estratégias}
 
@@ -157,7 +155,7 @@ análise posterior alguma. No entanto, tem-se como premissa a imparcialiadade
 dos usuários em suas opiniões, o que não pode ser verificado devido a seu
 caráter subjetivo e estritamente pessoal. Atualmente existem serviços
 especializados em reputação de produtos, que não têm venda associada, apenas
-disponibilizam as avaliações. É o caso do \emph{Internet Mobie Database}
+disponibilizam as avaliações. É o caso do \emph{Internet Movie Database}
 \footnote{http://www.imdb.com/}.
 
 \subsubsection{Recomendação por associação}
@@ -176,17 +174,17 @@ principalmente quando se trata de um grande volume de dados.
 \subsubsection{Filtragem baseada em conteúdo}
 
 Este método parte do princípio de que os usuários tendem a se interessar por
-itens semelhantes aos que eles já se interessaram no passado \cite{Herlocker:2000}.
-O ponto chave desta estratégia é a classificação dos itens, por exemplo, através
-da identificação de atributos (autores e temas de livros, por exemplo). A partir
-dos atributos dos itens, aplica-se técnicas de recuperação da informação para
-definir a semelhança entre os mesmos. No caso de uma livraria, por exemplo,
-sugerir ao cliente outros livros do mesmo autor de livros previamente
-selecionados é uma boa estratégia.
+itens semelhantes aos que eles já se interessaram no passado
+\cite{Herlocker:2000}. O ponto chave desta estratégia é a classificação dos
+itens, por exemplo, através da identificação de atributos (autores e temas de
+livros, por exemplo). A partir dos atributos dos itens, aplica-se técnicas de
+recuperação da informação para definir a semelhança entre os mesmos. No caso de
+uma livraria, por exemplo, sugerir ao cliente outros livros do mesmo autor de
+livros previamente selecionados é uma boa estratégia.
 
 Pelo fato de se apoiar na classificação dos itens, os resultados da
 recomendação são prejudicados nos casos em que os atributos não podem ser
-identificados de forma automatizada. Outro problema indicado por 
+identificados de forma automatizada. Outro problema indicado por
 \cite{Adomavicius:05} é o da superespecialização, onde apenas itens similares
 aos já escolhidos pelos usuários são recomendados.
 
@@ -213,16 +211,32 @@ aos já escolhidos pelos usuários são recomendados.
 
 \subsection{Privacidade}
 
+\section{Distribuições GNU/Linux} \label{sec:distro}
 
-\section{Distribuições linux}
+A escolha da distribuição que guiaria o estudo foi pautada pelos seguintes
+critérios: \emph{(1)} Existência de um esquema consistente de distribuição de
+software; \emph{(2)} Existência de dados estatísticos referentes ao uso de
+pacotes por usuários e possibilidade de acesso aos mesmos; \emph{(3)}
+Possibilidade de integração dos resultados do trabalho com os serviços
+dispobinilizados pela distribuição; \emph{(4)} Popularidade da distribuição.
 
-A escolha pela distribuição que guiaria o estudo foi pautada pelos seguintes
-critérios: (1) Existência de dados sobre o uso de pacotes por usuários; (2)
-Possibilidade de acesso aos dados existentes; (3) Facilidade de integração dos
-resultados do trabalho com os serviços da distribuição; (4) Popularidade da
-distribuição.
+A distribuição foi o Debian GNU/Linux pelos seguintes fatores:
 
-[Destrinchar a vantagem do Debian para cada ponto dos critérios adotados]
+%[Destrinchar a vantagem do Debian para cada ponto dos critérios adotados, com base na Policy]
+\begin{enumerate}
+\item APT
+\item Popcon
+\item Relato de casos
+\item Distrowatch
+\begin{verbatim}
+ DistroWatch database summary
+ Number of all distributions in the database: 671
+ Number of active distributions in the database: 318
+ Number of dormant distributions: 55
+ Number of discontinued distributions: 298
+ Number of distributions on the waiting list: 248
+\end{verbatim}
+\end{enumerate}
 
 Optou-se pelo desenvolvimento para o Debian, todavia, os resultados alcançados
 poderão facilmente ser adaptados para outros ambientes, desde que as
@@ -260,69 +274,57 @@ organização que concentre, coordene ou defina as atividades do projeto
 . Áreas: main, contrib, non-free\\
 . Seções\\
 
-\section{Soluções existentes}\label{sec:correlatos}
+\section{Soluções existentes} \label{sec:solucoes}
 
-Em face da complexa e crescente estrutura do Projeto
-Debian, verifica-se um esforço por parte de alguns contribuidores, ainda que
-incipiente, de organizar e tornar disponível de maneira organizada, as
-informações presentes nesta estrutura. Destacam-se o Debtags e o UDD como
-iniciativas recentes que já se firmaram na comunidade.
-
-Nesta seção são apresentadas outras iniciativas que de alguma forma estão relacionadas com este
-trabalho, seja dentro ou fora do Projeto Debian.
-
-\subsection{Iniciativas relacionadas ao Debian}
-. Popcon\\
-. Debtags\\
-. UDD\\
+Diante da complexa e crescente estrutura do Projeto Debian, observa-se um
+esforço por parte dos desenvolvedores, principalmente da equipe responsável
+pelo controle de qualidade\footnote{qa.debian.org}, de reunir, organizar e
+diponibilizar as informações ou meta-dados concernentes a esta estrutura
+\cite{Nussbaum:10}. A tabela \ref{tab:recDebian} relaciona algumas destas
+iniciativas que estão diretamente ligadas ao gerenciamento de pacotes.
+Vale ressaltar que a maioria destas soluções foram inicialmente desenvolvidas
+num contexto extra-oficial, mas a medida que se mostraram úteis e eficientes
+foram absorvidas pela comunidade de usuários e desenvolvedores.
 
 \begin{table}
   \centering
-  \caption{Recomendação no Debian}
+  \caption{Soluções de recomendação no Debian}
   \label{tab:recDebian}
-  \begin{tabularx}{\textwidth}{| c | c | X |}
+  \begin{tabularx}{\textwidth}{| c | X | c |}
     \hline
-    \emph{Estratégia de recomendação} & \emph{Solução} & \emph{Descrição}\\
+    \emph{Solução} & \emph{Descrição} & \emph{Estratégia de recomendação}\\
     \hline
-    \multirow{2}{*}{Reputação de pacotes} & BTS & Sistema de rastreamento de
-    bugs, que é alimentado pelos usuários\\
-    \cline{2-3}
-    & Packages.qa & Criado pelo time de qualidade, reune informações relativas
-    à manutenção do pacote \\
+    \small BTS & Sistema de rastreamento de bugs, que é alimentado pelos
+    usuários & \multirow{3}{*}{Reputação}\\
+    \cline{1-2}
+    Popcon & \emph{Popularity Contest} publica diariamente o resultado do
+    concurso de popularidade entre pacotes & \\
+    \cline{1-2}
+    Packages.qa & Criado pelo time de qualidade, reune informações relativas
+    à manutenção do pacote & \\
+    \cline{1-2}
+    UDD & \emph{Ultimate Debian Database} é outra iniciativa do time de
+    qualidade, que reune informações de diversos aspectos do Debian numa base
+    de dados única. Usuários avançados podem consultar esta base para tomar
+    decisões acerca de que pacotes usar. & \\
     \hline
-    Por associação & Debtags & No cadastro de tags para pacotes, novas tags são
-    sugeridas a partir das tags já associadas ao pacote\\
+    Debtags & Classificação de pacotes em produção, porém,
+    sem esquema de recomendação & Baseada em conteúdo\normalsize \\
     \hline
-    Baseada em conteúdo & Debtags & Classificação de pacotes em produção, porém,
-    sem esquema de recomendação\\
+    Debtags & No cadastro de tags para pacotes, novas tags são sugeridas a
+    partir das tags já associadas ao pacote & Associação\\
     \hline
   \end{tabularx}
 \end{table}
 
-\subsection{Iniciativas externas ao Debian}
+%[Investigar iniciativas externas ao Debian]
 
+\section{Metodologia} \label{sec:metodo}
 
-\section{Metodologia}
 A execução deste trabalho será guiada pelo método de resolução de problemas de
-[Polya 1944], descrito passoa-a-passo nas seções seguintes.
+George Polya \cite{Polya:45}, descrito passoa-a-passo nas seções seguintes.
 
 \subsection{Compreensão do Problema}
-
-%\begin{wrapfigure}{l}{0.5\textwidth}
-%  \vspace{-10pt}
-%  \begin{center}
-%  \shadowbox{
-%    \begin{Bflushleft}
-%      Qual é a incógnita?\\
-%      Quais são os dados?\\
-%      Qual é a condicionante?\\
-%      Trace uma figura.\\
-%      Adopte uma notação adequada.\\
-%    \end{Bflushleft}
-%  }
-%  \end{center}
-%  \vspace{-10pt}
-%\end{wrapfigure}
 
 %\begin{center}
 %\shadowbox{
@@ -340,7 +342,7 @@ usuários da distribuição. O problema tratado pode então ser formalizado da
 seguinte maneira: Dada a lista de pacotes de um usuário específico
 (destinatário da recomendação), a partir da análise de listas de pacotes de
 outros usuários reais, deve-se retornar uma lista de pacotes recomendados, que
-indiquem pacotes de interesse para o usuário destinatário. 
+indiquem pacotes de interesse para o usuário destinatário.
 
 Os dados de usuários reais foram coletados pelo
 popcon\footnote{\url{http://popcon.debian.org}}, para realização do concurso de
@@ -397,7 +399,7 @@ armazenados no servidor do popcon.
 
 Os dados do popcon devem ser pré-processados antes de serem considerados para o
 sistema de recomendação. Isso porque as listas de pacotes enviadas pelos
-usuários contém todos os pacotes do sistema, desde aplicativos, ao kernel linux
+usuários contém todos os pacotes do sistema, desde aplicativos, ao kernel Linux
 e bibliotecas. Para este estudo, apenas os aplicativos para usuário final são
 relevantes, visto que só deseja-se recomendar aplicativos. Os pacotes que fazem
 parte do sistema básico, que são essenciais para o funcionamento do sistema
@@ -437,7 +439,7 @@ Para o cálculo da recomendação pretende-se utilizar as seguiontes técnicas e ava
 %}
 %\end{center}
 
-\section{Conclusão}
+\section{Conclusão} \label{sec:conclusao}
 
 \bibliographystyle{sbc}
 \bibliography{quali-tassia}
