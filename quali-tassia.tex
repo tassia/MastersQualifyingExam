@@ -67,15 +67,15 @@ gama de softwares de qualidade, em constante atualização e evolução, e
 organizado na forma de um rossio \cite{Simon:08}.
 
 A grande diversidade de opções disponíveis nestes ambientes, apesar de positiva,
-representa uma sobrecarga de informações que pode confundir o usuário comum. O
+representa uma sobrecarga de informações que pode confundir o usuário final. O
 indivíduo muitas vezes possui pouca ou nenhuma experiência pessoal para
 realizar escolhas em determinado contexto \cite{Cazella:10}. Sendo assim,
 recomendações de outras pessoas são de grande utilidade, pois reduzem as
 dúvidas e auxiliam o processo de escolha dentre as muitas alternativas
 apresentadas. No entanto, diante do número de usuários e o volume de conteúdo
-que comumente deve ser considerado, recomendações no estilo "boca a boca"
-tornam-se ineficientes, pois exigem a comunicação direta entre os pares. Deste
-modo, a tecnologia passa a ter papel fundamental neste processo
+que comumente deve ser considerado, recomendações no estilo ``boca a
+boca"\ tornam-se ineficientes, pois exigem a comunicação direta entre os pares.
+Deste modo, a tecnologia passa a ter papel fundamental neste processo
 \cite{Shardanand:95}.
 
 Estratégias para a automatização de recomendações começaram a ser apresentadas
@@ -99,26 +99,17 @@ aplicação, configura-se um cenário onde um sistema de recomendação traria
 benefícios imediatos ao usuário, por auxiliá-lo a tomar decisões acerca da
 configuração do seu ambiente de trabalho.
 
-Distribuições GNU/Linux, como Debian, Fedora, Mandriva e Ubuntu são sistemas
-operacionais constituídos pelo kernel Linux e um conjunto de aplicativos
-básicos, numa configuração projetada para atrair determinado perfil de usuário.
-A seleção e configuração dos aplicativos básicos são de responsabilidade da
-empresa ou comunidade que desenvolve a distribuição, onde observa-se claramente
-o fenômeno do consumidor produtor descrito anteriormente. Os softwares
-adicionais devem ser instalados pelo usuário do sistema. Para facilitar este
-processo, as distribuições organizam e disponibilizam componentes de softwares
-prontos para instalação, que neste contexto são chamados de pacotes.
-
-No decorrer deste trabalho são apresentadas soluções existentes para
-recomendação de pacotes em distribuições GNU/Linux, seguidas por propostas de
-melhorias e novas implementações, com o intuito de aproximar os serviços
-atualmente disponíveis à comunidade de usuários ao estado da arte em sistemas
-de recomendação.
+Após uma breve introdução a sistemas de recomendação e as princiais estratégias
+utilizadas, ao longo do trabalho são apresentadas soluções existentes para a
+recomendação de pacotes em distribuições GNU/Linux, como Debian, Fedora,
+Mandriva e Ubuntu. Em seguida são apresentadas propostas de melhoria e novas
+implementações, com o intuito de aproximar os serviços atualmente disponíveis à
+comunidade de usuários ao estado da arte em sistemas de recomendação.
 
 \section{Sistemas de Recomendação}\label{sec:rec}
 
 Os Sistemas de Recomendação aumentam a capacidade e eficácia do processo de
-indicação, bastante popular nas relações sociais \cite{Resnick:97}.
+indicação bastante popular nas relações sociais \cite{Resnick:97}.
 Tradicionalmente, as recomendações eram produzidas exclusivamente por
 especialistas na área em que se pretendia recomendar. Um exemplo muito comum
 é a recomendação de filmes em cartaz, publicada por críticos de arte nos
@@ -139,8 +130,20 @@ alguns casos. Seja $u$ uma função que mede a utilidade do item $s$ para o
 usuário $c$, isto é, $u: C x S \rightarrow R$, onde $R$ é um conjunto ordenado
 (por e\-xemplo, inteiros não negativos ou números reais num determinado
 intervalo). Então, para cada usuário $c \in C$, deve-se escolher o item $s' \in
-S$ que maximiza a função de utilidade. Mais formalmente,
-$\forall c \in C, s'_c = arg_{s \in S} max u(c,s)$
+S$ que maximiza a função de utilidade. Mais formalmente, temos:
+
+\begin{equation}
+\forall c \in C, s'_c = arg_{s \in S} max u(c,s)
+\end{equation}
+
+[Perfis de usuário e privacidade]
+
+%\subsection{Perfis de Usuário}
+%. Identidade\\
+%. Geração e manutenção de perfil\\
+%. Reputação
+%
+%\subsection{Privacidade}
 
 \subsection{Estratégias}
 
@@ -204,84 +207,161 @@ aos já escolhidos pelos usuários são recomendados.
 . Clustering\\
 . Modelos probabilísticos
 
-\subsection{Perfis de Usuário}
-. Identidade\\
-. Geração e manutenção de perfil\\
-. Reputação
-
-\subsection{Privacidade}
 
 \section{Distribuições GNU/Linux} \label{sec:distro}
 
-A escolha da distribuição que guiaria o estudo foi pautada pelos seguintes
-critérios: \emph{(1)} Existência de um esquema consistente de distribuição de
-software; \emph{(2)} Existência de dados estatísticos referentes ao uso de
-pacotes por usuários e possibilidade de acesso aos mesmos; \emph{(3)}
-Possibilidade de integração dos resultados do trabalho com os serviços
-dispobinilizados pela distribuição; \emph{(4)} Popularidade da distribuição.
+Em 1983 Richard Stallman criou o projeto GNU\footnote{\url{hhtp://www.gnu.org}}
+com o objetivo de desenvolver um sistema operacional livre como alternativa ao
+UNIX\footnote{\url{http://www.unix.org/}} -- solução comercial amplamente
+difundida na indústria -- e que fosse compatível com os padrões
+POSIX\footnote{\url{http://standards.ieee.org/develop/wg/POSIX.html}} --
+família de normas definidas pelo IEEE com foco na portabilidade entre sistemas
+operacionais. Nos anos 90 o projeto GNU já havia atraído muitos colaboradores,
+que num curto espaço de tempo haviam desenvolvido inúmeros aplicativos para
+compor o sistema operacional. Porém, o núcleo do sistema (\emph{GNU Hurd}) teve
+desenvolvimento mais lento.
 
-A distribuição foi o Debian GNU/Linux pelos seguintes fatores:
+Em outubro de 1991 o estudante finlandês Linus Torvalds publicou a versão
+0.02 do Freax, o núcleo de um sistema operacional (\emph{kernel}, em inglês)
+desenvolvido por ele na universidade. Nem o próprio Linus imaginava que aquele
+projeto, desenvolvido sem grandes pretensões, teria a dimensão do que hoje
+conhecemos como Linux \cite{Linus:01}.
 
-%[Destrinchar a vantagem do Debian para cada ponto dos critérios adotados, com base na Policy]
+Com o anúncio de Torvalds, Stallman vislumbrou a possibilidade de agilizar o
+lançamento do sistema operacional livre, se os aplicativos GNU que já estavam
+prontos fossem combinados com o núcleo recém-lançado -- de fato, a primeira
+versão estável do GNU Hurd foi lançada apenas em 2001. Em 1992 o Linux foi
+licenciado sob a GNU GPL (\emph{General Public License\footnote{Suporte legal
+para a distribuição livre de softwares}}) e as equipes dos dois projetos
+começaram a trabalhar na adaptação do kernel Linux para o ambiente GNU. Este
+esforço conjunto possibilitou o surgimento das distribuições GNU/Linux, que
+são variações do sistema GNU/Linux.
+
+Distribuições como Debian, Fedora, Mandriva e Ubuntu, oferecem diferentes
+soluções de sistema operacional compostas pelo GNU/Linux e mais uma gama de
+softwares selecionados pela comunidade ou empresa responsável por seu
+desenvolvimento. As distribuições reduzem a complexidade de instalação e
+atualização do sistema para usuários finais \cite{Cosmo:08}. Os mantenedores da
+distribuição atuam como intermediários entre os usuários e os autores dos
+softwares (chamados de \emph{upstreams}), através do encapsulamento de
+componentes de software em abstrações chamadas \emph{pacotes}.
+
+O processo de desenvolvimento e manutenção de uma distribuição varia bastante
+de uma para outra e está diretamente ligado à constituição do projeto. Quando
+são criadas por empresas, costumam receber colaboração dos usuários, mas de
+forma limitada, visto que as decisões chave são tomadas dentro da organização.
+Este é o modelo de desenvolvimento conhecido como catedral \cite{Raymond:99}.
+Por outro lado, os projetos criados independentemente, formam ao longo do tempo
+uma comunidade de desenvolvedores interessados em colaborar, e estes são os
+únicos responsáveis pelo sucesso ou fracasso do projeto. Neste modelo, que
+recebe o nome de bazar, o código-fonte está disponível durante todo o processo
+de desenvolvimento, não apenas nos lançamentos, permitindo que a contribuição
+seja mais efetiva. Nesses casos observa-se com mais clareza o fenômeno do
+consumidor produtor descrito anteriormente. Segundo Raymond este modelo é
+mais favorável ao sucesso, pois um bom trabalho de desenvolvimento de software
+é motivado por uma necessidade pessoal do desenvolvedor (ou seja, o
+desenvolvedor é também usuário).
+
+A seleção e configuração dos aplicativos básicos de uma distribuição ficam
+a cargo da equipe que a desenvolve, com diferentes níveis de interferência da
+comunidade, como vimos acima. Este é um ponto chave no desenvolvimento,
+pois é um dos fatores que mais influenciam a escolha dos usuários pela
+distribuição. Um exemplo do impacto que tal seleção têm na comunidade foi a
+recente polêmica gerada pelo anúncio de Mark Shuttleworth, criador do
+Ubuntu, de que o projeto abandonaria o Gnome como interface padrão do usuário
+\cite{Paul:10}. No caso do Debian, uma decisão como esta seria resultado de
+longo período de discussão na lista debian-desktop. Polêmicas no Debian não são
+raras, por exemplo, quando o assunto é o tema do desktop padrão (papel de parede,
+cores e estilo das janelas, etc) que será lançado na próxima versão estável.
+
+Softwares adicionais que atendem a necessidades específicas devem ser
+instalados pelo usuário ou administrador do sistema, após a configuração do
+sistema operacional. Este processo é facilitado pela infraestrutura de
+instalação de softwares provida pela distribuição (baseada em pacotes), mas a
+seleção dos programas fica a cargo do usuário.
+
+\subsection{Contexto da Pesquisa}
+
+A escolha da distribuição na qual o desenvolvimento do trabalho seria baseado
+foi pautada pelos seguintes critérios: \emph{(1)} Existência de um esquema
+consistente de distribuição de software; \emph{(2)} Existência de dados
+estatísticos referentes ao uso de pacotes por usuários e possibilidade de
+acesso aos mesmos; \emph{(3)} Possibilidade de integração dos resultados do
+trabalho com os serviços dispobinilizados pela distribuição; \emph{(4)}
+Popularidade da distribuição. O Debian GNU/Linux foi selecionado pelos fatores
+apresentados a seguir.
+
 \begin{enumerate}
-\item APT
-\item Popcon
-\item Relato de casos
-\item Distrowatch
-\begin{verbatim}
- DistroWatch database summary
- Number of all distributions in the database: 671
- Number of active distributions in the database: 318
- Number of dormant distributions: 55
- Number of discontinued distributions: 298
- Number of distributions on the waiting list: 248
-\end{verbatim}
+
+\item O gerenciamento de pacotes em sistemas Debian GNU/Linux é realizado
+através do \emph{APT (Advanced Packaging Tool)}. Ações como a busca, obtenção,
+instalação, atualização e remoção de pacotes são disparadas pelo APT, que num
+nível mais baixo faz uso do \emph{dpkg}. O APT também gerencia conflitos entre
+pacotes, checando se novos pacotes a serem instalados conflitam com algum
+outro do sistema, e dependências, instalando todos os programas definidos
+como pré-requisitos antes da instalação de um pacote.
+
+\item O \emph{Popularity Contest}\footnote{\url{http://popcon.debian.org}} é o
+concurso de popularidade entre pacotes. Os usuários que aceitam participar do
+concurso enviam periodicamente a sua lista de pacotes instalados no sistema,
+que são armazenados no servidor do popcon. Diariamente as listas recebidas são
+processadas e dados estatísticos acerca do uso dos pacotes são gerados e
+disponibilizados no website do projeto.
+
+\item Segundo o seu \emph{contrato social perante a comunidade de software
+livre\footnote{\url{http://www.debian.org/social_contract.pt.html}}}, o
+desenvolvimento do projeto Debian é guiado pelas necessidades dos usuários
+e da comunidade de software livre. Portanto, as iniciativas de colaboradores
+individuais, seja ele desenvolvedor oficial ou não, serão igualmente
+consideradas e passarão a fazer parte da distribuição se seguirem aqueles
+princípios e forem considerados de utilidade para a comunidade.
+
+\item O Debian é um projeto de destaque no ecossistema do software livre. Desde
+o lançamento da primeira versão de sua distribuição, em 1993, o projeto cresceu
+bastante em termos de componentes de software (atualmente provê mais de 25.000
+pacotes), colaboradores e usuários. A \emph{Distrowatch}, que tem 671
+distribuições em sua base de dados, classifica o Debian GNU/Linux entre as 10
+distribuições mais
+populares\footnote{\url{http://distrowatch.com/dwres.php?resource=major}}.
+O Debian aparece na quinta posição em suas estatísticas de páginas visitadas
+\footnote{\url{http://distrowatch.com/stats.php?section=popularity}}. Já o
+\emph{Linux Counter\footnote{\url{http://counter.li.org/reports/machines.php}}}
+apresenta o Debian como a segunda distribuição mais popular entre as máquinas
+cadastradas que rodam o kernel Linux ($16\%$), ficando atrás apenas do Ubuntu
+($24\%$). Nas pesquisas da \emph{W$^{\textrm{3}}$Techs} sobre tecnologias para
+serviços
+web\footnote{\url{http://w3techs.com/technologies/history_details/os-linux}}, o
+Debian aparece em segundo lugar, estando presente em $27\%$ dos servidores. Na
+primeira posição está o CentOS com $31\%$.
+
 \end{enumerate}
 
-Optou-se pelo desenvolvimento para o Debian, todavia, os resultados alcançados
-poderão facilmente ser adaptados para outros ambientes, desde que as
-informações necessárias estejam disponíveis.
+Diante do exposto, optou-se pelo Debian GNU/Linux como ambiente de
+desenvolvimento, todavia, os resultados poderão facilmente ser adaptados para
+outros contextos, desde que as informações necessárias para o cálculo de
+recomendações estejam disponíveis (dados estatísticos).
 
-\subsection{Debian}
+\section{Recomendação e Distribuições} \label{sec:solucoes}
 
-De maneira geral, quando o projeto Debian é mencionado trata-se não
-somente do sistema operacinal, mas de toda a infra-estrutura de desenvolvimento
-e coordenação que dá suporte ao trabalho de cerca de 1500 desenvolvedores
-oficiais, além de outros milhares de colaboradores ao redor do globo. O trabalho
-é realizado de forma colaborativa, afinado pelo objetivo comum de produzir e
-disponibilizar livremente um sistema operacional de qualidade para seus usuários
-\cite{Jackson:98}. A interação entre os desenvolvedores acontece
+De maneira geral, quando o projeto Debian é mencionado trata-se não somente do
+sistema operacional, mas de toda a infra-estrutura de desenvolvimento e
+coordenação que dá suporte ao trabalho de cerca de 1500 desenvolvedores
+oficiais, além de outros milhares de colaboradores ao redor do globo. O
+trabalho é realizado de forma colaborativa, afinado pelo objetivo comum de
+produzir e disponibilizar livremente um sistema operacional de qualidade para
+seus usuários \cite{Jackson:98}. A interação entre os desenvolvedores acontece
 majoritariamente através da Internet, por meio de canais IRC e listas de
 discussão púlicas. Não existe uma entidade formal ou qualquer tipo de
-organização que concentre, coordene ou defina as atividades do projeto
-\cite{Ferraro:07}.
+organização que concentre, coordene ou defina as atividades do projeto. O que
+observa-se é um modelo de governança consolidado que emergiu naturalmente ao
+longo de sua história \cite{Ferraro:07}.
 
-\subsection{Pacotes Debian}
-. Binários e fontes\\
-. upstream, maintainer, uploader\\
-. Prioridade: required, important, standard, optional, extra\\
-. Base system = required or important (muitos são marcados como essenciais)\\
-. Essenciais: o gerenciador de pacotes se recusa a remover, a menos que seja forçado\\
-
-\subsection{Relação entre pacotes}
-. Dependência: Pre-depends, Depends, Recommends, Suggests, Enhances\\
-. Anti-dependência: Breaks, Conflicts, Replaces\\
-. Pacotes virtuais: Provides\\
-. Entre fontes e binários: Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep
-
-\subsection{O Repositório de Pacotes}
-. The Debian Archive,\\
-. Áreas: main, contrib, non-free\\
-. Seções\\
-
-\section{Soluções existentes} \label{sec:solucoes}
-
-Diante da complexa e crescente estrutura do Projeto Debian, observa-se um
+Diante da complexa e crescente estrutura do projeto Debian, observa-se um
 esforço por parte dos desenvolvedores, principalmente da equipe responsável
-pelo controle de qualidade\footnote{qa.debian.org}, de reunir, organizar e
-diponibilizar as informações ou meta-dados concernentes a esta estrutura
-\cite{Nussbaum:10}. A tabela \ref{tab:recDebian} relaciona algumas destas
-iniciativas que estão diretamente ligadas ao gerenciamento de pacotes.
+pelo controle de qualidade\footnote{\url{http://qa.debian.org}}, de reunir,
+organizar e diponibilizar as informações ou meta-dados concernentes a esta
+estrutura \cite{Nussbaum:10}. A tabela \ref{tab:recDebian} relaciona algumas
+destas iniciativas que estão diretamente ligadas ao gerenciamento de pacotes.
 Vale ressaltar que a maioria destas soluções foram inicialmente desenvolvidas
 num contexto extra-oficial, mas a medida que se mostraram úteis e eficientes
 foram absorvidas pela comunidade de usuários e desenvolvedores.
@@ -290,11 +370,11 @@ foram absorvidas pela comunidade de usuários e desenvolvedores.
   \centering
   \caption{Soluções de recomendação no Debian}
   \label{tab:recDebian}
+  \small
   \begin{tabularx}{\textwidth}{| c | X | c |}
     \hline
-    \emph{Solução} & \emph{Descrição} & \emph{Estratégia de recomendação}\\
-    \hline
-    \small BTS & Sistema de rastreamento de bugs, que é alimentado pelos
+    \normalsize \emph{Solução} & \normalsize \emph{Descrição} & \normalsize \emph{Estratégia de recomendação}\\
+    \hline     BTS & Sistema de rastreamento de bugs, que é alimentado pelos
     usuários & \multirow{3}{*}{Reputação}\\
     \cline{1-2}
     Popcon & \emph{Popularity Contest} publica diariamente o resultado do
@@ -309,7 +389,7 @@ foram absorvidas pela comunidade de usuários e desenvolvedores.
     decisões acerca de que pacotes usar. & \\
     \hline
     Debtags & Classificação de pacotes em produção, porém,
-    sem esquema de recomendação & Baseada em conteúdo\normalsize \\
+    sem esquema de recomendação & Baseada em conteúdo\\
     \hline
     Debtags & No cadastro de tags para pacotes, novas tags são sugeridas a
     partir das tags já associadas ao pacote & Associação\\
@@ -317,7 +397,7 @@ foram absorvidas pela comunidade de usuários e desenvolvedores.
   \end{tabularx}
 \end{table}
 
-%[Investigar iniciativas externas ao Debian]
+[Investigar iniciativas externas ao Debian: central de aplicativos ubuntu]
 
 \section{Metodologia} \label{sec:metodo}
 
@@ -338,7 +418,9 @@ George Polya \cite{Polya:45}, descrito passoa-a-passo nas seções seguintes.
 Os dados de entrada de um sistema de recomendação são associações entre
 clientes e itens, como num carrinho de compras de supermercado. No contexto do
 projeto Debian, os itens são os pacotes de software e os clientes são os
-usuários da distribuição. O problema tratado pode então ser formalizado da
+usuários da distribuição.
+
+O problema tratado pode então ser formalizado da
 seguinte maneira: Dada a lista de pacotes de um usuário específico
 (destinatário da recomendação), a partir da análise de listas de pacotes de
 outros usuários reais, deve-se retornar uma lista de pacotes recomendados, que
@@ -357,6 +439,25 @@ armazenados no servidor do popcon.
 \label{fig:recommendation}
 \end{figure}
 
+[Pacotes Debian, Relação entre pacotes, O Repositório de Pacotes]
+
+%\subsection{Pacotes Debian}
+%. Binários e fontes\\
+%. upstream, maintainer, uploader\\
+%. Prioridade: required, important, standard, optional, extra\\
+%. Base system = required or important (muitos são marcados como essenciais)\\
+%. Essenciais: o gerenciador de pacotes se recusa a remover, a menos que seja forçado\\
+%
+%\subsection{Relação entre pacotes}
+%. Dependência: Pre-depends, Depends, Recommends, Suggests, Enhances\\
+%. Anti-dependência: Breaks, Conflicts, Replaces\\
+%. Pacotes virtuais: Provides\\
+%. Entre fontes e binários: Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep
+%
+%\subsection{O Repositório de Pacotes}
+%. The Debian Archive,\\
+%. Áreas: main, contrib, non-free\\
+%. Seções\\
 
 \subsection{Estabelecimento de um Plano}
 
@@ -407,7 +508,7 @@ também devem ser desconsiderados, pois em tese todos os usuários já os possuem.
 
 Após esta etapa, pretende-se diminuir consideravelmente a ordem de grandeza das listas de pacotes, o que contribuirá para a eficiência do sistema.
 
-Para o cálculo da recomendação pretende-se utilizar as seguiontes técnicas e avaliar sua viabilidade em produção:
+Para o cálculo da recomendação pretende-se utilizar as seguintes técnicas e avaliar sua viabilidade em produção:
 \begin{itemize}
   \item
   \item
