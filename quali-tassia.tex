@@ -72,7 +72,7 @@ indivíduo muitas vezes possui pouca ou nenhuma experiência pessoal para
 realizar escolhas em determinado contexto \cite{Cazella:10}. Sendo assim,
 recomendações de outras pessoas são de grande utilidade, pois reduzem as
 dúvidas e auxiliam o processo de escolha dentre as muitas alternativas
-apresentadas. No entanto, diante do número de usuários e o volume de conteúdo
+apresentadas. No entanto, diante do número de usuários e do volume de conteúdo
 que comumente deve ser considerado, recomendações no estilo ``boca a
 boca"\ tornam-se ineficientes, pois exigem a comunicação direta entre os pares.
 Deste modo, a tecnologia passa a ter papel fundamental neste processo
@@ -99,12 +99,12 @@ aplicação, configura-se um cenário onde um sistema de recomendação traria
 benefícios imediatos ao usuário, por auxiliá-lo a tomar decisões acerca da
 configuração do seu ambiente de trabalho.
 
-Após uma breve introdução a sistemas de recomendação e as princiais estratégias
-utilizadas, ao longo do trabalho são apresentadas soluções existentes para a
-recomendação de pacotes em distribuições GNU/Linux, como Debian, Fedora,
-Mandriva e Ubuntu. Em seguida são apresentadas propostas de melhoria e novas
-implementações, com o intuito de aproximar os serviços atualmente disponíveis à
-comunidade de usuários ao estado da arte em sistemas de recomendação.
+Após uma breve introdução sobre sistemas de recomendação e principais
+estratégias utilizadas, ao longo do texto são apresentadas soluções existentes
+para a recomendação de pacotes em distribuições GNU/Linux, como Debian, Fedora,
+Mandriva e Ubuntu. Em seguida é apresentada a proposta de implementação deste
+trabalho, que pretende aproximar os serviços atualmente disponíveis à
+comunidade ao estado da arte em sistemas de recomendação.
 
 \section{Sistemas de Recomendação}\label{sec:rec}
 
@@ -136,6 +136,39 @@ S$ que maximiza a função de utilidade. Mais formalmente, temos:
 \forall c \in C, s'_c = arg_{s \in S} max u(c,s)
 \end{equation}
 
+\subsection{Desafios}
+
+Segundo \cite{Vozalis:03}, os principais desafios de sistemas de recomendação
+são:
+
+\begin{itemize}
+  \item \emph{Qualidade das recomendações:} usuários querem recomendações nas
+    quais eles possam confiar. Esta confiabilidade é alcançada na medida em
+    que se diminui a incidência de falsos positivos, ou seja, recomendações
+    que não interessam ao usuário;
+  \item \emph{Esparsidade:} a existência de poucas relações usuários-item por
+    usuário resulta numa matriz de relacionamentos esparsa. Isto dificulta
+    a localização de vizinhança, resultando em recomendações fracas.
+  \item \emph{Escalabilidade:} a complexidade do cálculo de recomendações
+    cresce tanto no número de clientes quanto na quantidade de itens, portanto
+    os algoritmos utilizados devem ser escaláveis.
+  \item \emph{Perda de transitividade de vizinhança:} usuários com
+    comportamento semelhante a um determinado usuário $u$ não necessariamente
+    têm comportamento semelhante entre si. Quando desejado, é necessário que se
+    aplique métodos específicos para captura deste tipo de relação.
+  \item \emph{Sinônimos:} Quando o universo de itens possibilita a existência
+    de sinônimos, a solução deve levar esta informação em conta para prover
+    melhores resultados.
+  \item \emph{Problema da primeira avaliação:} Um item só pode ser recomendado
+    se ele tiver sido escolhido por um usuário anteriormente. Portanto, novos
+    itens precisam ter um tratamento especial até que sua presença seja
+    "notada".
+  \item \emph{Problema do usuário incomum:} Indivíduos com opiniões que fogem
+    do usual, que não concordam nem discordam consistentemente com nenhum
+    grupo, normalmente não se beneficiam de seus sistemas de recomendações.
+
+\end{itemize}
+
 [Perfis de usuário e privacidade]
 
 %\subsection{Perfis de Usuário}
@@ -145,7 +178,7 @@ S$ que maximiza a função de utilidade. Mais formalmente, temos:
 %
 %\subsection{Privacidade}
 
-\subsection{Estratégias}
+\subsection{Estratégias de Recomendação}
 
 \subsubsection{Reputação do produto}
 
@@ -159,9 +192,18 @@ dos usuários em suas opiniões, o que não pode ser verificado devido a seu
 caráter subjetivo e estritamente pessoal. Atualmente existem serviços
 especializados em reputação de produtos, que não têm venda associada, apenas
 disponibilizam as avaliações. É o caso do \emph{Internet Movie Database}
-\footnote{http://www.imdb.com/}.
+\footnote{http://www.imdb.com/}, apresentado na figura \ref{fig:imdb}.
 
-\subsubsection{Recomendação por associação}
+\begin{figure}[h]
+\centering
+\fbox{
+  \includegraphics[width=1\textwidth]{fig/imdb.png}
+}
+\caption{Avaliação de usuário no IMDb}
+\label{fig:imdb}
+\end{figure}
+
+\subsubsection{Associação}
 
 A partir da análise de uma base de dados que relaciona clientes e itens
 selecionados pelos mesmos, utiliza-se diversas técnicas para inferir
@@ -172,9 +214,20 @@ quando uma associação é extraída, não significa que ela pode ser verificada em
 todos os casos, e sim numa porcentagem mínima, definida pelo suporte. A
 implementação desta estratégia é mais complexa, pois exige técnicas mais
 sofisticadas para identificação de padrões no comportamento dos usuários,
-principalmente quando se trata de um grande volume de dados.
+principalmente quando se trata de um grande volume de dados. Um exemplo de
+aplicação desta abordagem é encontrado no site da Amazon (figura
+\ref{fig:amazon}).
 
-\subsubsection{Filtragem baseada em conteúdo}
+\begin{figure}[h]
+\centering
+\fbox{
+  \includegraphics[width=1\textwidth]{fig/amazon-association.png}
+}
+\caption{Recomendação por associação na Amazon}
+\label{fig:amazon}
+\end{figure}
+
+\subsubsection{Baseada em conteúdo}
 
 Este método parte do princípio de que os usuários tendem a se interessar por
 itens semelhantes aos que eles já se interessaram no passado
@@ -191,22 +244,45 @@ identificados de forma automatizada. Outro problema indicado por
 \cite{Adomavicius:05} é o da superespecialização, onde apenas itens similares
 aos já escolhidos pelos usuários são recomendados.
 
-\subsubsection{Filtragem colaborativa}
- (baseada em avaliação de itens semelhantes de usuários mais próximos)
+\subsubsection{Colaborativa}
 
-\subsubsection{Filtragem híbrida}
+Esta abordagem não exige a compreensão ou reconhecimento do conteúdo dos itens,
+pois se baseia na troca de experiências entre pessoas que possuem interesses
+em comum.
 
+Define-se uma função que representa a distância entre os usuários, e a
+vizinhança de um usuário é composta pelos que estiverem mais próximos dele (com
+menor distância). Uma recomendação para o usuário $u$ é produzida a partir
+da análise dos itens da vizinhança de $u$. Os itens que aparecerem com maior
+frequência na vizinhança farão parte da recomendação.
 
-\subsubsection{Filtragem baseada em outros contextos}
- (uso de perfis)
+O problema da superespecialização é superado, visto que a recomendação neste
+caso não se baseia no histórico do próprio usuário, podendo apresentar itens
+totalmente inesperados. Outra contribuição é a possibilidade de formação de
+comunidades de usuários pela identificação de seus gostos e interesses
+similares \cite{Cazella:10}.
 
-\subsection{Técnicas}
-. Tf-idf\\
-. Classificador Bayesiano\\
-. Vizinhos mais próximos (knn)\\
-. Clustering\\
-. Modelos probabilísticos
+\subsubsection{Híbrida}
 
+Consiste basicamente na combinação das abordagens colaborativa e baseada em
+conteúdo, unindo o melhor das duas técnicas e eliminando as fraquezas de cada
+uma \cite{Cazella:10}.
+
+%\subsubsection{Filtragem baseada em outros contextos}
+% (uso de perfis)
+
+\subsection{Técnicas} \label{sec:tecnicas}
+
+Nesta seção são apresentadas as técnicas que dão suporte às estratégias
+apresentadas na seção anterior.
+
+\begin{itemize}
+  \item Tf-idf
+  \item Classificador Bayesiano
+  \item Vizinhos mais próximos (knn)
+  \item Clustering
+  \item Modelos probabilísticos
+\end{itemize}
 
 \section{Distribuições GNU/Linux} \label{sec:distro}
 
@@ -280,7 +356,7 @@ sistema operacional. Este processo é facilitado pela infraestrutura de
 instalação de softwares provida pela distribuição (baseada em pacotes), mas a
 seleção dos programas fica a cargo do usuário.
 
-\subsection{Contexto da Pesquisa}
+\subsection{Contexto do Trabalho}
 
 A escolha da distribuição na qual o desenvolvimento do trabalho seria baseado
 foi pautada pelos seguintes critérios: \emph{(1)} Existência de um esquema
@@ -336,13 +412,6 @@ primeira posição está o CentOS com $31\%$.
 
 \end{enumerate}
 
-Diante do exposto, optou-se pelo Debian GNU/Linux como ambiente de
-desenvolvimento, todavia, os resultados poderão facilmente ser adaptados para
-outros contextos, desde que as informações necessárias para o cálculo de
-recomendações estejam disponíveis (dados estatísticos).
-
-\section{Recomendação e Distribuições} \label{sec:solucoes}
-
 De maneira geral, quando o projeto Debian é mencionado trata-se não somente do
 sistema operacional, mas de toda a infra-estrutura de desenvolvimento e
 coordenação que dá suporte ao trabalho de cerca de 1500 desenvolvedores
@@ -356,6 +425,13 @@ organização que concentre, coordene ou defina as atividades do projeto. O que
 observa-se é um modelo de governança consolidado que emergiu naturalmente ao
 longo de sua história \cite{Ferraro:07}.
 
+Diante do exposto, optou-se pelo Debian GNU/Linux como ambiente de
+desenvolvimento, todavia, os resultados poderão facilmente ser adaptados para
+outros contextos, desde que as informações necessárias para o cálculo de
+recomendações estejam disponíveis (dados estatísticos).
+
+\section{Recomendação nas Distribuições} \label{sec:solucoes}
+
 Diante da complexa e crescente estrutura do projeto Debian, observa-se um
 esforço por parte dos desenvolvedores, principalmente da equipe responsável
 pelo controle de qualidade\footnote{\url{http://qa.debian.org}}, de reunir,
@@ -366,7 +442,7 @@ Vale ressaltar que a maioria destas soluções foram inicialmente desenvolvidas
 num contexto extra-oficial, mas a medida que se mostraram úteis e eficientes
 foram absorvidas pela comunidade de usuários e desenvolvedores.
 
-\begin{table}
+\begin{table}[h]
   \centering
   \caption{Soluções de recomendação no Debian}
   \label{tab:recDebian}
@@ -374,7 +450,7 @@ foram absorvidas pela comunidade de usuários e desenvolvedores.
   \begin{tabularx}{\textwidth}{| c | X | c |}
     \hline
     \normalsize \emph{Solução} & \normalsize \emph{Descrição} & \normalsize \emph{Estratégia de recomendação}\\
-    \hline     BTS & Sistema de rastreamento de bugs, que é alimentado pelos
+    \hline BTS & Sistema de rastreamento de bugs, que é alimentado pelos
     usuários & \multirow{3}{*}{Reputação}\\
     \cline{1-2}
     Popcon & \emph{Popularity Contest} publica diariamente o resultado do
@@ -415,31 +491,55 @@ George Polya \cite{Polya:45}, descrito passoa-a-passo nas seções seguintes.
 %}
 %\end{center}
 
-Os dados de entrada de um sistema de recomendação são associações entre
-clientes e itens, como num carrinho de compras de supermercado. No contexto do
-projeto Debian, os itens são os pacotes de software e os clientes são os
-usuários da distribuição.
-
-O problema tratado pode então ser formalizado da
-seguinte maneira: Dada a lista de pacotes de um usuário específico
-(destinatário da recomendação), a partir da análise de listas de pacotes de
-outros usuários reais, deve-se retornar uma lista de pacotes recomendados, que
-indiquem pacotes de interesse para o usuário destinatário.
-
-Os dados de usuários reais foram coletados pelo
-popcon\footnote{\url{http://popcon.debian.org}}, para realização do concurso de
-popularidade entre pacotes que acontece diariamente. Os usuários enviam
-periodicamente a lista de pacotes instalados em seu sistema, que são
-armazenados no servidor do popcon.
+Ao trazer o problema da recomendação para o contexto de distribuições GNU/Linux,
+considera-se que os componentes de software ou pacotes são itens e os usários
+da distribuição são clientes. Em termos de entrada e saída do sistema de
+recomendação: Dada a lista de pacotes de um usuário específico (destinatário da
+recomendação), a partir da análise de listas de pacotes de outros usuários,
+deve-se retornar uma lista de pacotes recomendados, que indiquem pacotes de
+potencial interesse para o usuário destinatário.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/recommendation.png}
+\includegraphics[width=.7\textwidth]{fig/recommendation.pdf}
 \caption{Cenário de uma Recomendação}
 \label{fig:recommendation}
 \end{figure}
 
-[Pacotes Debian, Relação entre pacotes, O Repositório de Pacotes]
+Uma característica importante desta instância do problema de recomendação é
+que, diferentemente da situação usual onde os itens não se relacionam entre si
+(produtos na prateleira do supermercado, por exemplo), os componentes de
+software objetos desta pesquisa (pacotes debian) podem declarar explicitamente
+requisitos em seu conteúdo \cite{Cosmo:09}. Requisitos positivos representam
+relações de dependência enquanto que os negativos representam conflitos, que
+podem ser definidos em diversos graus: dependência, sugestão, recomendação,
+conflito, substituição, quebra, etc. Por exemplo, se um componente $a$ depende
+de $b$, significa dizer que $b$ deve ser estar instalado no sistema para que
+$a$ funcione como previsto. Por outro lado, se $a$ conflita com $c$, a
+instalação de ambos os programas pode provocar um comportamento anômalo ou até
+comprometer o funcionamento de todo o sistema.
+
+As relações entre os componentes são consideradas pelo sistema de gerenciamento
+de pacotes (no Debian, o APT), que recebe do usuário um pedido de modificar
+a instalação do sistema de alguma maneira -- por exemplo, a instalação de um
+novo componente -- e tenta satisfazer o pedido a partir do conhecimento de onde
+os componentes se encontram (repositórios de pacotes) e das relações entre os
+componentes. O gerenciador então promove a instalação de todas as dependências
+de um pacote antes de instalá-lo, e não permite a instalação de pacotes que
+conflitem com outros já instalados no sistema.
+
+Portanto, o cálculo da recomendação de pacotes deve levar em conta as
+relações de dependência entre pacotes e desconsiderar pacotes dependentes
+nas buscas por associações, visto que as dependências de um pacote sempre
+(ou quase sempre) estão presentes nos sistemas com tal pacote instalado.
+
+Outro ponto a ser ressaltado é que as recomendações devem ser geradas a partir
+do comportamento do usuário (ação), e não da opinião. Neste trabalho não serão
+consideradas informações registradas por usuários no BTS ou em listas de
+discussão. Pretende-se calcular a recomendação a partir de dados do Popcon,
+que contém listas de pacotes instalados de milhares de sistemas em produção.
+
+%[Pacotes Debian, Relação entre pacotes, O Repositório de Pacotes]
 
 %\subsection{Pacotes Debian}
 %. Binários e fontes\\
@@ -498,23 +598,32 @@ armazenados no servidor do popcon.
 %}
 %\end{center}
 
-Os dados do popcon devem ser pré-processados antes de serem considerados para o
-sistema de recomendação. Isso porque as listas de pacotes enviadas pelos
-usuários contém todos os pacotes do sistema, desde aplicativos, ao kernel Linux
-e bibliotecas. Para este estudo, apenas os aplicativos para usuário final são
-relevantes, visto que só deseja-se recomendar aplicativos. Os pacotes que fazem
-parte do sistema básico, que são essenciais para o funcionamento do sistema
-também devem ser desconsiderados, pois em tese todos os usuários já os possuem.
+O Popcon\footnote{\url{http://popcon.debian.org}} recebe periodicamente listas
+de pacotes instalados em sistemas de usuários reais para realização do
+concurso diário de popularidade entre pacotes. Esses dados porém devem ser
+pré-processados antes de serem considerados para o sistema de recomendação.
 
-Após esta etapa, pretende-se diminuir consideravelmente a ordem de grandeza das listas de pacotes, o que contribuirá para a eficiência do sistema.
+As listas de pacotes enviadas pelos usuários contém todos os pacotes do
+sistema, entre aplicativos, bibliotecas e até o kernel Linux. Para este estudo,
+apenas os aplicativos para usuário final são relevantes, pois são eles que
+devem compor a recomendação. Os pacotes que fazem parte do sistema básico
+também devem ser desconsiderados, pois em tese todos os usuários já os possuem
+visto que são essenciais para o funcionamento de qualquer sistema Debian. Assim
+pretende-se diminuir consideravelmente a ordem de grandeza das listas de
+pacotes, o que contribuirá para a eficiência do sistema.
 
-Para o cálculo da recomendação pretende-se utilizar as seguintes técnicas e avaliar sua viabilidade em produção:
+Para o cálculo da recomendação pretende-se experimentar as estratégias:
 \begin{itemize}
-  \item
-  \item
-  \item
+  \item Baseada em conteúdo, a partir da classificação provida pelo debtags;
+  \item Colaborativa, a partir dos dados do popcon;
+  \item Híbrida, com uma mesclagem das duas abordagens.
 \end{itemize}
 
+Na implementação de tais estratégias, pretende-se utilizar algumas das técnicas
+mencionadas na seção \ref{sec:tecnicas} e fazer uma análise comparativa para
+avaliar qual delas é mais viável para o sistema em produção.
+
+[Possibilidades de arquitetura para o serviço]
 
 \subsection{Execução do Plano}
 
@@ -526,6 +635,35 @@ Para o cálculo da recomendação pretende-se utilizar as seguintes técnicas e aval
 %  \end{Bflushleft}
 %}
 %\end{center}
+
+O presente trabalho será realizado entre os meses de janeiro e julho de 2001.
+Um planejamento de execução inicial é apresentado na tabela \ref{tab:plano}.
+
+\begin{table}[h]
+  \centering
+  \caption{Planejamento de execução}
+  \label{tab:plano}
+  \small
+  \begin{tabularx}{\textwidth}{| c | X |}
+    \hline
+    \normalsize \emph{Mês} & \normalsize \emph{Atividade}\\
+    \hline
+    Janeiro & \multirow{2}{*}{Implementação das diferentes estratégias e técnicas} \\
+    \cline{1-1}
+    Fevereiro & \\
+    \hline
+    Março & Avaliação das soluções e lançamento do sistema para testes \\
+    \hline
+    Abril & Ajustes e melhorias na implementação \\
+    \hline
+    Maio & Preparação e realização de avaliação externa (feedback de usuários) \\
+    \hline
+    Junho & \multirow{2}{*}{Escrita da dissertação}\\
+    \cline{1-1}
+    Julho & \\
+    \hline
+  \end{tabularx}
+\end{table}
 
 \subsection{Retrospectiva}
 
@@ -539,6 +677,26 @@ Para o cálculo da recomendação pretende-se utilizar as seguintes técnicas e aval
 %  \end{Bflushleft}
 %}
 %\end{center}
+
+Ao término da etapa de implementação pretende-se avaliar as soluções
+produzidas. Porém, devido à própria natureza do problema e dificuldade de
+medição de acurácia da saída, examinar os resultados obtidos por um sistema de
+recomendação não é tarefa trivial.
+
+As métricas de avaliação mais utilizadas, herdadas da disciplina de recuperação
+da informação, são cobertura e precisão. Além dessas, serão consideradas também
+as métricas propostas por \cite{Fouss:08}: robustez e novidade. Todas essas
+métricas, porém, partem do pressuposto de que para cada conjunto de dados
+avaliado existe uma recomendação correta, ideal, com a qual a saída do
+sistema deve ser comparada. Na inexistência deste ideal, \cite{Vozalis:03}
+sugere que sejam criados conjuntos de dados artificiais especialmente para a
+avaliação do sistema. Ainda assim não se garante que esse ideal artificial de
+fato representa a realidade.
+
+Uma nova etapa de avaliação será realizada quando o sistema estiver em produção.
+Pretende-se aplicar questionários para usuários selecionados, com o intuito de
+obter um retorno mais fiel à realidade, ainda que de caráter mais subjetivo do
+que a primeira avaliação.
 
 \section{Conclusão} \label{sec:conclusao}
 
