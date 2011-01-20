@@ -250,20 +250,33 @@ itens de maior peso, ou seja, mais potencialmente relevantes para o usuário.
 
 Na busca por informação, assume-se que as necessidades do usuário são
 particulares e passageiras, e por isso a reincidência de \emph{queries} não é
-muito frequente. Porém, em situações onde se observa que as mesmas consultas
-são aplicadas repetidamente de tempos em tempos, é interessante que o sistema
-dê suporte a consultas permanentes. Desta forma a computação relativa a
-consulta pode ser realizada previamente, e apresentada sempre que um usuário
-requisitar. Se a classe de documentos que satisfazem a uma dessas
-\emph{queries} permanentes é tida como uma categoria, o processo de
-realização das consultas prévias pode ser caracterizado como o problema de
-classificação. Em linhas gerais, a classificação tem por objetivo, dado um
-conjunto de classes, determinar a qual (ou quais) classe(s) um determinado
-objeto pertence.
+muito frequente \cite{Manning:09}. Porém, em situações onde se observa que as
+mesmas consultas são aplicadas repetidamente de tempos em tempos, é
+interessante que o sistema dê suporte a consultas permanentes. Desta forma a
+computação necessária pode ser realizada previamente, e apresentada sempre que
+a consulta for requisitada. Se a classe de documentos que satisfazem a
+uma dessas \emph{queries} permanentes é tida como uma categoria, o processo de
+realização das consultas prévias pode ser caracterizado como uma classificação.
+O problema da classificação diz respeito à determinação de relacionamentos
+entre um dado objeto e um conjunto de classes pré-definidas.
+
+O problema de recomendação pode ser visto como uma classificação, na qual os
+itens devem ser categorizados entre duas classes: relevantes ou irrelevantes --
+os relevantes seriam recomendados. Porém, a definição de consultas ou regras
+fixas para uma busca não é uma estratégia eficiente para o problema da
+recomendação, porque neste caso a consulta estaria diretamente relacionada com
+a identidade do usuário e precisaria ser escrita especialmente para ele.
+
+Todavia, a disciplina de inteligência artificial aborda a questão da
+classificação através de estratégias que não se baseiam em busca. Os
+classificadores ``inteligentes'' são construídos a partir de um conjunto de
+dados tratados como exemplos para treinamento em algoritmos de aprendizado de
+máquina.
 
 A seguir são apresentadas algumas técnicas para resolução destes problemas
 que também são utilizadas na construção de sistemas de recomendação, dando
 suporte às estratégias apresentadas na seção \ref{sec:estrategias}.
+
 %\vspace{-0.1cm}
 \subsubsection{Medida tf-idf}
 
@@ -287,7 +300,7 @@ O conjunto de pesos determinado pelos \emph{tf}s dos termos de um documento
 pode ser visto como um resumo quantitativo do documento. Essa visão do
 documento é conhecida na literatura como ``saco de palavras'' (em inglês,
 \emph{``bag of words''}), onde a disposição das palavras no documento é
-ignorada e apenas a quantidade de ocorrências para cada termo é mantida.
+ignorada e apenas a quantidade de ocorrências para cada termo é resguardada.
 
 Por outro lado, alguns termos tem pouco ou nenhum poder de discriminação na
 determinação de relevância de um documento e a medida \emph{tf} não considera
@@ -349,9 +362,7 @@ termos da consulta \eqref{eq:ranking}.
 R_{d,q} = \sum_{t \in q} tfidf_{t,d}
 \end{equation}
 
-
-\vspace{0.3cm}
-\hspace{-1.4cm}
+\vspace{0.3cm} \hspace{-1.4cm}
 \textbf{Similaridade de cossenos}
 
 Medir a similaridade entre dois documentos pode ser útil, por exemplo, para
@@ -393,31 +404,35 @@ maiores valores indicarão os documentos mais relevantes para consulta.
 
 \subsubsection{Okapi BM25}
 
-O modelo Okapi \emph{BM25} figurou por diversos anos como o melhor esquema de
+O modelo \emph{Okapi BM25} figurou por diversos anos como o melhor esquema de
 pesos probabilísticos nas avaliações do TREC\footnote{O \emph{Text Retrieval
 Conference (TREC)} é uma conferência anual realizada pelo \emph{U.S. National
 Institute of Standards and Technology (NIST)} que promove uma ampla competição
 em recuperação da informação de grandes coleções de texto com o intuito de
-incentivar pesquisas na área.} \cite{Jones:00}. É uma evolução de outros dois
-esquemas, \emph{BM11} e \emph{BM15} (\emph{BM} de \emph{"Best Match"}). Tem
-esse nome porque o primeiro sistema no qual foi implementado se chamava Okapi.
+incentivar pesquisas na área.} e é considerado o estado da arte em recuperação
+da informação \cite{Perez:09}. É uma evolução de outros dois esquemas,
+\emph{BM11} e \emph{BM15} (\emph{BM} de \emph{"Best Match"}), sendo
+fundamentado teoricamente na disciplina de probabilidade discreta, ao modelar
+a frequência de termos em documentos utilizando distribuições de Poisson. Tem
+esse nome porque o primeiro sistema no qual foi implementado se chamava
+\emph{Okapi}.
 
 O \emph{BM25} utiliza os componentes estatísticos do \emph{tf-idf}, porém numa
 combinação diferente, além de considerar informações como o comprimento dos
 documentos, a frequência dos termos na \emph{query} e outros fatores
 constantes. A fórmula do \emph{BM25} é melhor compreendida através da análise
-de seus três componentes principais, que neste texto são referenciados como
+de seus três componentes principais, que neste texto são denominados de
 $WT$, $WD$ e $WQ$.
+
+$WT$ é a porção do peso que considera a frequência do termo no documento
+($tf_{t,d}$), permitindo haver normalização pelo tamanho do documento. Na
+fórmula \eqref{eq:WT}, $l_d$ representa o comprimento do documento $d$ e
+$l_{avg}$ o comprimento médio dos documentos da coleção.
 
 \begin{equation}
 \label{eq:WT}
 WT_{t,d} = \frac{tf_{t,d}(k_1+1)}{k_1((1-b)+b\frac{l_d}{l_{avg}})+tf_{t,d}}
 \end{equation}
-
-$WT$ é a porção do peso que considera a frequência do termo no documento
-($tf_{t,d}$), permitindo haver normalização pelo tamanho do documento. Na
-fórmula \eqref{eq:WT}, $l_d$ representa o comprimento do documento $d$ e
-$l{avg}$ o comprimento médio dos documentos da coleção.
 
 A constante $k_1$ determina o quanto o peso do documento deve ser afetado por
 um acréscimo no valor de $tf$. Se $k_1=0$, este componente da formula é
@@ -430,100 +445,161 @@ adicional é mínimo \cite{Jones:00}.
 
 O parâmetro $b \in [0,1]$ foi introduzido para ajustar o grau de normalização
 pelo comprimento dos documentos. Se a configuração for $b=1$, a normalização
-tem efeito completo (como no modelo \emph{BM11}). Valores menores reduzem
-este efeito. Se $b=0$, o comprimento do documento não afeta a pontuação final,
-como acontece no modelo \emph{BM15}.
+tem efeito completo (equivalente ao modelo \emph{BM11}). Valores menores
+reduzem este efeito. Se $b=0$, o comprimento do documento não afeta a pontuação
+final, (como no modelo \emph{BM15}).
 
-O segundo componente do peso ($WD$) 
-
-O $idf_t$ é comumente calculado como na equação \eqref{eq:bm25_idf}, onde $N$ é
-o número total de documentos na coleção e $df_t$ é o número de documentos que
-contém o termo $t$.
-
-\begin{equation}
-\label{eq:bm25_idf}
-WD_1 = log \frac{N}{df_t}
-\end{equation}
-
-\begin{equation}
-\label{eq:bm25_idf}
-WD_2 = log \frac{N-df_t+0.5}{df_t+0.5}
-\end{equation}
+O segundo componente do peso, $WD$, considera informações da atestação de
+relevância provida pelo usuário (em inglês, \emph{relevance feedback}\footnote{
+\emph{Relevance feedback} é o mecanismo através do qual o usuário avalia o
+resultado da consulta, marcando os itens retornados como relevantes ou
+irrelevantes, informação que é posteriormente utilizada para refinar a
+consulta}), quando disponível. Na equação \eqref{eq:WD_rf}, $N$ é o número
+total de documentos na coleção, $df_t$ é o número de documentos que contém o
+termo $t$, $R$ é o número total de documentos relevantes e $r$ é o número de
+documentos relevantes que contém o termo $t$.
 
 \begin{equation}
-\label{eq:bm25_idf}
-WD_3 = log \frac{(r+0.5)(N-df_t-R+r+0.5)}{(R-r+0.5)(df_t-r+0.5)}
+\label{eq:WD_rf}
+WD_{rf} = log \frac{(r+0.5)(N-df_t-R+r+0.5)}{(R-r+0.5)(df_t-r+0.5)}
 \end{equation}
 
-Consultas longas:
+Se não houver informações provenientes da atestação de relevância, o $idf_t$
+clássico pode ser utilizado \eqref{eq:idf}, ou ainda, uma variação de
+$WD$ \eqref{eq:WD} a partir do estabelecimento de que $R=r=0$ na equação acima.
+
 \begin{equation}
-\label{eq:bm25}
-WQ = \frac{(k_3+1)qtf_{t,q}}{k_3+qtf_{t,q}}
+\label{eq:WD}
+WD = log \frac{N-df_t+0.5}{df_t+0.5}
 \end{equation}
 
-De forma análoga ao \emph{tf-idf}, o cálculo no modelo \emph{BM25} da
-pontuação do documento $d$ para a \emph{query} $q$ pode ser realizado
-através da fórmula \eqref{eq:bm25}.
+A terceira parte da expressão, definida aqui como $WQ_{t,q}$ \eqref{eq:WQ}, permite
+a consideração da frequência do termo na \emph{query}, que é apropriada para
+o caso de consultas longas, podendo ser desconsiderada para \emph{queries}
+com poucos termos.
+
+\begin{equation}
+\label{eq:WQ}
+WQ_{t,q} = \frac{(k_3+1)qtf_{t,q}}{k_3+qtf_{t,q}}
+\end{equation}
+
+De forma análoga ao \emph{tf-idf}, o cálculo da pontuação do documento $d$ para
+a \emph{query} $q$ no modelo \emph{BM25} pode ser realizado através da fórmula
+\eqref{eq:bm25}.
 
 \begin{equation}
 \label{eq:bm25}
 R_{d,q} = \sum_{t \in q} WT_{t,d} \times WD_t \times WQ_{t,q}
 \end{equation}
 
-Atualmente já existem modelos que superaram o \emph{BM25} em
-alguns testes mas este continua sendo o modelo mais popular, pelo menos no que
-diz respeito a implementações livres. O Xapian\footnote{http://xapian.org/} e o
+O \emph{BM25} tem sido amplamente utilizado numa grande variedade tipos de
+busca e coleções. Tem obtido sucesso especialmente nas avaliações do TREC,
+o que provocou sua adoção por muitos grupos \cite{Jones:00}. A título de
+exemplo, o Xapian\footnote{http://xapian.org/} e o
 Lucene\footnote{http://lucene.apache.org/}, bibliotecas livres para construção
-de ferramentas de busca, são exemplos de projetos de grande destaque na
-comunidade que utilizam o \emph{BM25} como medida de pesos \cite{Betts:07}
-\cite{Perez:09}.
+de ferramentas de busca, são projetos de grande destaque na comunidade que
+utilizam o \emph{BM25} como medida de pesos \cite{Betts:07} \cite{Perez:09}.
 
 \subsubsection{Classificador bayesiano}
 
-O problema de recomendação pode ser visto como uma classificação entre duas
-classes, onde os itens devem ser categorizados em relevantes ou irrelevantes
-(os relevantes seriam recomendados). Na disciplina de inteligência artificial,
-a classificação é tratada com algoritmos de aprendizado de máquina. Naive Bayes
-é uma solução que figura entre os algoritmos de aprendizado supervisionado,
-onde o classificador é construído a partir de um conjunto de exemplos para
-treinamento. Cada exemplo traz um objeto classificado e seu conjunto de
-atributos.
-
-Portanto, desde que os itens possuam metadados que os caracterize (atributos do
-objetos), um classificador bayesiano pode ser usado como base para recomendação.
+Naive Bayes é uma solução para classificação que figura entre os algoritmos
+de aprendizado de máquina \emph{supervisionados}. Cada exemplo utilizado
+na fase de treinamento deve relacionar um objeto, caracterizado por um conjunto
+de atributos, e uma classe. É dito supervisionado porque o ser humano que
+atribuiu classes aos objetos dos exemplos atua como supervisor, como um
+professor orientando o processo de aprendizado.
 
 O classificador \emph{Naive Bayes} (Bayes ingênuo) tem como base um modelo
 probabilístico que aplica o teorema de Bayes com fortes suposições de
 independência de atributos -- por isso é considerado ingênuo. Em outras palavras,
 a presença ou ausência de um atributo em uma classe não estaria relacionada com a
 incidência de nenhum outro atributo. De certa forma a suposição de independência
-é equivalente no modelo de espaço vetorial, onde cada atributo é representado na
+é análoga no modelo de espaço vetorial, onde cada atributo é representado na
 matriz por uma dimensão ortogonal a todas as outras \cite{Manning:09}.
 
-O modelo probabilístico de um classificador é a condicional $p(C|x_1,...,x_n)$,
-onde $C$ representa a classe e $x_i$ os $n$ atributos. De acordo com o Teorema
-de Bayes, a probabilidade de um objeto $X = (x_1,...,x_n)$ ser da classe $C$ é
+A decisão acerca da classe a qual um objeto pertence é tomada de acordo com o
+modelo de probabilidade máxima posterior (em inglês, \emph{maximum a posteriori
+probability (MAP)}), indicada na equação \eqref{eq:map}. Dado que $C$ é o
+conjunto de classes e $x$ objeto a ser classificado, a classe atribuída a este
+será a que apresentar maior probabilidade condicionadada a $x$. $\hat{P}$ é
+utilizado ao invés de $P$ porque geralmente não se sabe o valor exato das
+probabilidades, elas são estimadas a partir dos dados de treinamento.
 
 \begin{equation}
+\label{eq:map}
+c_{map} = \underset{c \in C}{\operatorname{arg\ max}} \hat{P}(c|x)
+\end{equation}
+
+A equação \eqref{eq:bayes} aplica o Teorema de Bayes para probabilidades
+condicionadas. Na prática, apenas o numerador da fração interessa, visto que o
+denominador é constante para todas as classes, portanto não afeta o $arg max$
+\eqref{eq:bayes_no_deno}.
+
+\begin{eqnarray}
 \label{eq:bayes}
-p(C|x_1,...,x_n) = \frac{p(x_1,...,x_n|C)\times p(C)}{p(x_1,...,x_n)}
-\end{equation}
+c_{map} & = & \underset{c \in C}{\operatorname{arg\ max}} \ \frac{\hat{P}(x|c) \hat{P}(c)}{\hat{P}(x)} \\
+{} & {} & {} \nonumber \\
+\label{eq:bayes_no_deno}
+        & = & \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(x|c) \hat{P}(c)
+\end{eqnarray}
 
-Na prática, apenas o numerador da fração acima interessa, visto que o
-denominador é constante para todas as classes -- não depende de C e todos os
-valores de $x_i$ são dados. O numerador é equivalente ao modelo de
-probabilidade conjunta: $p(C,x_1,...,x_n)$, que pode ser reescrito da seguinte
-maneira, de acordo com a definição de probabilidade condicional:
+É neste ponto que a independência de atributos é importante. Considera-se que
+um documento $x$ pode ser caracterizado por uma série de atributos $x_i$ -- no
+caso de documentos de texto, os atributos são os próprios termos. Assumindo que
+a ocorrência de atributos acontece independentemente, tem-se que:
 
 \begin{equation}
-\label{eq:}
-p(C,x_1,...,x_n) = p(C) p(x_1,...,x_n|C) =  p(C) p(x_1,...,x_n,C)/p(c)
+\label{eq:independencia}
+\hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c) = \hat{P}(x_1|c) \times \hat{P}(x_2|c) \times ... \times \hat{P}(x_n|c)
 \end{equation}
 
-Definição de probabilidade condicional: $p(A|B) = \frac{p(A,B)}{p(B)}$
+Portanto, a função de decisão pode ser reescrita através da equação
+\eqref{eq:bayes_prod}. Cada parâmetro condicional $\hat{P}(x_i|c)$ é um peso
+que representa a qualidade do atributo $x_i$ como indicador da classe $c$,
+enquanto que $\hat{P}(c)$.
 
+\begin{equation}
+\label{eq:bayes_prod}
+c_{map} = \underset{c \in C}{\operatorname{arg\ max}} \ \ \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
+\end{equation}
 
-Apesar de esta suposição não ser verificada para a maioria
+Os parâmetros são obtidos através da estimativa de maior probabilidade (em
+inglês, \emph{maximum likelihood estimate (MLE)}), que é a frequência relativa
+e corresponde ao valor mais provável de cada parâmetro, de acordo com os dados
+de treinamento. A equação \eqref{eq:p_c} traz a estimativa de $\hat{P}(c)$,
+onde $N_c$ é o número de objetos da classe $c$ e $N$ é o número total de
+documentos.
+
+\begin{equation}
+\label{eq:p_c}
+\hat{P}(c) = \frac{N_c}{N}
+\end{equation}
+
+As probabilidades condicionais são estimadas como a frequência relativa do
+atributo $x$ em objetos que pertencem a classe $c$. Na equação \eqref{eq:p_xc},
+$T_{cx}$ é o número de ocorrências de $x$ em objetos de exemplo da classe $c$ e
+$V$ é o conjunto de atributos que os objetos podem apresentar.
+
+\begin{equation}
+\label{eq:p_xc}
+\hat{P}(x|c) = \frac{T_{cx}}{\sum_{x' \in V} T_{cx'}}
+\end{equation}
+
+No entanto, a estimativa \emph{MLE} é zero para combinações atributo-classe que
+não ocorrem nos dados de treinamento. Considerando que as probabilidades
+condicionais de todos os atributos serão multiplicadas \eqref{eq:bayes_prod},
+a simples ocorrência de uma probabilidade zerada resulta na desconsideração da
+classe na referida classificação. E de fato, dados de treinamento nunca são
+abrangentes o suficiente para representar a frequência de eventos raros de
+forma adequada \cite{Manning:09}. Para eliminar zeros, adiciona-se $1$ a cada
+termo da equação \eqref{eq:p_xc}:
+
+\begin{equation}
+\label{eq:p_xc+1}
+\hat{P}(x|c) = \frac{T_{cx}+1}{\sum_{x' \in V} T_{cx'}+1}
+\end{equation}
+
+Apesar de a independência de atributos não ser verificada para a maioria
 dos domínios de aplicação, na prática o Naive Bayes apresenta resultados
 satisfatórios. \cite{Zhang:04} atribui a supreendente boa performance deste
 método ao fato de que pode haver dependência forte entre dois atributos, desde
@@ -531,43 +607,106 @@ que as dependências sejam distribuídas igualmente nas classes. Segundo este
 argumento, é a distribuição das dependências entre atributos ao através das
 classes que afeta a classificação, não as dependências por si só.
 
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Variantes do modelo}
 
-Now the "naive" conditional independence assumptions come into play: assume that each feature Fi is conditionally independent of every other feature Fj for . This means that
+As duas principais variantes de implementação do classificador Naïve Bayes são
+denominadas modelo \emph{multinomial} e modelo de \emph{Bernoulli} e diferem
+fundamentalmente na maneira como os objetos são representados.
 
-for , and so the joint model can be expressed as
+O primeiro modelo utiliza uma representação que de certa forma preserva
+informações espaciais sobre o objeto. Na a classificação de documentos de
+texto, por exemplo, o modelo gera um atributo que corresponde a um termo do
+vocabulário para cada posição do documento. Já o modelo de \emph{Bernoulli}
+produz um indicador para cada possível atributo (no caso de texto, termo do
+vocabulário), onde $1$ representa a presença e $0$ a ausência do atributo no
+objeto.
 
+A escolha da representação de documentos adequada é uma decisão crítica no
+projeto de um classificador. O próprio significado de um atributo depende da
+representação. No \emph{multinomial}, um atributo pode assumir como valor
+qualquer termo do vocabulário, o que resulta numa representação do documento
+correspondente à sequência de termos do mesmo. Já para o modelo de
+\emph{Bernoulli}, um atributo pode assumir apenas os valores $0$ e $1$, e a
+representação do documento é uma sequência de $0$s e $1$s do tamanho do
+vocabulário. A figura \ref{fig:exemplo_bayes} ilustra as peculiaridades de cada
+representação.
 
-This means that under the above independence assumptions, the conditional distribution over the class variable C can be expressed like this:
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{fig/recommendation.pdf}
+\caption{Exemplo ilustrativo dos modelos multinomial e de Bernoulli}
+\label{fig:exemplo_bayes}
+\end{figure}
 
-where Z (the evidence) is a scaling factor dependent only on , i.e., a constant if the values of the feature variables are known.
-Models of this form are much more manageable, since they factor into a
-so-called class prior p(C) and independent probability distributions . If there
-are k classes and if a model for each  can be expressed in terms of r
-parameters, then the corresponding naive Bayes model has (k - 1) + n r k
-parameters. In practice, often k = 2 (binary classification) and r = 1
-(Bernoulli variables as features) are common, and so the total number of
-parameters of the naive Bayes model is 2n + 1, where n is the number of binary
-features used for classification and prediction
-
-\vspace{0.3cm}
-\hspace{-1.4cm}
+\vspace{0.3cm} \hspace{-1.4cm}
 \textbf{Seleção de atributos}
+
+Uma grande quantidade de atributos a ser considerados resulta em alta
+complexidade computacional, além de geralmente mascarar a presença de ruídos
+nos dados, que prejudicam a acurácia da classificação. A fim de amenizar estes
+problemas, é comum que seja feita uma seleção de atributos (em inglês,
+\emph{feature selection}), que consiste em escolher alguns atributos que
+ocorrem no conjunto de treinamento e utilizar apenas estes como parâmetro para
+a classificação. Esta seleção equivale à substituição de um classificador
+complexo por um mais simples. Especialmente quando a quantidade de dados de
+treinamento é limitada, modelos mais fracos são preferíveis \cite{Manning:09}.
+
+A seleção de atributos geralmente é realizada para cada clase em separado,
+seguida pela combinação dos diversos conjuntos. Abaixo são apresentados alguns
+métodos de escolha:
+
+\begin{description}
+  \item[Informação mútua.] Análise do quanto a presença ou ausência de um
+    atributo contribui para a tomada de decisão correta por uma determinada
+    classe. Informação mútua máxima significa que o atributo é um indicador
+    perfeito para pertencimento a uma classe, que acontece quando um objeto
+    apresenta o atributo se e somente se o objeto pertence à classe;
+  \item[Independência de eventos.] Aplicação do teste estatístico $X^2$ para
+    avaliar a independência de dois eventos -- neste caso, um atributo e uma
+    classe. Se os dois eventos são dependentes, então a ocorrência do atributo
+    torna a ocorrência da classe mais provável.
+  \item[Baseado em frequência.] Seleção os atributos mais comuns para uma
+    classe.
+\end{description}
+
+Ambos os métodos apresentados são ``gulosos'', ou seja, assumem escolhas ótimas
+locais na esperança de serem ótimas globais. Como resultado, podem selecionar
+atributos que não acrescentam nenhuma informação para a classificação quando
+considerados outros previamente escolhidos. Apesar disto, algoritmos não
+gulosos são raramente utilizados devido a seu custo computacional
+\cite{Manning:09}.
 
 \subsubsection{K-NN}
 
-\emph{K-nearest neighbors} (k-NN), em protuguês \emph{k vizinhos mais próximos}
-é outro algoritmo de aprendizado supervisionado para classificação.
+\emph{K-nearest neighbors} (k-NN), em português \emph{k vizinhos mais próximos}
+é mais um algoritmo de aprendizado supervisionado para classificação. Esta
+solução se baseia no conceito de vizinhança, que equivale a um conjunto de
+objetos que apresentam características semelhantes.
 
-pearson correlation p/ achar a vizinhanca - dependencia linear entre duas variaveis (em estatistica)
-seleção de atributos
+O K-NN não exige nenhum treinamento prévio com os dados de exemplo, que podem
+ser diretamente armazenados como vetores de atributos acompanhados por suas
+devidas classes. A classificação de um novo objeto parte do cálculo da
+vizinhança do mesmo, seguida pela atribuição da classe mais frequente entre os
+seus $k$ vizinhos. $k$ é um parâmetro que define o tamanho da vizinhança.
 
-\subsubsection{Agrupamento}
+O conceito de distância adotado deve ser o mais coerente para o domínio da
+aplicação e conjunto de dados. Medidas comuns são a distância euclidiana,
+distância de \emph{Hamming} e outras \emph{ad-hoc}. O k-NN também é sensível
+a ruídos e sua performance geralmente é beneficiada pelo processo de seleção
+de atributos.
 
-Agrupamento, \emph{clustering} em inglês, é uma técnica de aprendizado de
-máquina não supervisionado, ou seja, tenta identificar algum padrão de
-organização dos dados sem que haja uma classificação prévia dos exemplos.
+% ver http://en.wikipedia.org/wiki/Neighbourhood_components_analysis
+%pearson correlation p/ achar a vizinhanca - dependencia linear entre duas variaveis (em estatistica)
+%seleção de atributos
 
-k-means - k sementes, agrupamento por similaridade, cálculo de novos centróides
+%\subsubsection{Agrupamento}
+%
+%Agrupamento, \emph{clustering} em inglês, é uma técnica de aprendizado de
+%máquina não supervisionado, ou seja, tenta identificar algum padrão de
+%organização dos dados sem que haja uma classificação prévia dos exemplos.
+%
+%k-means - k sementes, agrupamento por similaridade, cálculo de novos centróides
 
 \subsection{Estratégias de recomendação} \label{sec:estrategias}
 
@@ -968,6 +1107,26 @@ foram absorvidas pela comunidade de usuários e desenvolvedores.
 
 [Investigar iniciativas externas ao Debian: central de aplicativos ubuntu]
 
+%[Pacotes Debian, Relação entre pacotes, O Repositório de Pacotes]
+
+%\subsection{Pacotes Debian}
+%. Binários e fontes\\
+%. upstream, maintainer, uploader\\
+%. Prioridade: required, important, standard, optional, extra\\
+%. Base system = required or important (muitos são marcados como essenciais)\\
+%. Essenciais: o gerenciador de pacotes se recusa a remover, a menos que seja forçado\\
+%
+%\subsection{Relação entre pacotes}
+%. Dependência: Pre-depends, Depends, Recommends, Suggests, Enhances\\
+%. Anti-dependência: Breaks, Conflicts, Replaces\\
+%. Pacotes virtuais: Provides\\
+%. Entre fontes e binários: Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep
+%
+%\subsection{O Repositório de Pacotes}
+%. The Debian Archive,\\
+%. Áreas: main, contrib, non-free\\
+%. Seções\\
+
 \section{Metodologia} \label{sec:metodologia}
 
 O desenvolvimento deste trabalho será pautado pelos seguintes passos:
@@ -1024,27 +1183,6 @@ Portanto, o cálculo da recomendação de pacotes deve levar em conta as
 relações de dependência entre pacotes e desconsiderar pacotes dependentes
 nas buscas por associações, visto que as dependências de um pacote sempre
 (ou quase sempre) estão presentes nos sistemas com tal pacote instalado.
-
-
-%[Pacotes Debian, Relação entre pacotes, O Repositório de Pacotes]
-
-%\subsection{Pacotes Debian}
-%. Binários e fontes\\
-%. upstream, maintainer, uploader\\
-%. Prioridade: required, important, standard, optional, extra\\
-%. Base system = required or important (muitos são marcados como essenciais)\\
-%. Essenciais: o gerenciador de pacotes se recusa a remover, a menos que seja forçado\\
-%
-%\subsection{Relação entre pacotes}
-%. Dependência: Pre-depends, Depends, Recommends, Suggests, Enhances\\
-%. Anti-dependência: Breaks, Conflicts, Replaces\\
-%. Pacotes virtuais: Provides\\
-%. Entre fontes e binários: Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep
-%
-%\subsection{O Repositório de Pacotes}
-%. The Debian Archive,\\
-%. Áreas: main, contrib, non-free\\
-%. Seções\\
 
 \subsection{Desenvolvimento de estratégias}
 
@@ -1105,6 +1243,8 @@ passos:
 Ao final da etapa de avaliação, os dados de avaliação submetidos por todos os
 usuários serão compilados em gráficos e comentários apresentados na versão
 final da dissertação deste trabalho.
+
+Ver: http://www.limesurvey.org/
 
 \subsection{Plano de execução}
 
