@@ -32,9 +32,7 @@
 
 \sloppy
 %FIXME [Definir titulo]
-\title{Sistema que Recomenda Sistema:\\
-       uma Solução para Recomendação\\
-       de Componentes de Software}
+\title{Recomendação de Componentes de Software}
 
 \author{Tássia Camões Araújo \inst{1} }
 
@@ -97,11 +95,11 @@ repositórios para compartilhamento de fotografia e vídeo, como Flickr
 entre outros. Considerando a produção em termos de software, observa-se o
 exemplo das comunidades de software livre e/ou de código aberto
 (FOOS\footnote{Termo consolidado no idioma inglês, acrônimo para
-\emph{Free/Open-Source Software}, que diz respeito aos programas que são
-licenciados livremente para garantir aos usuários o direito de uso, estudo e
-modificação, por meio da disponibilidade do seu código-fonte.}), que propiciam
-a construção coletiva de uma ampla gama de softwares de qualidade em constante
-atualização e evolução, organizados na forma de um rossio \cite{Simon:08}.
+\emph{Free/Open-Source Software}, que diz respeito aos programas licenciados
+livremente para garantir aos usuários o direito de uso, estudo e modificação,
+por meio da disponibilidade do seu código-fonte.}), que propiciam a construção
+coletiva de uma ampla gama de softwares de qualidade em constante atualização
+e evolução, organizados na forma de um rossio \cite{Simon:08}.
 
 A grande diversidade de opções disponíveis nestes ambientes, apesar de positiva,
 representa uma sobrecarga de informações que pode confundir o usuário final.
@@ -162,13 +160,11 @@ etapa de execução.
 \section{Sistemas de recomendação}\label{sec:recomendacao}
 
 Os Sistemas de Recomendação aumentam a capacidade e eficácia de um processo de
-indicação que é bastante popular nas relações sociais. Tradicionalmente as
-recomendações eram produzidas exclusivamente por especialistas na área em que
-se pretendia recomendar \cite{Resnick:97}.
-%FIXME [Confirmar citacao]
-A recomendação de filmes em cartaz é um exemplo deste tipo de indicação, publicada por críticos de arte
-nos principais jornais e revistas do país. Nos últimos anos, porém, a opinião e
-o comportamento de usuários não especializados passaram a ser considerados nas
+indicação que é bastante popular nas relações sociais \cite{Resnick:97}.
+Existem recomendações que são produzidas exclusivamente por especialistas na
+área, a exemplo de indicações de filmes por críticos de arte publicadas nos
+principais jornais e revistas do país. Nos últimos anos, porém, a opinião e o
+comportamento de usuários não especializados passaram a ser considerados nas
 recomendações, por agregarem valor às mesmas. Isto pode acontecer de forma
 explícita, quando o próprio usuário escreve sua opinião ou avalia a qualidade
 de um item, ou implícita, quando suas preferências, comportamentos e transações
@@ -203,11 +199,10 @@ aproximações, pois têm como base as avaliações registradas pelos próprios usuári
 %\forall c \in C, s'_c = arg_{s \in S} max u(c,s)
 %\end{equation}
 
-% FIXME [Revisar seção: Ações]
 \subsection{Ações} \label{sec:acoes}
 
 Sistemas de recomendação são implementados nos mais diversos contextos
-e podem ser projetados com finalidades distintas. Abaixo estão relacionadas
+e podem ser projetados com finalidades distintas. Abaixo estão descritas
 algumas ações relacionadas a estes sistemas identificadas por
 \cite{Herlocker:2004}.
 
@@ -224,13 +219,13 @@ algumas ações relacionadas a estes sistemas identificadas por
   mais comum entre os sistemas de recomendação comerciais, atraindo grande
   parte das pesquisas relacionadas com o tema.
 
-\item[Encontrar todos os itens relevantes.] Em situações onde não se deseja
+\item[Encontrar todos os itens relevantes.] Em situações em que não se deseja
   ignorar nenhum item relevante, ao invés da recomendação de apenas alguns,
   todos os itens considerados relevantes devem ser retornados.
 
-\item[Sequência recomendada.] Quando não somente quais itens mas a ordem em que
-  eles são apresentados importa, caracteriza-se a ação de recomendação de
-  sequência.
+\item[Sequência recomendada.] Quando não somente os itens recomendados importa,
+  mas também a ordem em que eles são apresentados, caracteriza-se a ação de
+  recomendação de sequência.
 
 \item[Expressão de opinião.] A recomendação em si muitas vezes não é o que
   atrai usuários desses sistemas. Alguns estão interessados simplesmente em
@@ -242,7 +237,7 @@ algumas ações relacionadas a estes sistemas identificadas por
   nem sempre aparecerem juntas, tal atividade está comumente relacionada com a
   expressão de opinião.
 
-\item[Navegação.] Muitos usuários utilizam estes sistemas mesmo quando não têm
+\item[Navegação.] Alguns usuários utilizam recomendadores mesmo quando não têm
   planos de consumir produto algum, apenas para navegar entre os itens
   disponíveis. Neste caso, aspectos como a interface, facilidade de uso e
   natureza da informação provida são de extrema importância.
@@ -297,6 +292,7 @@ por \cite{Vozalis:03} e são citadas a seguir.
 %
 %\subsection{Privacidade}
 
+%FIXME [Analisar complexidade de cada tecnica]
 \subsection{Técnicas} \label{sec:tecnicas}
 
 O desenvolvimento de sistemas de recomendação tem suas raízes em áreas
@@ -348,7 +344,7 @@ A seguir são apresentadas algumas técnicas para resolução destes problemas
 que também são utilizadas na construção de sistemas de recomendação, dando
 suporte às estratégias apresentadas na seção \ref{sec:estrategias}.
 
-%\vspace{-0.1cm}
+\vspace{-0.3cm}
 \subsubsection{Medida tf-idf}
 
 Acrônimo para \emph{term frequency - inverse document frequency}, o
@@ -373,8 +369,7 @@ documento é comumente referenciada na literatura como ``saco de palavras'' (em
 inglês, \emph{``bag of words''}), onde a disposição das palavras é ignorada e
 apenas a quantidade de ocorrências para cada termo é considerada.
 
-%FIXME [Revisar paragrafo]
-Por outro lado, alguns termos tem pouco poder de discriminação na determinação
+Por outro lado, alguns termos têm pouco poder de discriminação na determinação
 de relevância de um documento, por estarem presentes em quase todos os
 documentos. Ao passo que existem outros muito raros que quando presentes
 são forte indicativo de relevância. Por exemplo, supondo uma \emph{query}
@@ -388,13 +383,6 @@ cálculo de relevância, diminuindo o peso de um termo por um fator que cresce
 com sua frequência na coleção. Na equação \eqref{eq:idf}, $N$ representa o
 número de documentos da coleção e $df_t$ (\emph{document frequency}) é o número
 de documentos que contém o termo $t$.
-
-%Por exemplo, numa coleção de documentos sobre
-%filmes, o termo \emph{diretor} aparece em quase todos os documentos, ao passo
-%que outros são raríssimos, por exemplo, \emph{} outros são raros. Considerando
-%apenas a medida $tf$, 
-%
-% e a medida \emph{tf} não considera isto.
 
 \begin{equation}
 \label{eq:idf}
@@ -419,17 +407,15 @@ conjunto de documentos é ilustrado na figura \ref{fig:exemplo_tfidf}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/recommendation.pdf}
+\includegraphics[width=.7\textwidth]{fig/todo.pdf}
 \caption{Exemplo de cálculo de pesos para um conjunto de documentos}
 \label{fig:exemplo_tfidf}
 \end{figure}
 
-%FIXME [Revisar paragrafo]
 Existem diversas variantes para o cálculo da medida \emph{tf-idf}$_{t,d}$,
-propostas ao longo do tempo por pesquisadores na temática de recuperação de
-informação com o intuito de resolver anomalias e aperfeiçoar a busca.
-Por exemplo, é pouco provável que a persença de uma palavra 20 vezes num
-documento tenha de fato 20 vezes mais representatividade que uma ocorrência
+propostas ao longo do tempo com o intuito de resolver anomalias e aperfeiçoar
+a busca. Por exemplo, é pouco provável que a persença de uma palavra 20 vezes
+num documento tenha de fato 20 vezes mais representatividade que uma ocorrência
 única. O logaritmo pode ser incorporado no cálculo do \emph{tf} para atenuar o
 crescimento do peso para valores crescentes de frequência. Outras abordagens
 alternativas utilizam normalizações por diversas medidas: pelo comprimento do
@@ -448,7 +434,9 @@ termos da consulta (equação \eqref{eq:ranking}).
 R_{d,q} = \sum_{t \in q} tfidf_{t,d}
 \end{equation}
 
-\vspace{0.3cm} \hspace{-1.4cm}
+\newpage
+%\vspace{0.3cm}
+\hspace{-1.4cm}
 \textbf{Similaridade de cossenos}
 
 Medir a similaridade entre dois documentos pode ser útil, por exemplo, para
@@ -723,7 +711,7 @@ representação.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/recommendation.pdf}
+\includegraphics[width=.7\textwidth]{fig/todo.pdf}
 \caption{Exemplo ilustrativo dos modelos multinomial e de Bernoulli}
 \label{fig:exemplo_bayes}
 \end{figure}
@@ -832,17 +820,18 @@ este trabalho se baseou.
 
 \subsubsection{Reputação do item}
 
-Popular entre serviços de venda, como livrarias, sites de leilão e
+Popular entre serviços de venda como livrarias, sites de leilão e
 lojas de modo geral, esta estratégia consiste no armazenamento de avaliações
-dos produtos escritas por usuários e apresentação das mesmas no momento e
-local apropriado \cite{Cazella:10}. A implementação desta solução é simples,
-visto que exige apenas a manutenção dos dados originais, não sendo necessária
-análise posterior alguma. No entanto, tem-se como premissa a imparcialiadade
-dos usuários em suas opiniões, que de fato não pode ser verificada devido a seu
-caráter subjetivo e estritamente pessoal. Atualmente existem serviços
-especializados em reputação de produtos, que não realizam venda associada,
-apenas disponibilizam as avaliações. É o caso do \emph{Internet Movie Database}
-\footnote{\url{http://www.imdb.com/}}, apresentado na figura \ref{fig:imdb}.
+dos produtos escritas por usuários, bem como na apresentação das mesmas no
+momento e local apropriado \cite{Cazella:10}. A implementação desta solução é
+simples, visto que exige apenas a manutenção dos dados originais, não sendo
+necessária análise posterior alguma. No entanto, tem-se como premissa a
+imparcialiadade dos usuários em suas opiniões, que de fato não pode ser
+verificada devido a seu caráter subjetivo e estritamente pessoal. Atualmente
+existem serviços especializados em reputação de produtos que não realizam
+venda associada, apenas disponibilizam as avaliações. É o caso do
+\emph{Internet Movie Database} \footnote{\url{http://www.imdb.com/}},
+apresentado na figura \ref{fig:imdb}.
 
 \begin{figure}[h]
 \centering
@@ -860,24 +849,24 @@ itens semelhantes aos que eles já se interessaram no passado
 \cite{Herlocker:2000}. O ponto chave desta estratégia é a caracterização dos
 itens, por exemplo, através da identificação de atributos (autores e temas de
 livros, por exemplo). A partir dos atributos dos itens, aplica-se técnicas de
-recuperação da informação para encontrar itens semelhantes (por exemplo,
-\emph{tf-idf} e \emph{BM25}) ou de classificação para encontrar itens
-relevantes (por exemplo, \emph{naïve Bayes}). Em uma livraria, sugerir
-ao cliente outros livros do mesmo autor ou tema de livros previamente
-selecionados é uma estratégia amplamente adotada.
+recuperação da informação (por exemplo, \emph{tf-idf} e \emph{BM25}) para
+encontrar itens semelhantes ou de classificação (por exemplo, \emph{naïve
+Bayes}) para encontrar itens relevantes. Em uma livraria, sugerir ao cliente
+outros livros do mesmo autor ou tema de livros previamente selecionados é uma
+estratégia amplamente adotada.
 
 Pelo fato de se apoiar na classificação dos itens, os resultados da
 recomendação são prejudicados nos casos em que os atributos não podem ser
 identificados de forma automatizada. A superespecialização é outro problema
 indicado por \cite{Adomavicius:05}, que diz respeito à abrangência das
-recomendações se limitar a itens similares aos já escolhidos pelos usuários.
+recomendações estar limitada a itens similares aos já escolhidos pelos usuários.
 
 \subsubsection{Colaborativa}
 
-Esta estratégia não exige a compreensão ou reconhecimento do conteúdo dos itens,
-pois se baseia na troca de experiências entre pessoas que possuem interesses
-em comum. A figura \ref{fig:rec_colaborativa} ilustra o cenário da recomendação
-colaborativa.
+Esta estratégia não exige o reconhecimento semântico do conteúdo dos itens,
+pois é fundamentado na troca de experiências entre pessoas que possuem
+interesses em comum. A figura \ref{fig:rec_colaborativa} ilustra o cenário da
+recomendação colaborativa.
 
 \begin{figure}[ht]
 \centering
@@ -886,20 +875,20 @@ colaborativa.
 \label{fig:rec_colaborativa}
 \end{figure}
 
-A estratégia do K-NN é comummente utilizada neste tipo de solução. Define-se
-uma função que representa a distância entre os usuários, e a vizinhança de um
-usuário $u$ é composta pelos que estiverem mais próximos dele (com menor
-distância). Porém, ao invés de uma classe ser extraída da vizinhança, como
-descrito na seção \ref{sec:knn}, uma recomendação para o usuário $u$ é
-produzida a partir da análise dos itens que a vizinhança de $u$ considera
-relevantes. Geralmente os itens que aparecerem com maior frequência na
-vizinhança compõem a recomendação.
+A estratégia do K-NN é comumente utilizada neste tipo de solução. Define-se
+uma função que representa a distância entre os usuários. Com base nesta medida,
+a vizinhança de um usuário $u$ é composta pelos que estiverem mais próximos
+a ele (com menor distância). Porém, ao invés de uma classe ser extraída da
+vizinhança, como descrito na seção \ref{sec:knn}, uma recomendação para o
+usuário $u$ é produzida a partir da análise dos itens que a vizinhança de $u$
+considera relevantes. Geralmente os itens que ocorrem com maior frequência
+na vizinhança compõem a recomendação.
 
 O problema da superespecialização é superado, visto que a recomendação neste
-caso não se baseia no histórico do próprio usuário, podendo apresentar itens
-totalmente inesperados. Outra contribuição é a possibilidade de formação de
-comunidades de usuários pela identificação de seus gostos e interesses
-similares \cite{Cazella:10}.
+caso não se baseia no histórico do próprio usuário, portanto pode apresentar
+itens totalmente inesperados. Outra contribuição é a possibilidade de formação
+de comunidades de usuários pela identificação de seus interesses semelhantes
+\cite{Cazella:10}.
 
 \subsubsection{Híbrida}
 
@@ -911,7 +900,7 @@ A figura \ref{fig:rec_hibrida} ilustra algumas possibilidades de combinação.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/recommendation.pdf}
+\includegraphics[width=.7\textwidth]{fig/todo.pdf}
 \caption{Recomendação híbrida}
 \label{fig:rec_hibrida}
 \end{figure}
@@ -938,8 +927,9 @@ principalmente quando se trata de um grande volume de dados.
 
 %FIXME [Descrever o algoritmo Apriori]
 
-Um exemplo de recomendação por associação é encontrado no site da Amazon
-(figura \ref{fig:amazon}).
+Um exemplo de recomendação por associação é encontrado na loja virtual da
+empresa \emph{Amazon}\footnote{\url{http://www.amazon.com/}} (figura
+\ref{fig:amazon}).
 
 \begin{figure}[h]
 \centering
@@ -953,16 +943,16 @@ Um exemplo de recomendação por associação é encontrado no site da Amazon
 \subsection{Avaliação de sistemas de recomendação} \label{sec:avaliacao}
 
 A avaliação de sistemas de recomendação não é uma tarefa trivial,
-principalmente porque não há consenso entre os pesquisadores sobre quais
-atributos devem ser observados e quais métricas devem ser adotadas para
-cada atributo. Ademais, diferentes estratégias podem funcionar melhor ou pior
-de acordo com o domínio da aplicação e as propriedades dos dados. Por exemplo,
+principalmente visto que não há consenso sobre quais atributos devem ser
+observados e quais métricas devem ser adotadas para cada atributo. Ademais,
+diferentes estratégias podem funcionar melhor ou pior de acordo com o domínio
+da aplicação e as propriedades dos dados \cite{Herlocker:2004}. Por exemplo,
 algoritmos projetados especificamente para conjuntos de dados com um número
 muito maior de usuários do que de itens podem se mostrar inapropriados em
-domínios onde há muito mais itens do que usuários. \cite{Herlocker:2004}
-sugere que o processo de avaliação tenha início com a compreensão das ações
-para as quais o sistema foi projetado (seção \ref{sec:acoes}), como guia para
-as decisões metológicas ao longo dos testes.
+domínios onde há muito mais itens do que usuários. Recomenda-se que o
+processo de avaliação tenha início com a compreensão das ações para as quais
+o sistema foi projetado (ver seção \ref{sec:acoes}), como guia para as decisões
+metológicas ao longo dos testes.
 
 \subsubsection{Seleção dos dados}
 
@@ -993,12 +983,12 @@ A esparsidade dos dados tem efeito menor neste tipo de experimento, visto
 que o usuário está disponível para avaliar se os itens recomendados são ou
 não relevantes.
 
-Quando não existem dados prévios disponíveis ou quando existem porém não são
-considerados adequados para o domínio ou a ação principal do sistema a ser
-avaliado, pode-se ainda optar pelo uso de dados sintéticos. O uso de dados
-artificiais é aceitável em fases preliminares de testes, porém, tecer
-conclusões comparativas é arriscado, visto que os dados produzidos podem se
-ajustar melhor para uma estratégia do que para outras \cite{Herlocker:2004}.
+Quando não existem dados previamente disponíveis ou quando não são adequados
+para o domínio ou a ação principal do sistema a ser avaliado, pode-se ainda
+optar pelo uso de dados sintéticos. O uso de dados artificiais é aceitável
+em fases preliminares de testes, porém, tecer conclusões comparativas é
+arriscado, visto que os dados produzidos podem se ajustar melhor para uma
+estratégia do que para outras \cite{Herlocker:2004}.
 
 \subsection{Métricas} \label{sec:metricas}
 
@@ -1012,7 +1002,7 @@ absoluto médio, erro quadrático médio, erro absoluto médio normalizado.
 
 \item[Acurácia de classificação.] Medem a frequência com a qual o sistema faz
 classificações corretas no que tange a relevância dos itens. Exemplos:
-precisão, lembrança, medida F1, curva ROC, ...
+precisão, lembrança, medida F1 e curva ROC.
 
 \item[Além da acurácia.] Cobertura, curva de aprendizado, novidade e surpresa,
 confiança, avaliação do usuário.
@@ -1030,8 +1020,8 @@ família de normas definidas pelo IEEE com foco na portabilidade entre sistemas
 operacionais.}\footnote{\url{http://standards.ieee.org/develop/wg/POSIX.html}}.
 Nos anos 90 o projeto GNU já havia atraído muitos colaboradores, que num curto
 espaço de tempo haviam desenvolvido inúmeros aplicativos para compor o sistema
-operacional. Porém, o núcleo do sistema (\emph{GNU Hurd}) teve desenvolvimento
-mais lento.
+operacional. No entanto, o desenvolvimento do núcleo do sistema (\emph{GNU
+Hurd}) não acompanhou o ritmo dos demais aplicativos.
 
 Em outubro de 1991 o estudante finlandês Linus Torvalds publicou a versão
 0.02 do Freax, o núcleo de um sistema operacional (\emph{kernel}, em inglês)
@@ -1046,12 +1036,13 @@ versão estável do GNU Hurd foi lançada apenas em 2001. Em 1992 o Linux foi
 licenciado sob a GNU GPL (\emph{General Public License\footnote{Suporte legal
 para a distribuição livre de softwares}}) e as equipes dos dois projetos
 começaram a trabalhar na adaptação do kernel Linux para o ambiente GNU. Este
-esforço conjunto possibilitou o surgimento das distribuições GNU/Linux, que
-são variações do sistema GNU/Linux.
+esforço conjunto desencadeou o surgimento das distribuições GNU/Linux, que
+são variações do sistema operacional composto por milhares de aplicativos
+majoritariamente desenvolvidos pelo projeto GNU e pelo kernel Linux.
 
-Distribuições como Debian, Fedora, Mandriva e Ubuntu, oferecem diferentes
-soluções de sistema operacional compostas pelo GNU/Linux e mais uma gama de
-softwares selecionados por seus desenvolvedores. As distribuições reduzem a
+Distribuições GNU/Linux, como Debian, Fedora, Mandriva e Ubuntu, oferecem
+diferentes ``sabores'' do sistema operacional, constituídos por aplicativos
+selecionados por seus desenvolvedores. As distribuições reduzem a
 complexidade de instalação e atualização do sistema para usuários finais
 \cite{Cosmo:08}. Os mantenedores da distribuição atuam como intermediários
 entre os usuários e os autores dos softwares (chamados de \emph{upstreams}),
@@ -1069,21 +1060,21 @@ uma comunidade de desenvolvedores interessados em colaborar, sendo estes os
 denominado bazar, o código-fonte está disponível durante todo o processo
 de desenvolvimento, não apenas nos lançamentos, permitindo que a contribuição
 seja mais efetiva. Nesses casos observa-se com mais clareza o fenômeno do
-consumidor produtor descrito anteriormente. Segundo o autor este modelo é
+consumidor produtor descrito anteriormente. Segundo o autor, este modelo é
 mais favorável ao sucesso, pois um bom trabalho de desenvolvimento de software
 é motivado por uma necessidade pessoal do desenvolvedor (ou seja, o
 desenvolvedor é também usuário).
 
 A seleção e configuração dos aplicativos básicos de uma distribuição ficam
-a cargo da equipe que a desenvolve, com diferentes níveis de interferência da
-comunidade, como descrito acima. Este é um ponto chave no desenvolvimento,
-pois é um dos fatores que mais influenciam a escolha dos usuários pela
-distribuição. O impacto que tal seleção tem para a comunidade de usuários
-resulta em frequentes polêmicas em torno do tema, como a gerada pelo
+sob a responsabilidade da equipe que a desenvolve, com diferentes níveis de
+interferência da comunidade, como descrito acima. Este é um ponto chave no
+desenvolvimento, pois é um dos fatores que mais influenciam a escolha dos
+usuários pela distribuição. O impacto que tal seleção tem para a comunidade de
+usuários resulta em frequentes polêmicas em torno do tema, como a gerada pelo
 anúncio de que o projeto \emph{Ubuntu} abandonaria o \emph{Gnome} como
 interface padrão de usuário \cite{Paul:10}.
 
-Softwares adicionais para atender a necessidades específicas dos usuários
+Softwares adicionais para atender a demandas específicas dos usuários
 devem ser instalados pelos mesmos, após a configuração do sistema operacional.
 A infraestrutura de instalação de softwares provida pela distribuição,
 geralmente baseada em pacotes, facilita este processo \cite{Cosmo:08}. Ainda
@@ -1091,7 +1082,7 @@ assim, a seleção dos programas é de responsabilidade do usuário do sistema.
 
 \subsection{Escolha da plataforma}
 
-A escolha da distribuição na qual o desenvolvimento do trabalho seria baseado
+A escolha da distribuição na qual o desenvolvimento do trabalho será baseado
 foi pautada pelos seguintes critérios: \emph{(1)} Existência de um esquema
 consistente de distribuição de software; \emph{(2)} Existência de dados
 estatísticos referentes ao uso de pacotes por usuários e possibilidade de
@@ -1099,19 +1090,18 @@ acesso aos mesmos; \emph{(3)} Possibilidade de integração dos resultados do
 trabalho com os serviços dispobinilizados pela distribuição; \emph{(4)}
 Popularidade da distribuição.
 
-As seguir estão descritos os fatores que contribuiram para a seleção do
+As seguir estão descritos os fatores que contribuiram para a opção pelo
 Debian GNU/Linux como plataforma de desenvolvimento.
 
 \begin{enumerate}
 
 \item O gerenciamento de pacotes em sistemas Debian GNU/Linux é realizado
-através do \emph{APT (Advanced Packaging Tool)}. Ações como a busca, obtenção,
-instalação, atualização e remoção de pacotes são disparadas pelo \emph{APT}, que
-num nível mais baixo faz uso do \emph{dpkg}, ferramenta que de fato realiza
-instalações e remoções de softwares. O \emph{APT} também gerencia conflitos
-entre pacotes, checando se novos pacotes a serem instalados conflitam com algum
-outro do sistema; e dependências, instalando todos os programas definidos
-como pré-requisitos antes da instalação de um pacote.
+através do \emph{APT (Advanced Packaging
+Tool)}\footnote{\url{http://wiki.debian.org/Apt}}. Ações como a busca,
+obtenção, instalação, atualização e remoção de pacotes são disparadas pelo
+\emph{APT}, que num nível mais baixo faz uso do \emph{dpkg}, ferramenta que de
+fato realiza instalações e remoções de softwares. O \emph{APT} também gerencia
+de maneira eficiente as relações de conflito e dependência entre pacotes.
 
 \item O \emph{Popcon (Popularity Contest)}\footnote{\url{http://popcon.debian.org}}
 é a concurso de popularidade entre pacotes. Os usuários que aceitam participar
@@ -1120,13 +1110,13 @@ que são armazenados no servidor do popcon. Diariamente as listas recebidas são
 processadas e dados estatísticos acerca do uso dos pacotes são gerados e
 disponibilizados no website do projeto.
 
-\item Segundo o \emph{contrato
-social}\footnote{\url{http://www.debian.org/social_contract.pt.html}} do Debian
-perante a comunidade de software livre, o desenvolvimento do projeto é guiado
-pelas necessidades dos usuários e da comunidade. Portanto, as iniciativas de
-colaboradores individuais, seja ele desenvolvedor oficial ou não, serão
-igualmente consideradas e passarão a fazer parte da distribuição se seguirem
-aqueles princípios e forem considerados de utilidade para a comunidade.
+\item Segundo o \emph{contrato social
+Debian}\footnote{\url{http://www.debian.org/social_contract.pt.html}},
+o desenvolvimento do projeto é guiado pelas necessidades dos usuários e da
+comunidade. Portanto, as iniciativas de colaboradores individuais, sejam eles
+desenvolvedores oficiais ou não, serão igualmente consideradas e passarão a
+fazer parte da distribuição se seguirem os princípios do projeto e forem
+considerados úteis para a comunidade.
 
 \item O Debian é um projeto de destaque no ecossistema do software livre. Desde
 o lançamento da primeira versão de sua distribuição, em 1993, o projeto cresceu
@@ -1139,9 +1129,10 @@ O Debian aparece na quinta posição em suas estatísticas de páginas visitadas
 \footnote{\url{http://distrowatch.com/stats.php?section=popularity}}. Já o
 \emph{Linux Counter\footnote{\url{http://counter.li.org/reports/machines.php}}}
 apresenta o Debian como a segunda distribuição mais popular entre as máquinas
-cadastradas que rodam o kernel Linux ($16\%$), ficando atrás apenas do Ubuntu
-($24\%$). Nas pesquisas da \emph{W$^{\textrm{3}}$Techs} sobre tecnologias para
-serviços
+cadastradas que rodam o kernel Linux ($16\%$), ficando atrás apenas do
+Ubuntu\footnote{\url{http://www.ubuntu.com/community/ubuntu-and-debian}}
+($24\%$), que é uma distribuição derivada do Debian. Nas pesquisas da
+\emph{W$^{\textrm{3}}$Techs} sobre tecnologias para serviços
 web\footnote{\url{http://w3techs.com/technologies/history_details/os-linux}}, o
 Debian aparece em segundo lugar, estando presente em $27\%$ dos servidores. Na
 primeira posição está o CentOS com $31\%$.
@@ -1150,11 +1141,12 @@ primeira posição está o CentOS com $31\%$.
 
 De maneira geral, quando o projeto Debian é mencionado trata-se não somente do
 sistema operacional, mas de toda a infra-estrutura de desenvolvimento e
-coordenação que dá suporte ao trabalho de cerca de 1500 desenvolvedores
-oficiais, além de outros milhares de colaboradores ao redor do globo. O
-trabalho é realizado de forma colaborativa, afinado pelo objetivo comum de
-produzir e disponibilizar livremente um sistema operacional de qualidade para
-seus usuários \cite{Jackson:98}. A interação entre os desenvolvedores acontece
+coordenação que dá suporte ao trabalho de cerca de 900 desenvolvedores
+oficiais\footnote{\url{http://www.perrier.eu.org/weblog/2010/08/07\#devel-countries-2010}},
+além de outros milhares de colaboradores ao redor do globo. O trabalho é
+realizado de forma colaborativa, afinado pelo objetivo comum de produzir e
+disponibilizar livremente um sistema operacional de qualidade para seus
+usuários \cite{Jackson:98}. A interação entre os desenvolvedores acontece
 majoritariamente através da Internet, por meio de canais IRC e listas de
 discussão púlicas. Não existe uma entidade formal ou qualquer tipo de
 organização que concentre, coordene ou defina as atividades do projeto. O que
@@ -1168,7 +1160,7 @@ recomendações estejam disponíveis.
 
 \section{Recomendação nas distribuições} \label{sec:rec_distro}
 
-A maioria das as distribuições GNU/Linux têm investido no desenvolvimento de
+Grande parte das distribuições GNU/Linux têm investido no desenvolvimento de
 interfaces para facilitar o gerenciamento de aplicativos e a forma como se obtém
 informações sobre os mesmos. Entre os dias 18 e 21 de janeiro 2011 aconteceu a
 primeira reunião sobre a temática com a presença de desenvolvedores de
@@ -1182,58 +1174,21 @@ distribuições, em detrimento de outros considerados específicos de cada projeto
 \cite{Freedesktop:11}.
 
 O projeto Debian tem se destacado no universo das distribuições por suas
-recentes iniciativas pioneiras no campo de gerenciamento de aplicações
-\cite{Zini:11}. Diante da complexa e crescente estrutura do projeto,
-observa-se um esforço por parte dos desenvolvedores, principalmente da equipe
-responsável pelo controle de qualidade\footnote{\url{http://qa.debian.org}}, de
-reunir, organizar e diponibilizar as informações ou meta-dados concernentes a
-esta estrutura \cite{Nussbaum:10}.
+iniciativas pioneiras no campo de gerenciamento de aplicações \cite{Zini:11}.
+Diante da complexa e crescente estrutura do projeto, observa-se um esforço por
+parte dos desenvolvedores, principalmente da equipe responsável pelo controle
+de qualidade\footnote{\url{http://qa.debian.org}}, de reunir, organizar e
+diponibilizar as informações ou meta-dados concernentes a esta estrutura
+\cite{Nussbaum:10}.
 
 A tabela \ref{tab:recDebian} relaciona algumas destas iniciativas que estão
 diretamente ligadas ao gerenciamento de pacotes. Vale ressaltar que a maioria
 destas soluções foi inicialmente desenvolvida num contexto extra-oficial, mas
-ao passo se mostraram úteis e eficientes foram absorvidas pela comunidade de
-usuários e desenvolvedores.
-
-\begin{landscape}
-\begin{table}[h]
-  \centering
-  \caption{Recomendadores no Debian}
-  \label{tab:recDebian}
-  \small
-  \begin{tabularx}{25cm}{| c | X | c |}
-    \hline
-    \normalsize \textbf{\emph{Solução}} & \normalsize \textbf{\emph{Descrição}} & \normalsize \textbf{\emph{Estratégia de recomendação}}\\
-    \hline BTS  & \multirow{3}{13cm}{Sistema de acompanhamento de bugs, alimentado pelos usuários e desenvolvedores da distribuição, reune todo o histórico referente ao relatório e correção de erros em pacotes.} & \multirow{10}{*}{Reputação}\\
-    \emph{Bug Tracking System}& & \\
-    \scriptsize{\url{http://bugs.debian.org}}& & \\
-    \cline{1-2}
-    Popcon & \multirow{3}{13cm}{Concurso de popularidade entre pacotes realizado diariamente, disponibiliza estatísticas de uso dos pacotes do repositório. Provê gráficos específicos por pacote, por arquitetura, por desenvolvedor etc.} & \\
-    \emph{Popularity Contest}& & \\
-    \scriptsize{\url{http://popcon.debian.org}} & & \\
-    \cline{1-2}
-    PTS & \multirow{3}{13cm}{Sistema de acompanhamento de pacotes, reune informações relativas à manutenção dos pacotes: versão, mantenedor, \emph{upstream}, bugs abertos por tipo, últimas atualizações no repositório etc.} & \\
-    \emph{Package Tracking System}& & \\
-    \scriptsize{\url{http://packages.qa.debian.org}} & & \\
-    & & \\
-    \cline{1-2}
-    UDD & \multirow{3}{13cm}{{Iniciativa recente do time de qualidade com o intuito de reunir informações de diversos aspectos do Debian numa base de dados única. Usuários avançados podem consultar esta base para tomar decisões acerca de que pacotes usar.}} & \\
-    \emph{Ultimate Debian Database}& & \\
-    \scriptsize{\url{http://udd.debian.org}}& & \\
-    & & \\
-    \hline
-    Debtags & \multirow{2}{13.5cm}{Caracterização dos pacotes por múltiplos atributos, realizada manualmente por usuários e desenvolvedores, que auxilia a navegação e busca no repositório de pacotes.} & \multirow{2}{*}{Baseada em conteúdo}\\
-    Classificação de pacotes & & \\
-    \cline{2-3}
-    \scriptsize{\url{http://debtags.alioth.debian.org}} & Novas \emph{tags} (atributos) são sugeridas a partir das tags já associadas ao pacote. & Associação\\
-    & & \\
-    \hline
-  \end{tabularx}
-\end{table}
-\end{landscape}
+ao passo que se mostraram úteis e eficientes foram absorvidas pela comunidade
+de usuários e desenvolvedores.
 
 
-%FIXME [Descrever o software-center como solução estado-da-arte]
+%FIXME [Descrever o software-center e outras solucoes]
 % http://distributions.freedesktop.org/wiki/Meetings/AppInstaller2011
 %Software Center: UI focused on applications
 %app-install: UI focused on applications + code to generate metadata
@@ -1276,65 +1231,108 @@ de acordo como estão planejadas até presente data.
 
 \subsection{Caracterização do problema}
 
-Este trabalho se propõe a desenvolver soluções para o problema da recomendação
+Neste trabalho propõe-se desenvolver soluções para o problema da recomendação
 no contexto de componentes de sofware, em especial no âmbito de distribuições
-GNU/Linux, onde os pacotes são modelados como itens e os usuários da
-distribuição atuam os clientes do recomendador.
+GNU/Linux. Neste cenário os pacotes são modelados como itens e os usuários da
+distribuição como clientes do recomendador.
 
 Embora já seja pauta de discussões entre desenvolvedores um esquema de
 pontuação de pacotes como medida de avaliação pessoal dos usuários, não há
 previsão para tal solução de fato ser implementada \cite{Freedesktop:11}.
 No entanto, a presença de um componente no sistema do usuário pode ser
-considerado como indicativo de relevância. A pontuação neste caso é binária:
-um item pode ser relevante ou irrelevante. O cenário da recomendação é então
-caracterizado da seguinte maneira: dada a lista de pacotes instalados no
-sistema de determinado usuário como representação de sua identidade, o
-recomendador deve retornar uma lista de sugestão de pacotes, que representam
-pacotes de potencial interesse para tal usuário. Desta forma, a ação
-principal do sistema é definida como \emph{encontrar itens relevantes} (seção
-\ref{sec:acoes}).
+considerado como indicativo de relevância. A pontuação neste caso é binária --
+um item pode ser relevante ou irrelevante -- e a recomendação é caracterizada
+da seguinte maneira: dada a lista de pacotes instalados no sistema de
+determinado usuário (como representação de sua identidade), o recomendador deve
+retornar uma lista de sugestão de pacotes, que representam pacotes de potencial
+interesse para tal usuário. Desta forma, a ação principal do sistema é definida
+como \emph{encontrar itens relevantes} (ver seção \ref{sec:acoes}).
 
 Neste trabalho as recomendações devem ser geradas a partir do comportamento do
-usuário. Não serão consideradas informações registradas por usuários no BTS ou
-em listas de discussão. Pretende-se calcular a recomendação a partir de dados
-do \emph{Popcon}, que contém listas de pacotes instalados de milhares de sistemas
+usuário. Não serão consideradas informações registradas no BTS, fóruns ou em
+listas de discussão. Pretende-se calcular a recomendação a partir de dados do
+\emph{Popcon}, que contém listas de pacotes instalados de milhares de sistemas
 em produção, e do \emph{Debtags}, como fonte de metadados sobre os pacotes. O
 uso de perfis também está sendo considerado, através do preenchimento de um
 formulário simples com macro-temas de interesse do usuário.
 
 Uma característica peculiar da recomendação neste contexto é que, diferentemente
-de outras instâncias do problema onde os itens não se relacionam entre si, os
+de outras instâncias do problema, onde os itens não se relacionam entre si, os
 componentes de software que são objeto desta pesquisa podem declarar
-explicitamente requisitos em seu conteúdo \cite{Cosmo:09}. Requisitos positivos
-representam relações de dependência e os negativos de conflito, podendo ser
-definidos em diversos graus: dependência, sugestão, recomendação, conflito,
-substituição, quebra, etc \cite{Cosmo:09}. Por exemplo, se um componente $a$
-depende de $b$, significa dizer que $b$ deve ser instalado no sistema para
-que $a$ funcione como previsto. Por outro lado, se $a$ conflita com $c$, a
-instalação de ambos os programas pode provocar um comportamento anômalo ou até
-comprometer o funcionamento de todo o sistema.
+explicitamente requisitos em seu conteúdo. Requisitos positivos representam
+relações de dependência, enquanto que os negativos caracterizam as relações de
+conflito entre os pacotes, podendo ser definidos em diversos graus:
+dependência, sugestão, recomendação, conflito, substituição, quebra etc
+\cite{Cosmo:09}. Por exemplo, se um componente $A$ depende de $B$, significa
+dizer que $B$ deve ser instalado no sistema para que $A$ funcione como
+previsto. Por outro lado, se $A$ conflita com $C$, a instalação de ambos os
+programas pode provocar um comportamento anômalo ou até comprometer o
+funcionamento de todo o sistema.
+
+\begin{landscape}
+\begin{table}[h]
+  \centering
+  \caption{Recomendadores no Debian}
+  \label{tab:recDebian}
+  \small
+  \begin{tabularx}{25cm}{| c | X | c |}
+    \hline
+    \normalsize \textbf{\emph{Solução}} & \normalsize \textbf{\emph{Descrição}} & \normalsize \textbf{\emph{Estratégia de recomendação}}\\
+    \hline BTS  & \multirow{3}{13cm}{Sistema de acompanhamento de bugs, alimentado pelos usuários e desenvolvedores da distribuição. Reúne todo o histórico referente ao relatório e correção de erros em pacotes.} & \multirow{10}{*}{Reputação}\\
+    \emph{Bug Tracking System}& & \\
+    \scriptsize{\url{http://bugs.debian.org}}& & \\
+    \cline{1-2}
+    Popcon & \multirow{3}{13cm}{Concurso de popularidade entre pacotes realizado diariamente, disponibiliza estatísticas de uso dos pacotes do repositório. Provê gráficos específicos por pacote, por arquitetura, por desenvolvedor etc.} & \\
+    \emph{Popularity Contest}& & \\
+    \scriptsize{\url{http://popcon.debian.org}} & & \\
+    \cline{1-2}
+    PTS & \multirow{3}{13cm}{Sistema de acompanhamento de pacotes, reúne informações relativas à manutenção dos pacotes: versão, mantenedor, \emph{upstream}, bugs abertos por tipo, últimas atualizações no repositório etc.} & \\
+    \emph{Package Tracking System}& & \\
+    \scriptsize{\url{http://packages.qa.debian.org}} & & \\
+    & & \\
+    \cline{1-2}
+    UDD & \multirow{3}{13cm}{{Iniciativa recente do time de qualidade criada com o intuito de reunir informações de diversos aspectos do Debian numa base de dados única. Usuários avançados podem consultar esta base para tomar decisões acerca de que pacotes usar.}} & \\
+    \emph{Ultimate Debian Database}& & \\
+    \scriptsize{\url{http://udd.debian.org}}& & \\
+    & & \\
+    \hline
+    Debtags & \multirow{2}{13.5cm}{Caracterização dos pacotes por múltiplos atributos, realizada manualmente por usuários e desenvolvedores, que auxilia a navegação e busca no repositório de pacotes.} & \multirow{2}{*}{Baseada em conteúdo}\\
+    Classificação de pacotes & & \\
+    \cline{2-3}
+    \scriptsize{\url{http://debtags.alioth.debian.org}} & Novas \emph{tags} (atributos) são sugeridas a partir das tags já associadas ao pacote. & Associação\\
+    & & \\
+    \hline
+  \end{tabularx}
+\end{table}
+\end{landscape}
 
 O sistema de gerenciamento de pacotes (no caso do Debian, o \emph{APT}), ao
 receber um pedido de modificação da configuração do sistema -- por exemplo,
-a instalação de um novo componente --, tenta satisfazer a requisição a partir
+a instalação de um novo componente -- tenta satisfazer a requisição a partir
 do conhecimento de como obter os componentes (endereço dos repositórios de
 pacotes) e das relações de dependência entre os mesmos. Desta forma, o
 gerenciador promove a instalação de todas as dependências de um pacote antes de
 instalá-lo, ao passo que não permite a instalação de pacotes que conflitem com
 outros já instalados no sistema.
 
+%FIXME [Investigar a utilidade do Debtags pra selecao de atributos]
 As relações entre componentes também devem ser consideradas pelo recomendador
-de pacotes. Numa mesma recomendação, não faz sentido recomendar pacotes
-dependentes, a menos que suas características intrínsecas sejam a causa da
-recomendação. No caso de pacotes com alguma relação de dependência, o fato de
-estarem presentes concomitantemente em grande parte dos sistemas não é uma
-coincidência, e sim consequência da relação de dependência.
+de pacotes. Intuitivamente, numa mesma recomendação não faz sentido sugerir
+pacotes dependentes, visto que ao aceitar a recomendação de um determinado
+componente e prosseguir com a instalação do mesmo, o usuário já está
+implicitamente aceitando a recomendação de todas as suas dependências. Uma
+exceção seria o caso em que as características intrínsecas do componente
+sejam a causa da recomendação e o usuário possa se interessar apenas pela
+dependência.
 
-Por outro lado, teriam grande valor as regras de associação mineradas a partir
-da análise dos dados estatísticos relacionando componentes que não apresentam
-relação alguma de dependência. Neste cenário, novos graus de relacionamento
-poderiam ser estabelecidos, baseados não na dependência, mas na colaboração dos
-componentes.
+Outro ponto a considerar no caso de busca por associação é que o fato de
+pacotes com alguma relação de dependência estarem presentes concomitantemente
+em grande parte dos sistemas não é uma coincidência, e sim uma consequência da
+dependência. Por outro lado, teriam grande valor as regras de associação
+mineradas a partir da análise dos dados estatísticos relacionando componentes
+que não apresentam relação alguma de dependência. Neste cenário, novos graus de
+relacionamento poderiam ser estabelecidos, baseados não na dependência mas na
+colaboração dos componentes.
 
 \subsection{Metodologia}
 
@@ -1346,22 +1344,20 @@ e estabelecidas como meta de desenvolvimento da presente proposta.
 \subsubsection{Coleta de dados}
 
 Os dados estatísticos disponíveis publicamente no site do \emph{Popcon} não
-preservam os relacionamentos usuário-item, já que as listas de pacotes
-originais submetidas pelos usuários não são publicadas. Por questões de
-privacidade, as estatísticas são geradas e um resumo de todas as submissões
-é disponibilizado diariamente, mas os dados de usuários reais ficam armazenados
-nos servidores do projeto e apenas desenvolvedores oficiais têm acesso a esses
-dados\footnote{\url{http://popcon.debian.org/FAQ}}. Para a realização deste
-trabalho, o apoio do desenvolvedor Debian \emph{Tiago
-Vaz}\footnote{\url{http://qa.debian.org/developer.php?login=tiago\%40debian.org}},
-permitirá o acesso aos dados necessários.
+preservam os relacionamentos usuário-item, essenciais para a utilização de
+estratégias colaborativas. Por questões relativas à
+privacidade\footnote{\url{http://popcon.debian.org/FAQ}}, as listas de pacotes
+originais submetidas pelos usuários não são publicadas, apenas as estatísticas
+geradas e um resumo de todas as submissões são disponibilizados diariamente.
+No entanto, este trabalho é desenvolvido com o apoio de desenvolvedores
+oficiais Debian, o que possibilitará o acesso aos dados necessários.
 
 \subsubsection{Seleção de atributos}
 
-Existem peculiaridades do domínio de componentes de software que, se analisadas
-com o devido cuidado, podem revelar ganhos potenciais na eficiência e qualidade
-das recomendações. A seleção de atributos geralmente proporciona ganhos,
-na medida em que diminui o ruído e a ordem de grandeza dos dados.
+A seleção de atributos geralmente proporciona ganhos na eficiência e qualidade
+das recomedações, na medida em que diminui o ruído e a ordem de grandeza dos
+dados. Existem peculiaridades do domínio de componentes de software que se
+consideradas podem ampliar estes ganhos.
 
 Seja qual for o sistema operacional ou distribuição GNU/Linux, existe um
 conjunto de componentes que fazem parte da instalação padrão, selecionados
@@ -1371,7 +1367,7 @@ conjunto de componentes da instalação padrão está instalado no sistema e (2)
 alguns componentes não estão presentes porque foram propositalmente removidos
 pelo usuário. Em ambos os casos a recomendação de tais pacotes certamente não
 interessaria ao usuário, portanto todos eles podem ser desconsiderados sem
-prejuizos.
+prejuízo.
 
 Os dados coletados pelo \emph{Popcon} também possuem informações temporais.
 A data de instalação do pacote no sistema é obtida através do atributo
@@ -1384,7 +1380,7 @@ pesos diferentes para pacotes que são usados com muita frequência pelo usuário
 em detrimento de outros que foram acessados pela última vez logo após serem
 instalados.
 
-A última etapa de seleção de atributos utilizá os métodos clássicos
+Na última etapa da seleção de atributos serão utilizados métodos clássicos
 apresentados na seção \ref{sec:selecao_atributos}.
 
 \subsubsection{Estratégias de recomendação}
@@ -1413,33 +1409,33 @@ de sugestões, com base na técnica \emph{K-NN}.
 \hspace{1cm}O \emph{Popcon} é a fonte de dados disponível atualmente para
 soluções colaborativas de recomendação. Neste caso, listas de pacotes
 representam a identidade do usuário, que receberá recomendações com base
-no que outros usuários parecidos com ele têm instalado em seus sistemas e
-ele não tem.
+no que outros usuários com interesses semelhantes aos dele têm instalado
+em seus sistemas e ele não tem.
 
 \vspace{0.3cm}
   \item \textbf{Híbrida}
 
 A primeira estratégia híbrida a ser implementada será uma recomendação
-colaborativa a partir das \emph{tags} dos pacotes de cada usuário (descrição
-de conteúdo). Outras soluções híbridas podem ser projetadas a medida que os
-recomendadores das estratégias puras forem sendo implementados e posteriormente
-combinados.
+colaborativa a partir das \emph{tags} dos pacotes de cada usuário (como
+representação de conteúdo). Outras soluções híbridas podem ser projetadas à
+medida que os recomendadores das estratégias puras forem sendo implementados
+e posteriormente combinados.
 
 \hspace{1cm}Estratégias mistas podem considerar também novos fatores para
 composição das sugestões, alguns dos quais são descritos abaixo.
 
 \begin{description}
-  \item[Areas de interesse:] a composição de um perfil de usuário que indique
+  \item[Áreas de interesse:] a composição de um perfil de usuário que indique
     suas áreas de interesse diminuiria a ocorrência de anomalias como, por
     exemplo, a indicação de bibliotecas de desenvolvimento de software para um
     usuário que não é programador;
   \item[Popularidade:] pacotes que figuram entre os mais populares no
-    \emph{Popcon} devem receber maior pontuação nos cálculos, nem que este seja
-    como apenas um critério de desempate;
+    \emph{Popcon} devem receber maior pontuação nos cálculos, ainda que este seja
+    apenas um critério de desempate;
   \item[Bugs:] muitos bugs abertos são um indicativo de problemas,
-    principalmente se forem bugs graves. Devido ao número de pacotes reduzido
-    em cada recomendação, deve-se dar prioridade à incluir pacotes que estão
-    recebendo atenção frequente de seu mantenedor.
+    principalmente se forem bugs graves. Devido ao número reduzido de pacotes
+    em cada recomendação, deve-se dar prioridade à incluir aqueles que recebem
+    atenção constante de seu mantenedor.
 \end{description}
 
 \end{enumerate}
@@ -1453,15 +1449,15 @@ também desenvolvidas nesta liguagem. Ademais, a vasta documentação e grande
 variedade de bibliotecas de utilidade para o trabalho, a exemplo da
 \emph{NLTK}\footnote{\url{http://www.nltk.org/}}
 e \emph{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que contribuiram
-para esta escolha. 
+para esta escolha.
 
 \subsection{Avaliação}
 
-Diante da não disponibilidade de dados que possibilitassem a análise
-\emph{offline} de acurácia das recomendação, optou-se pela realização de
-experimentos diretamente com usuários, por meio de um \emph{survey} eletrônico.
-Algumas ferramentas estão sendo avaliadas para a construção do \emph{survey},
-entre elas, o \emph{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
+Diante da inexistência de dados que possibilitem a análise \emph{offline}
+de acurácia das recomendação, optou-se pela realização de experimentos
+diretamente com usuários, por meio de um \emph{survey} eletrônico. Algumas
+ferramentas estão sendo avaliadas para a construção do \emph{survey}, entre
+elas, o \emph{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
 
 A consulta será guiada através dos seguintes passos:
 \begin{enumerate}
