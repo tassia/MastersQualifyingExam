@@ -1,7 +1,6 @@
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
-
 \usepackage{graphicx,url,fancybox,wrapfig}
 \usepackage{multirow,tabularx}
 \usepackage[brazil]{babel}
@@ -10,29 +9,20 @@
 \usepackage{amsmath}
 \usepackage{pdflscape}
 \usepackage{enumerate}
+\usepackage{rotfloat}
 
-% Here it is: the code that adjusts justification and spacing around caption.
-\makeatletter
-% http://www.texnik.de/floats/caption.phtml
-% This does spacing around caption.
+\pagestyle{plain}
+
+% Espaçamento ao redor de captions
 \setlength{\abovecaptionskip}{6pt}   % 0.5cm as an example
 \setlength{\belowcaptionskip}{6pt}   % 0.5cm as an example
-%% This does justification (left) of caption.
-%\long\def\@makecaption#1#2{%
-%  \vskip\abovecaptionskip
-%  \sbox\@tempboxa{#1: #2}%
-%  \ifdim \wd\@tempboxa >\hsize
-%    #1: #2\par
-%  \else
-%    \global \@minipagefalse
-%    \hb@xt@\hsize{\box\@tempboxa\hfil}%
-%  \fi
-%  \vskip\belowcaptionskip}
-\makeatother
 
 \sloppy
 %FIXME [Definir titulo]
-\title{Recomendação de Componentes de Software}
+%\title{Recomendação de Componentes de Software}
+\title{Aplicação de Estratégias de \\
+       Recomendação ao Domínio de \\
+       Componentes de Software}
 
 \author{Tássia Camões Araújo \inst{1} }
 
@@ -293,6 +283,7 @@ por \cite{Vozalis:03} e são citadas a seguir.
 %\subsection{Privacidade}
 
 %FIXME [Analisar complexidade de cada tecnica]
+%FIXME [Produzir figuras ilustrativas para cada tecnica]
 \subsection{Técnicas} \label{sec:tecnicas}
 
 O desenvolvimento de sistemas de recomendação tem suas raízes em áreas
@@ -777,13 +768,15 @@ na tabela \ref{tab:knn_distancia}.
   \caption{K-NN: Medidas de distância entre objetos}
   \label{tab:knn_distancia}
   \centering
+  \newcommand\T{\rule{0pt}{2.8ex}}
+  \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
   \begin{tabular}{| l | l |}
     \hline
-    Distância euclidiana & $d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    Distância euclidiana & \T\B$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
     \hline
-    Similaridade de cossenos & $sim(X,Y) = \frac{\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|} = \frac{\sum_{1\leq i \leq n} x_i \times y_i}{\sqrt{\sum_{1\leq i \leq n} x_i^2}\times\sqrt{\sum_{1\leq i \leq n} y_i^2}}$\\
+    Similaridade de cossenos & $sim(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|} = \frac{\sum_{1\leq i \leq n} x_i \times y_i}{\sqrt{\sum_{1\leq i \leq n} x_i^2}\times\sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
     \hline
-    Coeficiente de Pearson & $p(X,Y) = \frac{\sum_{1 \leq i \leq n} (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}\times\sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}}$\\
+    Coeficiente de Pearson & $p(X,Y) = \frac{\T\sum_{1 \leq i \leq n} (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}\times\sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
     \hline
   \end{tabular}
 \end{table}
@@ -810,6 +803,117 @@ beneficiada pelo processo de seleção de atributos descrito na seção
 %
 %k-means: k sementes, agrupamento por similaridade, cálculo de novos centróides.
 
+%FIXME [Descrever o algoritmo Apriori]
+\subsubsection{Apriori} \label{sec:apriori}
+
+Mineração de Dados, também referenciada como descoberta de conhecimento em
+bases de dados, é a área da ciência da computação destinada à descoberta de
+correlações e padrões frequentes num conjunto de dados. Informações extraídas
+de uma base de dados de transações de venda, por exemplo, têm alto valor para
+organizações que pretendem realizar processos de \emph{marketing} guiados por
+informação -- modelo denominado, em inglês, \emph{market basket analysis}.
+Outros domínios de aplicação que também utilizam técnicas de mineração são:
+detecção de intrusão através da análise de \emph{logs} de sistemas
+computacionais, pesquisas na área de saúde sobre a correlação entre doenças,
+sequenciamento de DNA etc \cite{Hegland:03}.
+
+Os padrões frequentes podem ser descritos por conjuntos de itens que ocorrem
+simultaneamente ou por regras de associação, que são implicações na forma $X
+\Rightarrow Y$, sendo $X$ e $Y$ conjuntos de itens disjuntos ($X \cap Y =
+\emptyset$). \emph{Suporte} e \emph{confiança} são duas métricas para
+quantificar a força dos padrões de acordo com a sua representatividade no banco
+de dados de transações. O \emph{suporte} de um conjunto de itens é a frequência
+com a qual ele ocorre numa base de dados, enquanto para uma regra de
+associação $X \Rightarrow Y$, é o suporte do conjunto de itens $X \cup Y$. A
+\emph{confiança} é medida pela frequêcia de $Y$ nos registros que contém $X$,
+representando o grau de co-ocorrência de $X$ e $Y$.
+
+O \emph{Apriori} é um algoritmo para mineração de regras de associação
+sustentadas por medidas mínimas de suporte e confiança numa base de dados.
+Este problema é comumente decomposto em dois sub-problemas:
+
+\begin{enumerate}[(1)]
+  \item Identificação de todos os conjuntos de itens que extrapolam um valor de
+    suporte mínimo na base de dados (denominados de \emph{conjuntos
+    frequentes}).
+  \item Produção de regras de associação a partir dos conjuntos frequentes,
+    selecionando apenas as que satisfazem a condição de confiança mínima.
+    Visto que as regras são partições binárias de conjuntos de itens, uma
+    solução trivial para este problema é: para cada sub-conjunto $S$ de
+    um comjunto frequente $F$, gerar a regra $S \Rightarrow F - S$ e testar
+    seu valor de confiaça.
+\end{enumerate}
+
+O \emph{Apriori} foi o primeiro algoritmo eficiente para tratar do sub-problema
+\emph{(1)}, que de fato é o mais desafiador. Uma possível solução ingênua
+seria: listar todos os conjuntos candidatos (conjunto das partes do universo
+de itens) e selecionar os conjuntos frequentes a partir do cálculo de suporte
+para cada um. No entanto, esta é uma estratégia extremamente custosa visto que
+o conjunto das partes de um conjunto com $n$ elementos contém $2^n$
+subconjuntos, inviabilizando o cálculo para domínios de aplicação com um
+universo de itens grande \cite{Hegland:03}. A figura \ref{fig:diagrama_hasse}
+ilustra através de um diagrama de hasse o conjunto das partes do universo de
+itens $U=\{x,y,z\}$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{fig/todo.pdf}
+\caption{Conjunto das partes ilustrado por um diagrama de Hasse}
+\label{fig:diagrama_hasse}
+\end{figure}
+
+A inovação do \emph{Apriori} sobre a abordagem ingênua é a redução da
+quantidade de conjuntos candidatos pelo descarte de certos conjuntos que
+comprovadamente não são conjuntos frequentes. Desta forma o algoritmo
+consegue detectar todos os conjuntos frequentes sem a necessidade de calcular o
+suporte para todos os $2^n$ subconjuntos possíveis.
+
+A descoberta de conjuntos frequentes acontece por níveis, como uma busca em
+largura no diagrama de Hasse começando pelos conjuntos unitários (figura
+\ref{fig:diagrama_apriori}). Ao invés de gerar os conjuntos candidatos a partir
+da base de dados, a cada nível da busca é feita uma combinação dos elementos
+para gerar os candidatos do nível seguinte. Neste ponto a solução se beneficia
+do fato de que qualquer subconjunto de um conjunto frequente também é um conjunto
+frequente. Portanto, só devem participam da nova combinação os elementos que
+apresentarem um suporte superior ao limite, pois um conjunto que não é frequente
+não será jamais subconjunto de um conjunto frequente \cite{Agrawal:94}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{fig/todo.pdf}
+\caption{Descarte de conjuntos candidatos pelo algoritmo Apriori}
+\label{fig:diagrama_apriori}
+\end{figure}
+
+%http://www.slidefinder.net/d/data_mining_association_analysis_basic/14431678
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Algoritmos alternativos para mineração de regras} \label{sec:variacoes_apriori}
+
+Apesar de apresentar um processo inovador para geração de regras de associação,
+o \emph{Apriori} ainda apresenta fraquezas, entre elas a necessidade de
+percorrer a base de dados repetidas vezes para cálculo de suporte e confiança
+\cite{Kotsiantis:06}. Diversas variantes do algoritmo foram propostas com o
+intuito de superar algumas de suas desvantagens, entre elas estão o
+\emph{AprioriTid}, que utiliza uma estrutura de dados auxiliar para evitar
+múliplas passagens na base de dados \cite{Agrawal:94}; o \emph{FDM}, que é
+uma versão do \emph{Apriori} com suporte a paralelização \cite{Cheung:96}.
+
+Abaixo estão relacionados alguns algoritmos apontados por \cite{Kotsiantis:06}
+como soluções eficientes alternativas ao \emph{Apriori}.
+
+\begin{itemize}
+  \item \emph{FT-Tree}: uma estrutura de árvore de prefixos é utilizada para
+    armazenar informação sobre os padrões. Os conjuntos frequentes são
+    descobertos e com apenas duas passadas na base de dados e sem a necessidade
+    de geração de conjuntos candidatos \cite{Han:00};
+  \item \emph{TreeProjection}: a base de dados é projetada numa árvore
+    lexicográfica de conjuntos de itens e o cálculo de suporte é realizado
+    numa estrutura de matriz \cite{Agarwal:00}; %tree-projection.pdf
+  \item \emph{PRICES}
+  \item \emph{Matrix Algorithm}
+\end{itemize}
+
 \subsection{Estratégias de recomendação} \label{sec:estrategias}
 
 Sistemas de recomendação são comumente classificados em três grandes grupos, de
@@ -818,7 +922,7 @@ baseada em conteúdo, \emph{(2)} colaborativa e \emph{(3)} híbrida.
 \cite{Cazella:10} propõe uma classificação um pouco mais abrangente, na qual
 este trabalho se baseou.
 
-\subsubsection{Reputação do item}
+\subsubsection{Reputação dos itens}
 
 Popular entre serviços de venda como livrarias, sites de leilão e
 lojas de modo geral, esta estratégia consiste no armazenamento de avaliações
@@ -842,7 +946,7 @@ apresentado na figura \ref{fig:imdb}.
 \label{fig:imdb}
 \end{figure}
 
-\subsubsection{Baseada em conteúdo}
+\subsubsection{Recomendação baseada em conteúdo}
 
 Esta abordagem parte do princípio de que os usuários tendem a se interessar por
 itens semelhantes aos que eles já se interessaram no passado
@@ -861,7 +965,7 @@ identificados de forma automatizada. A superespecialização é outro problema
 indicado por \cite{Adomavicius:05}, que diz respeito à abrangência das
 recomendações estar limitada a itens similares aos já escolhidos pelos usuários.
 
-\subsubsection{Colaborativa}
+\subsubsection{Recomendação colaborativa}
 
 Esta estratégia não exige o reconhecimento semântico do conteúdo dos itens,
 pois é fundamentado na troca de experiências entre pessoas que possuem
@@ -890,7 +994,7 @@ itens totalmente inesperados. Outra contribuição é a possibilidade de formação
 de comunidades de usuários pela identificação de seus interesses semelhantes
 \cite{Cazella:10}.
 
-\subsubsection{Híbrida}
+\subsubsection{Estratégia híbrida}
 
 Consiste basicamente na combinação das abordagens colaborativa e baseada em
 conteúdo, unindo o melhor das duas técnicas na tentativa de eliminar as
@@ -911,25 +1015,27 @@ A figura \ref{fig:rec_hibrida} ilustra algumas possibilidades de combinação.
 %
 % Uso de perfis.
 
-\subsubsection{Associação}
+\subsubsection{Regras de associação}
 
-A partir da análise de uma base de dados que relaciona clientes e itens
-selecionados pelos mesmos, utiliza-se diversas técnicas para inferir
-associações entre os itens, como por e\-xemplo: "Clientes que selecionaram os
-itens A, B e C também selecionaram o item D". As associações são caracterizadas
-por um suporte mínimo, que diz respeito à confiabilidade das mesmas. Portanto,
-quando uma associação é extraída, não significa que ela pode ser verificada em
-todos os casos, e sim numa porcentagem mínima, definida pelo suporte.
+A estratégia baseada em regras de associação tem como premissa o registro das
+escolhas dos usuários ao longo do tempo e utiliza técnicas de mineração de
+dados para extrair correlações e padrões frequentes no comportamento dos
+mesmos. Tal abordagem é frequentemente utilizada em recomendações implícitas,
+por exemplo, a definição do posicionamento de produtos numa prateleria ou a
+realização de propagandas dirigidas \cite{Hegland:03}.
 
-A implementação desta estratégia é mais complexa, pois exige técnicas mais
-sofisticadas para identificação de padrões no comportamento dos usuários,
-principalmente quando se trata de um grande volume de dados.
+Dado um conjunto de associações, a recomendação para determinado usuário é
+produzida de acordo com as regras satisfeitas pelo conjunto de itens que ele
+já tenha selecionado. Por exemplo, a regra ${A,B,C} \Rightarrow {D}$ seria
+satisfeita por usuários que possuem os itens $A$, $B$ e $C$, resultando na
+indicação do item $D$: \emph{``Clientes que compraram os itens A, B e C também
+compraram o item D''}.
 
-%FIXME [Descrever o algoritmo Apriori]
-
-Um exemplo de recomendação por associação é encontrado na loja virtual da
-empresa \emph{Amazon}\footnote{\url{http://www.amazon.com/}} (figura
-\ref{fig:amazon}).
+As técnicas mais utilizadas na implementação desta classe de recomendadores são
+variações do algoritmos Apriori, apresentado na seção \ref{sec:apriori}
+\cite{Kotsiantis:06}. Um exemplo de recomendação por associação é encontrado na
+loja virtual da empresa \emph{Amazon}\footnote{\url{http://www.amazon.com/}}
+(figura \ref{fig:amazon}).
 
 \begin{figure}[h]
 \centering
@@ -1187,6 +1293,44 @@ destas soluções foi inicialmente desenvolvida num contexto extra-oficial, mas
 ao passo que se mostraram úteis e eficientes foram absorvidas pela comunidade
 de usuários e desenvolvedores.
 
+\begin{sidewaystable}
+  \centering
+  \caption{Recomendadores no Debian}
+  \label{tab:recDebian}
+  \small
+  \newcommand\T{\rule{0pt}{3.0ex}}
+  \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
+  \begin{tabularx}{25cm}{| c | X | c |}
+    \hline
+    \normalsize \textbf{\emph{Solução}}\T\B & \normalsize \textbf{\emph{Descrição}} & \normalsize \textbf{\emph{Estratégia de recomendação}}\\
+    \hline BTS \T & \multirow{3}{13cm}{Sistema de acompanhamento de bugs, alimentado pelos usuários e desenvolvedores da distribuição. Reúne todo o histórico referente ao relatório e correção de erros em pacotes.} & \multirow{10}{*}{Reputação}\\
+    \emph{Bug Tracking System}& & \\
+    \scriptsize{\url{http://bugs.debian.org}} & & \\
+    & & \\
+    \cline{1-2}
+    Popcon \T & \multirow{3}{13cm}{Concurso de popularidade entre pacotes realizado diariamente, disponibiliza estatísticas de uso dos pacotes do repositório. Provê gráficos específicos por pacote, por arquitetura, por desenvolvedor etc.} & \\
+    \emph{Popularity Contest}& & \\
+    \scriptsize{\url{http://popcon.debian.org}} & & \\
+    & & \\
+    \cline{1-2}
+    PTS \T & \multirow{3}{13cm}{Sistema de acompanhamento de pacotes, reúne informações relativas à manutenção dos pacotes: versão, mantenedor, \emph{upstream}, bugs abertos por tipo, últimas atualizações no repositório etc.} & \\
+    \emph{Package Tracking System}& & \\
+    \scriptsize{\url{http://packages.qa.debian.org}} & & \\
+    & & \\
+    \cline{1-2}
+    UDD \T & \multirow{3}{13cm}{{Iniciativa recente do time de qualidade criada com o intuito de reunir informações de diversos aspectos do Debian numa base de dados única. Usuários avançados podem consultar esta base para tomar decisões acerca de que pacotes utilizar.}} & \\
+    \emph{Ultimate Debian Database}& & \\
+    \scriptsize{\url{http://udd.debian.org}}& & \\
+    & & \\
+    \hline
+    Debtags \T & \multirow{2}{13.5cm}{Caracterização dos pacotes por múltiplos atributos, realizada manualmente por usuários e desenvolvedores, que auxilia a navegação e busca no repositório de pacotes.} & \multirow{2}{*}{Baseada em conteúdo}\\
+    Classificação de pacotes & & \\
+    \cline{2-3}
+    \scriptsize{\url{http://debtags.alioth.debian.org}} & \multirow{2}{*}{Novas \emph{tags} (atributos) são sugeridas a partir das tags já associadas ao pacote.} & \multirow{2}{*}{Associação}\\
+    & & \\
+    \hline
+  \end{tabularx}
+\end{sidewaystable}
 
 %FIXME [Descrever o software-center e outras solucoes]
 % http://distributions.freedesktop.org/wiki/Meetings/AppInstaller2011
@@ -1256,6 +1400,7 @@ em produção, e do \emph{Debtags}, como fonte de metadados sobre os pacotes. O
 uso de perfis também está sendo considerado, através do preenchimento de um
 formulário simples com macro-temas de interesse do usuário.
 
+
 Uma característica peculiar da recomendação neste contexto é que, diferentemente
 de outras instâncias do problema, onde os itens não se relacionam entre si, os
 componentes de software que são objeto desta pesquisa podem declarar
@@ -1268,43 +1413,6 @@ dizer que $B$ deve ser instalado no sistema para que $A$ funcione como
 previsto. Por outro lado, se $A$ conflita com $C$, a instalação de ambos os
 programas pode provocar um comportamento anômalo ou até comprometer o
 funcionamento de todo o sistema.
-
-\begin{landscape}
-\begin{table}[h]
-  \centering
-  \caption{Recomendadores no Debian}
-  \label{tab:recDebian}
-  \small
-  \begin{tabularx}{25cm}{| c | X | c |}
-    \hline
-    \normalsize \textbf{\emph{Solução}} & \normalsize \textbf{\emph{Descrição}} & \normalsize \textbf{\emph{Estratégia de recomendação}}\\
-    \hline BTS  & \multirow{3}{13cm}{Sistema de acompanhamento de bugs, alimentado pelos usuários e desenvolvedores da distribuição. Reúne todo o histórico referente ao relatório e correção de erros em pacotes.} & \multirow{10}{*}{Reputação}\\
-    \emph{Bug Tracking System}& & \\
-    \scriptsize{\url{http://bugs.debian.org}}& & \\
-    \cline{1-2}
-    Popcon & \multirow{3}{13cm}{Concurso de popularidade entre pacotes realizado diariamente, disponibiliza estatísticas de uso dos pacotes do repositório. Provê gráficos específicos por pacote, por arquitetura, por desenvolvedor etc.} & \\
-    \emph{Popularity Contest}& & \\
-    \scriptsize{\url{http://popcon.debian.org}} & & \\
-    \cline{1-2}
-    PTS & \multirow{3}{13cm}{Sistema de acompanhamento de pacotes, reúne informações relativas à manutenção dos pacotes: versão, mantenedor, \emph{upstream}, bugs abertos por tipo, últimas atualizações no repositório etc.} & \\
-    \emph{Package Tracking System}& & \\
-    \scriptsize{\url{http://packages.qa.debian.org}} & & \\
-    & & \\
-    \cline{1-2}
-    UDD & \multirow{3}{13cm}{{Iniciativa recente do time de qualidade criada com o intuito de reunir informações de diversos aspectos do Debian numa base de dados única. Usuários avançados podem consultar esta base para tomar decisões acerca de que pacotes usar.}} & \\
-    \emph{Ultimate Debian Database}& & \\
-    \scriptsize{\url{http://udd.debian.org}}& & \\
-    & & \\
-    \hline
-    Debtags & \multirow{2}{13.5cm}{Caracterização dos pacotes por múltiplos atributos, realizada manualmente por usuários e desenvolvedores, que auxilia a navegação e busca no repositório de pacotes.} & \multirow{2}{*}{Baseada em conteúdo}\\
-    Classificação de pacotes & & \\
-    \cline{2-3}
-    \scriptsize{\url{http://debtags.alioth.debian.org}} & Novas \emph{tags} (atributos) são sugeridas a partir das tags já associadas ao pacote. & Associação\\
-    & & \\
-    \hline
-  \end{tabularx}
-\end{table}
-\end{landscape}
 
 O sistema de gerenciamento de pacotes (no caso do Debian, o \emph{APT}), ao
 receber um pedido de modificação da configuração do sistema -- por exemplo,
@@ -1488,19 +1596,21 @@ intermediárias foram estabelecidas e apresentadas na tabela \ref{tab:plano}.
   \centering
   \caption{Plano de execução}
   \label{tab:plano}
-  \small
+  %\small
+  \newcommand\T{\rule{0pt}{2.6ex}}
+  \newcommand\B{\rule[-1.5ex]{0pt}{0pt}}
   \begin{tabularx}{\textwidth}{| X | c | c | c | c | c | c | c |}
     \hline
-    \normalsize \emph{Atividade} & \normalsize \emph{Janeiro} & \normalsize \emph{Fevereiro} & \normalsize \emph{Março} & \normalsize \emph{Abril} & \normalsize \emph{Maio} & \normalsize \emph{Junho} & \normalsize \emph{Julho}\\
-    \hline
-    Preparação e realização da qualificação & X & X & & & & & \\
-    \hline
-    Implementação de diferentes estratégias e técnicas & X & X & X & X & & & \\
-    \hline
-    Testes e ajustes na implementação & & & & X & X & & \\
-    \hline
-    Preparação e aplicação do \emph{survey} & & & & & X & X & \\
-    \hline
+    \T\B \textbf{\emph{Atividade}} & \textbf{\emph{Janeiro}} & \textbf{\emph{Fevereiro}} & \textbf{\emph{Março}} & \textbf{\emph{Abril}} & \textbf{\emph{Maio}} & \textbf{\emph{Junho}} & \textbf{\emph{Julho}}\\
+    \hline \small \T
+    Preparação e realiza-ção da qualificação & \multirow{2}{*}{X} & \multirow{2}{*}{X} & & & & & \\
+    \hline \small \T
+    Implementação de diferentes estratégias e técnicas & \multirow{3}{*}{X} & \multirow{3}{*}{X} & \multirow{3}{*}{X} & \multirow{3}{*}{X} & & & \\
+    \hline \small \T
+    Testes e ajustes na implementação & & & & \multirow{2}{*}{X} & \multirow{2}{*}{X} & & \\
+    \hline \small \T
+    Preparação e aplicação do \emph{survey} & & & & & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \\
+    \hline \small \T
     Escrita da dissertação & & & & & X & X & X \\
     \hline
   \end{tabularx}
