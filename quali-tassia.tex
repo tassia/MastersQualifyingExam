@@ -10,6 +10,7 @@
 \usepackage{pdflscape}
 \usepackage{enumerate}
 \usepackage{rotfloat}
+\usepackage{overpic}
 
 \pagestyle{plain}
 
@@ -398,8 +399,34 @@ conjunto de documentos é ilustrado na figura \ref{fig:exemplo_tfidf}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/todo.pdf}
-\caption{Exemplo de cálculo de pesos para um conjunto de documentos}
+\begin{tabular}{*4{c}}
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (1)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Morena,\\ minha morena, tira a roupa da
+    janela. Vendo a roupa sem a dona, eu penso na dona sem ela.}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (2)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Olha o \\ jeito dela, morena cor de
+    canela, pode morrer de paixão quem olhar nos olhos dela.}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (3)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize O cravo brigou com a rosa debaixo de
+    uma sacada. O cravo saiu ferido.}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (4)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Morena dos olhos d'água, tira os seus
+    olhos do mar.}}\end{overpic} \\
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (5)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Queixo-me às rosas, mas que bobagem,
+    as rosas não falam.}}
+    \end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (6)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Morena de Angola que leva o chocalho
+    amarrado na canela.}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (7)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Onde vais \\ morena Rosa, com essa rosa
+    no cabelo e esse andar de moça prosa.}}\end{overpic} & 
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (8)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize A padaria Dona Morena vende pão de
+    cravo e canela.}}\end{overpic} 
+\end{tabular}
+\caption{Coleção de documentos}
 \label{fig:exemplo_tfidf}
 \end{figure}
 
@@ -803,10 +830,9 @@ beneficiada pelo processo de seleção de atributos descrito na seção
 %
 %k-means: k sementes, agrupamento por similaridade, cálculo de novos centróides.
 
-%FIXME [Descrever o algoritmo Apriori]
 \subsubsection{Apriori} \label{sec:apriori}
 
-Mineração de Dados, também referenciada como descoberta de conhecimento em
+A mineração de Dados, também referenciada como descoberta de conhecimento em
 bases de dados, é a área da ciência da computação destinada à descoberta de
 correlações e padrões frequentes num conjunto de dados. Informações extraídas
 de uma base de dados de transações de venda, por exemplo, têm alto valor para
@@ -818,14 +844,14 @@ computacionais, pesquisas na área de saúde sobre a correlação entre doenças,
 sequenciamento de DNA etc \cite{Hegland:03}.
 
 Os padrões frequentes podem ser descritos por conjuntos de itens que ocorrem
-simultaneamente ou por regras de associação, que são implicações na forma $X
-\Rightarrow Y$, sendo $X$ e $Y$ conjuntos de itens disjuntos ($X \cap Y =
-\emptyset$). \emph{Suporte} e \emph{confiança} são duas métricas para
+simultaneamente ou por implicações na forma $X \Rightarrow Y$, denominadas de
+\emph{regras de associação}, sendo $X$ e $Y$ conjuntos de itens disjuntos ($X
+\cap Y = \emptyset$). \emph{Suporte} e \emph{confiança} são duas métricas para
 quantificar a força dos padrões de acordo com a sua representatividade no banco
-de dados de transações. O \emph{suporte} de um conjunto de itens é a frequência
-com a qual ele ocorre numa base de dados, enquanto para uma regra de
-associação $X \Rightarrow Y$, é o suporte do conjunto de itens $X \cup Y$. A
-\emph{confiança} é medida pela frequêcia de $Y$ nos registros que contém $X$,
+de dados de transações. O suporte de um conjunto de itens é a frequência
+com a qual ele ocorre numa base de dados. Para uma regra de associação $X
+\Rightarrow Y$, mede-se o suporte do conjunto de itens $X \cup Y$. A confiança
+de uma regra é medida pela frequêcia de $Y$ nos registros que contém $X$,
 representando o grau de co-ocorrência de $X$ e $Y$.
 
 O \emph{Apriori} é um algoritmo para mineração de regras de associação
@@ -839,25 +865,25 @@ Este problema é comumente decomposto em dois sub-problemas:
   \item Produção de regras de associação a partir dos conjuntos frequentes,
     selecionando apenas as que satisfazem a condição de confiança mínima.
     Visto que as regras são partições binárias de conjuntos de itens, uma
-    solução trivial para este problema é: para cada sub-conjunto $S$ de
+    solução trivial para este problema é: para cada subconjunto $S$ de
     um comjunto frequente $F$, gerar a regra $S \Rightarrow F - S$ e testar
     seu valor de confiaça.
 \end{enumerate}
 
 O \emph{Apriori} foi o primeiro algoritmo eficiente para tratar do sub-problema
-\emph{(1)}, que de fato é o mais desafiador. Uma possível solução ingênua
-seria: listar todos os conjuntos candidatos (conjunto das partes do universo
-de itens) e selecionar os conjuntos frequentes a partir do cálculo de suporte
-para cada um. No entanto, esta é uma estratégia extremamente custosa visto que
-o conjunto das partes de um conjunto com $n$ elementos contém $2^n$
+\emph{(1)}, que de fato é o mais desafiador. Uma solução ingênua para tal
+problema seria: listar todos os conjuntos candidatos (conjunto das partes do
+universo de itens) e selecionar os conjuntos frequentes a partir do cálculo de
+suporte para cada um. No entanto, esta é uma estratégia extremamente custosa
+visto que o conjunto das partes de um conjunto com $n$ elementos contém $2^n$
 subconjuntos, inviabilizando o cálculo para domínios de aplicação com um
 universo de itens grande \cite{Hegland:03}. A figura \ref{fig:diagrama_hasse}
 ilustra através de um diagrama de hasse o conjunto das partes do universo de
-itens $U=\{x,y,z\}$.
+itens $U=\{a,b,c\}$.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/todo.pdf}
+\includegraphics[width=.4\textwidth]{fig/diagrama_hasse.pdf}
 \caption{Conjunto das partes ilustrado por um diagrama de Hasse}
 \label{fig:diagrama_hasse}
 \end{figure}
@@ -873,46 +899,40 @@ largura no diagrama de Hasse começando pelos conjuntos unitários (figura
 \ref{fig:diagrama_apriori}). Ao invés de gerar os conjuntos candidatos a partir
 da base de dados, a cada nível da busca é feita uma combinação dos elementos
 para gerar os candidatos do nível seguinte. Neste ponto a solução se beneficia
-do fato de que qualquer subconjunto de um conjunto frequente também é um conjunto
-frequente. Portanto, só devem participam da nova combinação os elementos que
-apresentarem um suporte superior ao limite, pois um conjunto que não é frequente
-não será jamais subconjunto de um conjunto frequente \cite{Agrawal:94}.
+do seguinte princípio: qualquer subconjunto de um conjunto frequente também é
+um conjunto frequente. Portanto, só devem participar da nova combinação os
+elementos que apresentarem um suporte superior ao limite, pois um conjunto que
+não é frequente não será jamais subconjunto de um conjunto frequente
+\cite{Agrawal:94}.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/todo.pdf}
+\includegraphics[width=\textwidth]{fig/diagrama_apriori.pdf}
 \caption{Descarte de conjuntos candidatos pelo algoritmo Apriori}
 \label{fig:diagrama_apriori}
 \end{figure}
 
 %http://www.slidefinder.net/d/data_mining_association_analysis_basic/14431678
 
-\vspace{0.3cm} \hspace{-1.4cm}
-\textbf{Algoritmos alternativos para mineração de regras} \label{sec:variacoes_apriori}
+%\vspace{0.3cm} \hspace{-1.4cm}
+%\textbf{Soluções alternativas para mineração de regras}
+%\label{sec:variacoes_apriori}
+
+A introdução do \emph{Apriori} representou um marco para o desenvolvimento de
+soluções para mineração de dados, motivando o surgimento de inúmeras variantes
+baseadas no mesmo princípio. Entre elas, surgiram algumas propostas específicas
+para situações onde os dados têm características adicionais conhecidas como,
+por exemplo, base de dados particionada, dados que satisfazem à determinadas
+restrições ou que fazem parte de uma taxonomia conhecida \cite{Hegland:03}.
 
 Apesar de apresentar um processo inovador para geração de regras de associação,
-o \emph{Apriori} ainda apresenta fraquezas, entre elas a necessidade de
-percorrer a base de dados repetidas vezes para cálculo de suporte e confiança
-\cite{Kotsiantis:06}. Diversas variantes do algoritmo foram propostas com o
-intuito de superar algumas de suas desvantagens, entre elas estão o
-\emph{AprioriTid}, que utiliza uma estrutura de dados auxiliar para evitar
-múliplas passagens na base de dados \cite{Agrawal:94}; o \emph{FDM}, que é
-uma versão do \emph{Apriori} com suporte a paralelização \cite{Cheung:96}.
-
-Abaixo estão relacionados alguns algoritmos apontados por \cite{Kotsiantis:06}
-como soluções eficientes alternativas ao \emph{Apriori}.
-
-\begin{itemize}
-  \item \emph{FT-Tree}: uma estrutura de árvore de prefixos é utilizada para
-    armazenar informação sobre os padrões. Os conjuntos frequentes são
-    descobertos e com apenas duas passadas na base de dados e sem a necessidade
-    de geração de conjuntos candidatos \cite{Han:00};
-  \item \emph{TreeProjection}: a base de dados é projetada numa árvore
-    lexicográfica de conjuntos de itens e o cálculo de suporte é realizado
-    numa estrutura de matriz \cite{Agarwal:00}; %tree-projection.pdf
-  \item \emph{PRICES}
-  \item \emph{Matrix Algorithm}
-\end{itemize}
+o \emph{Apriori} também apresenta fraquezas, sendo a principal delas a
+necessidade de percorrer a base de dados múltiplas vezes para cálculo de
+suporte e confiança dos conjuntos de itens. Algumas soluções alternativas
+fazem uso de estruturas de dados auxiliares para armazenar informações
+extraídas da base de dados numa única passagem, evitando desta forma repetidos
+acessos à mesma. Árvores de prefixos, árvores lexicográficas e matrizes
+binárias são algumas dessas estruturas \cite{Kotsiantis:06}.
 
 \subsection{Estratégias de recomendação} \label{sec:estrategias}
 
@@ -940,7 +960,7 @@ apresentado na figura \ref{fig:imdb}.
 \begin{figure}[h]
 \centering
 \fbox{
-  \includegraphics[width=1\textwidth]{fig/imdb.png}
+  \includegraphics{fig/imdb.pdf}
 }
 \caption{Avaliação de usuário no IMDb}
 \label{fig:imdb}
@@ -959,6 +979,13 @@ Bayes}) para encontrar itens relevantes. Em uma livraria, sugerir ao cliente
 outros livros do mesmo autor ou tema de livros previamente selecionados é uma
 estratégia amplamente adotada.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{fig/rec_conteudo.pdf}
+\caption{Cenário de uma recomendação baseada em conteúdo}
+\label{fig:rec_conteudo}
+\end{figure}
+
 Pelo fato de se apoiar na classificação dos itens, os resultados da
 recomendação são prejudicados nos casos em que os atributos não podem ser
 identificados de forma automatizada. A superespecialização é outro problema
@@ -974,7 +1001,7 @@ recomendação colaborativa.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/recommendation.pdf}
+\includegraphics[width=\textwidth]{fig/rec_colaboracao.pdf}
 \caption{Cenário da recomendação colaborativa}
 \label{fig:rec_colaborativa}
 \end{figure}
@@ -1040,7 +1067,7 @@ loja virtual da empresa \emph{Amazon}\footnote{\url{http://www.amazon.com/}}
 \begin{figure}[h]
 \centering
 \fbox{
-  \includegraphics[width=1\textwidth]{fig/amazon-association.png}
+  \includegraphics{fig/amazon.pdf}
 }
 \caption{Recomendação por associação na Amazon}
 \label{fig:amazon}
