@@ -19,6 +19,16 @@
 \setlength{\abovecaptionskip}{6pt}   % 0.5cm as an example
 \setlength{\belowcaptionskip}{6pt}   % 0.5cm as an example
 
+% Definição de identificadores
+\mathchardef\mhyphen="2D
+\newcommand\tfidf{\mathit{tf\mhyphen idf}}
+\newcommand\tf{\mathit{tf}}
+\newcommand\idf{\mathit{idf}}
+\newcommand\df{\mathit{df}}
+\newcommand\pd{\mathit{pd}}
+\newcommand\pt{\mathit{pt}}
+\newcommand\pq{\mathit{pq}}
+
 \sloppy
 %FIXME [Definir titulo]
 %\title{Recomendação de Componentes de Software}
@@ -86,7 +96,7 @@ repositórios para compartilhamento de fotografia e vídeo, como Flickr
 \footnote{\url{http://flickr.com}} e Youtube\footnote{\url{http://youtube.com}},
 entre outros. Considerando a produção em termos de software, observa-se o
 exemplo das comunidades de software livre e/ou de código aberto
-(FOOS\footnote{Termo consolidado no idioma inglês, acrônimo para
+(FOSS\footnote{Termo consolidado no idioma inglês, acrônimo para
 \emph{Free/Open-Source Software}, que diz respeito aos programas licenciados
 livremente para garantir aos usuários o direito de uso, estudo e modificação,
 por meio da disponibilidade do seu código-fonte.}), que propiciam a construção
@@ -254,13 +264,13 @@ por \cite{Vozalis:03} e são citadas a seguir.
     a localização de usuários com preferências semelhantes (relações de
     vizinhança), resultando em recomendações fracas.
   \item[Escalabilidade.] A complexidade do cálculo de recomendações cresce
-    proporcionalmente tanto ao número de clientes quanto à quantidade de itens,
+    tanto com o número de clientes quanto com a quantidade de itens,
     portanto a escalabilidade dos algoritmos é um ponto importante a ser
     considerado.
   \item[Perda de transitividade de vizinhança.] Usuários que têm comportamento
-    semelhante a um determinado usuário $u$ não necessariamente têm
+    semelhante a um determinado usuário não necessariamente têm
     comportamento semelhante entre si. A captura deste tipo de relação pode ser
-    desejável mas em geral esta informação não e resguardada, exigindo a
+    desejável mas em geral esta informação não é resguardada, exigindo a
     aplicação de métodos específicos para tal.
   \item[Sinônimos.] Quando o universo de itens possibilita a existência
     de sinônimos, a solução deve levar esta informação em conta para prover
@@ -330,21 +340,20 @@ consulta estaria diretamente relacionada com a identidade do usuário e
 portanto deveria ser escrita especialmente para ele.
 
 Todavia, a disciplina de inteligência artificial aborda a questão da
-classificação através de estratégias que não se baseiam em busca. Os
-classificadores ``inteligentes'' são construídos a partir de um conjunto de
-dados tratados como exemplos para treinamento em algoritmos de aprendizado de
-máquina.
+classificação através de estratégias que não se baseiam em busca. Algoritmos
+de aprendizado de máquina são utilizados para a construção de modelos de
+classificação ``inteligentes'', que aprendem através da análise de exemplos.
 
 A seguir são apresentadas algumas técnicas para resolução destes problemas
 que também são utilizadas na construção de sistemas de recomendação, dando
 suporte às estratégias apresentadas na seção \ref{sec:estrategias}.
 
 \vspace{-0.3cm}
-\subsubsection{Medida tf-idf}
+\subsubsection{Medida \emph{tf-idf}}
 
 Acrônimo para \emph{term frequency - inverse document frequency}, o
-\emph{tf-idf} é uma medida de peso clássica utilizada no desenvolvimento de
-buscadores para ordenar os itens por relevância.
+$\tfidf$ é uma medida de peso clássica utilizada por buscadores para ordenar o
+resultado da consulta pela relevância dos itens.
 
 No cálculo de relevância normalmente são desconsiderados alguns termos,
 designados como \emph{stop words}, que são muito frequentes e pouco
@@ -362,10 +371,10 @@ um documento. Intuitivamente, os documentos que referenciam os termos de uma
 \emph{query} com mais frequência estão mais fortemente relacionados com a
 mesma, e por isso deveriam receber uma pontuação maior. Desta forma, para cada
 termo do documento é atribuído um peso proporcional ao número de ocorrências do
-mesmo, designado como \emph{tf$_{t,d}$} (\emph{term frequency}). Em sua
-abordagem mais simples, \emph{tf$_{t,d}$} é igual ao número de ocorrências do
+mesmo, designado como $\tf_{t,d}$ (\emph{term frequency}). Em sua
+abordagem mais simples, $\tf_{t,d}$ é igual ao número de ocorrências do
 termo $t$ no documento $d$. A figura \ref{fig:colecao} ilustra uma coleção de
-documentos e na tabela \ref{tab:tfidf} estão os valores de \emph{tf$_{t,d}$} de
+documentos e na tabela \ref{tab:tfidf} estão os valores de $\tf_{t,d}$ de
 cada documento para alguns termos do dicionário.
 
 \begin{figure}[ht]
@@ -401,7 +410,7 @@ cada documento para alguns termos do dicionário.
 \label{fig:colecao}
 \end{figure}
 
-O conjunto de pesos determinado pelos \emph{tf}s dos termos de um documento
+O conjunto de pesos determinado pelos $\tf$s dos termos de um documento
 pode ser entendido como um resumo quantitativo do mesmo. Esta visão do
 documento é comumente referenciada na literatura como ``saco de palavras'' (em
 inglês, \emph{``bag of words''}), onde a disposição das palavras é ignorada e
@@ -413,44 +422,51 @@ documentos. Ao passo que existem outros muito raros que quando presentes
 são forte indicativo de relevância. Por exemplo, supondo uma \emph{query}
 composta por dois termos, um muito frequente e outro muito raro, dois
 documentos que contenham apenas um deles com a mesma frequência terão o mesmo
-valor de $tf$. Porém, enquanto este valor de $tf$ se repete ao longo da coleção
-para o termo frequente, ele pode ser único para o termo raro, o que de fato
-diferencia tal documento dos outros. O \emph{idf}$_t$ (\emph{inverse document
-frequency}) foi então introduzido para atenuar o efeito de termos usuais no
-cálculo de relevância, diminuindo o peso de um termo por um fator que cresce
-com sua frequência na coleção. Na equação \eqref{eq:idf}, $N$ representa o
-número de documentos da coleção e $df_t$ (\emph{document frequency}) é o número
-de documentos que contém o termo $t$. Valores de \emph{idf$_t$} para a coleção
-da figura \ref{fig:colecao} são apresentados na tabela \ref{tab:tfidf}.
+valor de $\tf$. Porém, enquanto este valor de $\tf$ se repete ao longo
+da coleção para o termo frequente, ele pode ser único para o termo raro, o que
+de fato diferencia tal documento dos outros. O $\idf_t$ (\emph{inverse
+document frequency}) foi então introduzido para atenuar o efeito de termos
+usuais no cálculo de relevância, diminuindo o peso de um termo por um fator que
+cresce com sua frequência na coleção. Na equação \eqref{eq:idf}, $N$ representa
+o número de documentos da coleção e $\df_t$ (\emph{document frequency})
+é o número de documentos que contém o termo $t$. Valores de $\idf_t$ para
+a coleção da figura \ref{fig:colecao} são apresentados na tabela
+\ref{tab:tfidf}.
 
 \begin{equation}
 \label{eq:idf}
-idf_t = log \frac{N}{df_t}
+\idf_t = log \frac{N}{\df_t}
 \end{equation}
 
-A medida \emph{tf-idf}$_{t,d}$ combina as definições de \emph{tf} e \emph{idf},
-produzindo um peso composto (\emph{tf-idf}$_{t,d} = tf_{t,d} \times idf_t$) com
-as seguintes propriedades \cite{Manning:09}:
+A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
+\eqref{eq:tfidf}), produzindo um peso composto com as seguintes propriedades
+\cite{Manning:09}:
 
 \begin{enumerate}
   \item É alta quando ocorre muitas vezes em poucos documentos;
   \item Diminui quando ocorre menos vezes num documento ou em muitos documentos;
   \item É muito baixa quando o termo ocorre em quase todos os documentos.
 \end{enumerate}
-\begin{table}[h]
-  \caption{Valores de \emph{tf$_{t,d}$} e \emph{idf$_t$} para documentos da coleção}
+
+\begin{equation}
+\label{eq:tfidf}
+\tfidf_{t,d} = \tf_{t,d} \times \idf_t
+\end{equation}
+
+\begin{table}
+  \caption{Valores de $\tf_{t,d}$ e $\idf_t$ para documentos da coleção}
   \label{tab:tfidf}
   \centering
   \begin{tabular}{| l | c | c | c | c | c | c | c | c | c |}
     \hline
     \multirow{2}{*}{\backslashbox{\textbf{\emph{Termo}}}
-                                 {\textbf{\emph{Documento}}}}&
+                                 {\textbf{\emph{Doc}}}}&
     \textbf{\small{(1)}}&\textbf{\small{(2)}}&\textbf{\small{(3)}}&
     \textbf{\small{(4)}}&\textbf{\small{(5)}}&\textbf{\small{(6)}}&
     \textbf{\small{(7)}}&\textbf{\small{(8)}}&
-    \multirow{2}{*}{\textbf{\emph{idf$_t$}}}\\
+    \multirow{2}{*}{\textbf{$\idf_t$}}\\
     \cline{2-9}
-    &\multicolumn{8}{c|}{\textbf{\emph{tf$_{t,d}$}}}&\\
+    &\multicolumn{8}{c|}{\textbf{$\tf_{t,d}$}}&\\
     \hline
     morena & $2$ & $1$ & & $1$ & & $1$ & $1$ & $1$ & $0.12$\\
     \hline
@@ -471,45 +487,77 @@ as seguintes propriedades \cite{Manning:09}:
   \end{tabular}
 \end{table}
 
-Considerando os pesos \emph{tf-idf} dos termos do dicionário em cada
+Considerando os pesos $\tfidf$ dos termos do dicionário em cada
 documento, um cálculo possível de pontuação de um documento para uma
 determinada \emph{query} seria a soma dos pesos dos termos da consulta
-(equação \eqref{eq:ranking}).
+(equação \eqref{eq:ranking}). A tabela \ref{tab:tfidf-resultado}
+apresentam o resultado das respectivas consultas ao sistema de busca, no
+que diz respeito à ordenação dos documentos.
 
-Existem diversas variantes para o cálculo da medida \emph{tf-idf}$_{t,d}$,
+\begin{equation}
+\label{eq:ranking}
+R_{d,q} = \sum_{t \in q} \tfidf_{t,d}
+\end{equation}
+
+\begin{table}[h]
+  \caption{Ordenação dos documentos como resultado de consultas.}
+  \label{tab:tfidf-resultado}
+  \centering
+  \begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c |}
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    \multirow{2}{*}{doc} & query & \multirow{2}{*}{$R_{d,q}$} & &
+    \multirow{2}{*}{doc} & \multicolumn{2}{|c|}{query} & \multirow{2}{*}{$R_{d,q}$} &&
+    \multirow{2}{*}{doc} & \multicolumn{2}{|c|}{query} & \multirow{2}{*}{$R_{d,q}$} \\
+    \cline{2-2}\cline{6-7}\cline{11-12}
+    & \emph{morena} & & & & \emph{morena} & \emph{canela} & & & & \emph{morena} &\emph{rosa} & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    (1) & $0.24$ & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    (2) & $0.12$ & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    (4) & $0.12$ & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    (6) & $0.12$ & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    (7) & $0.12$ & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    (8) & $0.12$ & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    & & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+    & & & & & & & & & & & & \\
+    \cline{1-3}\cline{5-8}\cline{10-13}
+  \end{tabular}
+\end{table}
+
+Existem diversas variantes para o cálculo da medida $\tfidf_{t,d}$,
 propostas ao longo do tempo com o intuito de resolver anomalias e aperfeiçoar
-a busca. Por exemplo, é pouco provável que a persença de uma palavra 20 vezes
+a busca. Por exemplo, é pouco provável que a presença de uma palavra 20 vezes
 num documento tenha de fato 20 vezes mais representatividade que uma ocorrência
-única. O logaritmo pode ser incorporado no cálculo do \emph{tf} para atenuar o
+única. O logaritmo pode ser incorporado no cálculo do $\tf$ para atenuar o
 crescimento do peso para valores crescentes de frequência. Outras abordagens
 alternativas utilizam normalizações por diversas medidas: pelo comprimento do
-documento, pelo comprimento médio dos documentos da coleção, pelo \emph{tf}
-máximo ou médio entre os \emph{tf}s de todos os termos do documento, entre
+documento, pelo comprimento médio dos documentos da coleção, pelo $\tf$
+máximo ou médio entre os $\tf$s de todos os termos do documento, entre
 outros. É comum também que elementos constantes sejam introduzidos para
 suavizar um ou outro fator da fórmula.
 
-\begin{figure}[h]
-\begin{equation}
-\label{eq:ranking}
-R_{d,q} = \sum_{t \in q} tfidf_{t,d}
-\end{equation}
-\end{figure}
-
+\vspace{0.3cm}
 \hspace{-1.4cm}
 \textbf{Modelo de espaço vetorial}
 
 Uma coleção de documentos pode ser representada por um conjunto de vetores,
 sendo cada documento descrito como um vetor de termos do dicionário e os
-respectivos pesos \emph{tf-idf} no documento. Tem-se como resultado uma visão
+respectivos pesos $\tfidf$ no documento. Tem-se como resultado uma visão
 da coleção como uma matriz de dimensões $M \times N$, na qual as linhas
 representam os $M$ termos do dicionário e as colunas os $N$ documentos da
 coleção. Esta representação, conhecida como \emph{modelo de espaço vetorial}, é
 amplamente utilizada em soluções para recuperação da informação.
 
 %\newpage
-%\vspace{0.3cm}
+\vspace{0.3cm}
 \hspace{-1.4cm}
-\textbf{Similaridade de cossenos}
+\textbf{Similaridade de cosseno}
 
 Medir a similaridade entre dois documentos pode ser útil, por exemplo, para
 disponibilizar o recurso ``mais do mesmo'', onde o usuário pede indicações
@@ -517,8 +565,8 @@ de itens semelhantes a um que ele já conhece. Porém, se a diferença entre os
 vetores de pesos de dois documentos for usada como medida para avaliação de
 similaridade entre os mesmos, pode acontecer de documentos com conteúdo similar
 serem considerados diferentes simplesmente porque um é muito maior que o outro.
-Para compensar o efeito do comprimento dos documentos utiliza-se como medida a
-similaridade de cossenos dos vetores que os representam, apresentada na equação
+Para compensar o efeito do comprimento dos documentos utiliza-se como medida de
+similaridade o cosseno dos vetores que os representam, apresentado na equação
 \eqref{eq:sim-cos}. O numerador representa o produto escalar dos dois vetores e
 o denominador a distância euclidiana entre os mesmos.
 
@@ -529,16 +577,16 @@ sim(d_1,d_2) = \frac{\vec{V}(d_1) \cdot \vec{V}(d_2)}{|\vec{V}(d_1)| |\vec{V}(d_
 
 Dado um documento $d$, para encontrar os documentos de uma coleção que mais se
 assemelham mais a este, basta encontrar aqueles com maior similaridade de
-cossenos com $d$. Para tanto, pode-se calcular os valores $sim(d,d_i)$ entre
+cosseno com $d$. Para tanto, pode-se calcular os valores $sim(d,d_i)$ entre
 $d$ e os demais $d_i$ documentos da coleção e os maiores valores indicarão os
 documentos mais semelhantes.
 
 Considerando o fato de que \emph{queries}, assim como documentos, são um
 conjunto me palavras, elas também podem ser representadas como vetores no
-modelo de espaço vetorial. Portanto a similaridade de cossenos pode ser
+modelo de espaço vetorial. Portanto a similaridade de cosseno pode ser
 utilizada na busca por documentos relevantes para uma consulta, que serão os
 que mais se assemelham à referida \emph{query}. Após o cálculo de similaridade
-de cossenos entre os vetores da \emph{query} e dos documentos da coleção, os
+de cosseno entre os vetores da \emph{query} e dos documentos da coleção, os
 maiores valores indicarão os documentos mais relevantes para a mesma.
 
 \subsubsection{Okapi BM25}
@@ -555,29 +603,30 @@ fundamentado teoricamente na disciplina de probabilidade discreta, ao modelar
 a frequência de termos em documentos utilizando distribuições de
 \emph{Poisson}. Seu nome advém do primeiro sistema no qual foi implementado, denominado \emph{Okapi}.
 
-O \emph{BM25} utiliza os componentes estatísticos do \emph{tf-idf}, porém numa
+O \emph{BM25} utiliza os componentes estatísticos do $\tfidf$, porém numa
 combinação diferente, além de considerar informações como o comprimento dos
 documentos, a frequência dos termos na \emph{query} e outros fatores
 constantes. A fórmula do \emph{BM25} é melhor compreendida através da análise
 de seus três componentes principais, que neste trabalho são denominados de
-$WT$, $WD$ e $WQ$.
+$\pt$, $\pd$ e $\pq$.
 
-$WT$ é a porção do peso que considera a frequência do termo no documento
-($tf_{t,d}$), permitindo haver normalização pelo tamanho do documento. Na
-fórmula \eqref{eq:WT}, $l_d$ representa o comprimento do documento $d$ e
-$l_{avg}$ o comprimento médio dos documentos da coleção.
+$\pt$ é a porção do peso que considera a frequência do termo no documento
+($\tf_{t,d}$), permitindo haver normalização pelo tamanho do documento. Na
+fórmula \eqref{eq:pt}, $l_d$ representa o comprimento do documento $d$ e
+$l_{\mathit{avg}}$ o comprimento médio dos documentos da coleção.
 
 \begin{equation}
-\label{eq:WT}
-WT_{t,d} = \frac{tf_{t,d}(k_1+1)}{k_1((1-b)+b\frac{l_d}{l_{avg}})+tf_{t,d}}
+\label{eq:pt}
+  \pt_{t,d} = \frac{\tf_{t,d}(k_1+1)}
+                  {k_1((1-b)+b\frac{l_d}{l_{\mathit{avg}}})+\tf_{t,d}}
 \end{equation}
 
 A constante $k_1$ determina o quanto o peso do documento deve ser afetado por
-um acréscimo no valor de $tf$. Se $k_1=0$, este componente da formula é
-eliminado, portanto $tf$ passa a não interferir no peso. Para valores altos de
-$k_1$, o peso passa a ter um crescimento linear com relação a $tf$. De acordo
+um acréscimo no valor de $\tf$. Se $k_1=0$, este componente da formula é
+eliminado, portanto $\tf$ passa a não interferir no peso. Para valores altos de
+$k_1$, o peso passa a ter um crescimento linear com relação a $\tf$. De acordo
 com experimentos do TREC, valores entre $1.2$ e $2$ são os mais indicados.
-Valores dentro deste intervalo implicam numa interferência de $tf$ altamente
+Valores dentro deste intervalo implicam numa interferência de $\tf$ altamente
 não linear, isto é, após 3 ou 4 ocorrências o impacto de uma ocorrência
 adicional é mínimo \cite{Jones:00}.
 
@@ -587,48 +636,49 @@ tem efeito completo (equivalente ao modelo \emph{BM11}). Valores menores
 reduzem este efeito. Se $b=0$, o comprimento do documento não afeta a pontuação
 final, (como no modelo \emph{BM15}).
 
-O segundo componente do peso ($WD$) considera informações da atestação de
+O segundo componente do peso ($\pd$) considera informações da atestação de
 relevância provida pelo usuário (em inglês, \emph{relevance feedback}\footnote{
 \emph{Relevance feedback} é o mecanismo através do qual o usuário avalia o
 resultado da consulta, marcando os itens retornados como relevantes ou
 irrelevantes, informação que é posteriormente utilizada para refinar a
-consulta}), quando disponível. Na equação \eqref{eq:WD_rf}, $N$ é o número
-total de documentos na coleção, $df_t$ é o número de documentos que contém o
+consulta}), quando disponível. Na equação \eqref{eq:pd_rf}, $N$ é o número
+total de documentos na coleção, $\df_t$ é o número de documentos que contém o
 termo $t$, $R$ é o número total de documentos relevantes e $r$ é o número de
 documentos relevantes que contém o termo $t$.
 
 \begin{equation}
-\label{eq:WD_rf}
-WD_{rf} = log \frac{(r+0.5)(N-df_t-R+r+0.5)}{(R-r+0.5)(df_t-r+0.5)}
+\label{eq:pd_rf}
+  \pd_t = log \frac{(r+0.5)(N-\df_t-R+r+0.5)}
+                               {(R-r+0.5)(\df_t-r+0.5)}
 \end{equation}
 
-Se não houver informações provenientes da atestação de relevância, o $idf_t$
+Se não houver informações provenientes da atestação de relevância, o $\idf_t$
 clássico pode ser utilizado (equação \eqref{eq:idf}), ou ainda, uma variação de
-$WD$ a partir do estabelecimento de que $R=r=0$ na equação acima (equação
-\eqref{eq:WD}).
+$\pd$ a partir do estabelecimento de que $R=r=0$ na equação acima (equação
+\eqref{eq:pd}).
 
 \begin{equation}
-\label{eq:WD}
-WD = log \frac{N-df_t+0.5}{df_t+0.5}
+\label{eq:pd}
+  \pd_t = log \frac{N-\df_t+0.5}{\df_t+0.5}
 \end{equation}
 
-A terceira parte da expressão, definida aqui como $WQ_{t,q}$ (equação
-\eqref{eq:WQ}, permite a consideração da frequência do termo na \emph{query},
+A terceira parte da expressão, definida aqui como $\pq_{t,q}$ (equação
+\eqref{eq:pq}, permite a consideração da frequência do termo na \emph{query},
 que é apropriada para o caso de consultas longas, podendo ser desconsiderada
 para \emph{queries} com poucos termos.
 
 \begin{equation}
-\label{eq:WQ}
-WQ_{t,q} = \frac{(k_3+1)qtf_{t,q}}{k_3+qtf_{t,q}}
+\label{eq:pq}
+  pq_{t,q} = \frac{(k_3+1)\mathit{qtf}_{t,q}}{k_3+\mathit{qtf}_{t,q}}
 \end{equation}
 
-De forma análoga ao \emph{tf-idf}, o cálculo da pontuação do documento $d$ para
+De forma análoga ao $\tfidf$, o cálculo da pontuação do documento $d$ para
 a \emph{query} $q$ no modelo \emph{BM25} pode ser realizado através da fórmula
 \eqref{eq:bm25}.
 
 \begin{equation}
 \label{eq:bm25}
-R_{d,q} = \sum_{t \in q} WT_{t,d} \times WD_t \times WQ_{t,q}
+R_{d,q} = \sum_{t \in q} \pt_{t,d} \times pd_t \times pq_{t,q}
 \end{equation}
 
 O \emph{BM25} é amplamente utilizado em diversos tipos de busca e coleções.
@@ -642,20 +692,19 @@ comunidade que utilizam o \emph{BM25} como medida de pesos \cite{Betts:07}
 
 \subsubsection{Classificador bayesiano}
 
-Naive Bayes é uma solução para classificação que figura entre os algoritmos
-de aprendizado de máquina supervisionados. Cada exemplo utilizado
-na fase de treinamento deve relacionar um objeto, caracterizado por um conjunto
-de atributos, e uma classe. É dito supervisionado porque o ser humano que
-atribuiu classes aos objetos dos exemplos atua como supervisor, como um
-professor orientando o processo de aprendizado.
+\emph{Bayes ingênuo} é uma solução para classificação que figura entre os
+algoritmos de aprendizado de máquina supervisionados. Tais métodos fundamentam-
+se na construção de um classificador que ``aprende'' na medida em que lhe são
+apontados exemplos de objetos classificados. São caracterizados como
+supervisionados porque as classes atribuídas aos objetos de treinamento são
+determinadas por um ser humano, que atua como um supervisor orientando o
+processo de aprendizado \cite{Manning:09}.
 
-O classificador \emph{Naive Bayes} (Bayes ingênuo) tem como base um modelo
-probabilístico que aplica o teorema de Bayes com fortes suposições de
-independência de atributos -- por isso é considerado ingênuo. Em outras palavras,
-a presença ou ausência de um atributo em uma classe não estaria relacionada com a
-incidência de nenhum outro atributo. De certa forma a suposição de independência
-é análoga no modelo de espaço vetorial, onde cada atributo é representado na
-matriz por uma dimensão ortogonal a todas as outras \cite{Manning:09}.
+O classificador bayesiano apoia-se num modelo probabilístico que aplica o
+teorema de Bayes com fortes suposições de independência de atributos -- por
+esta razão o método é considerado ingênuo. Em outras palavras, a presença ou
+ausência de um atributo em uma classe não estaria relacionada com a incidência
+de nenhum outro atributo.
 
 A decisão acerca da classe a qual um objeto pertence é tomada de acordo com o
 modelo de probabilidade máxima posterior (em inglês, \emph{maximum a posteriori
@@ -667,7 +716,7 @@ probabilidades, elas são estimadas a partir dos dados de treinamento.
 
 \begin{equation}
 \label{eq:map}
-c_{map} = \underset{c \in C}{\operatorname{arg\ max}} \hat{P}(c|x)
+  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
 \end{equation}
 
 A equação \eqref{eq:bayes} aplica o Teorema de Bayes para probabilidades
@@ -677,10 +726,12 @@ denominador é constante para todas as classes, portanto não afeta o $arg max$
 
 \begin{eqnarray}
 \label{eq:bayes}
-c_{map} & = & \underset{c \in C}{\operatorname{arg\ max}} \ \frac{\hat{P}(x|c) \hat{P}(c)}{\hat{P}(x)} \\
-{} & {} & {} \nonumber \\
+  c_{\mathit{map}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
+                         \frac{\hat{P}(x|c) \hat{P}(c)}{\hat{P}(x)} \\
+                {} & {} & {} \nonumber \\
 \label{eq:bayes_no_deno}
-        & = & \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(x|c) \hat{P}(c)
+                   & = & \underset{c \in C}{\operatorname{arg\ max}} \
+                         \hat{P}(x|c) \hat{P}(c)
 \end{eqnarray}
 
 É neste ponto que a independência de atributos é importante. Considera-se que
@@ -690,39 +741,41 @@ a ocorrência de atributos acontece independentemente, tem-se que:
 
 \begin{equation}
 \label{eq:independencia}
-\hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c) = \hat{P}(x_1|c) \times \hat{P}(x_2|c) \times ... \times \hat{P}(x_n|c)
+  \hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c) = \hat{P}(x_1|c)
+                 \times \hat{P}(x_2|c) \times ... \times \hat{P}(x_n|c)
 \end{equation}
 
 Portanto, a função de decisão pode ser reescrita através da equação
 \eqref{eq:bayes_prod}. Cada parâmetro condicional $\hat{P}(x_i|c)$ é um peso
 que representa a qualidade do atributo $x_i$ como indicador da classe $c$,
-enquanto que $\hat{P}(c)$.
+enquanto que $\hat{P}(c)$ é a frequência relativa da classe $c$.
 
 \begin{equation}
 \label{eq:bayes_prod}
-c_{map} = \underset{c \in C}{\operatorname{arg\ max}} \ \ \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
+  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
+                     \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
 \end{equation}
 
 Os parâmetros são obtidos através da estimativa de maior probabilidade (em
-inglês, \emph{maximum likelihood estimate (MLE)}), que é a frequência relativa
-e corresponde ao valor mais provável de cada parâmetro, de acordo com os dados
-de treinamento. A equação \eqref{eq:p_c} traz a estimativa de $\hat{P}(c)$,
-onde $N_c$ é o número de objetos da classe $c$ e $N$ é o número total de
-documentos.
+inglês, \emph{maximum likelihood estimate (MLE)}), que corresponde ao valor
+mais provável de cada parâmetro de acordo com os dados de treinamento. A
+equação \eqref{eq:p_c} traz a estimativa de $\hat{P}(c)$, onde $N_c$ é o
+número de objetos da classe $c$ e $N$ é o número total de documentos.
 
 \begin{equation}
 \label{eq:p_c}
-\hat{P}(c) = \frac{N_c}{N}
+  \hat{P}(c) = \frac{N_c}{N}
 \end{equation}
 
 As probabilidades condicionais são estimadas como a frequência relativa do
 atributo $x$ em objetos que pertencem à classe $c$. Na equação \eqref{eq:p_xc},
-$T_{cx}$ é o número de ocorrências de $x$ em objetos de exemplo da classe $c$ e
-$V$ é o conjunto de atributos que os objetos podem apresentar.
+$T_{\mathit{cx}}$ é o número de ocorrências de $x$ em objetos de exemplo da
+classe $c$ e $V$ é o conjunto de atributos que os objetos podem apresentar.
 
 \begin{equation}
 \label{eq:p_xc}
-\hat{P}(x|c) = \frac{T_{cx}}{\sum_{x' \in V} T_{cx'}}
+  \hat{P}(x|c) = \frac{T_{\mathit{cx}}}
+                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}}
 \end{equation}
 
 No entanto, a estimativa \emph{MLE} é zero para combinações atributo-classe que
@@ -736,7 +789,8 @@ zeros, adiciona-se $1$ a cada termo da equação \eqref{eq:p_xc}:
 
 \begin{equation}
 \label{eq:p_xc+1}
-\hat{P}(x|c) = \frac{T_{cx}+1}{\sum_{x' \in V} T_{cx'}+1}
+  \hat{P}(x|c) = \frac{T_{\mathit{cx}}+1}
+                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}+1}
 \end{equation}
 
 Apesar de a independência de atributos não ser verificada para a maioria
@@ -746,12 +800,14 @@ método ao fato de que pode haver dependência forte entre dois atributos, desde
 que as dependências sejam distribuídas igualmente nas classes. Segundo este
 argumento, a mera existência de dependências entre atributos não prejudicaria
 a classificação, mas sim o modo como as dependências estão distribuídas ao
-longo das classes.
+longo das classes. Por outro lado, segundo \cite{Manning}, a suposição de
+independência é análoga no modelo de espaço vetorial, onde cada atributo é
+representado na matriz por uma dimensão ortogonal a todas as outras.
 
 \vspace{0.3cm} \hspace{-1.4cm}
-\textbf{Variantes do modelo naïve Bayes}
+\textbf{Variantes do modelo Bayes ingênuo}
 
-As duas principais variantes de implementação do classificador Naïve Bayes são
+As duas principais variantes de implementação do classificador bayesiano são
 denominadas modelo \emph{multinomial} e modelo de \emph{Bernoulli} e diferem
 fundamentalmente na maneira como os objetos são representados.
 
@@ -770,14 +826,50 @@ qualquer termo do vocabulário, o que resulta numa representação do documento
 correspondente à sequência de termos do mesmo. Já para o modelo de
 \emph{Bernoulli}, um atributo pode assumir apenas os valores $0$ e $1$, e a
 representação do documento é uma sequência de $0$s e $1$s do tamanho do
-vocabulário. A figura \ref{fig:exemplo_bayes} ilustra as peculiaridades de cada
-representação.
+vocabulário.
+
+%A figura \ref{fig:exemplo_bayes} ilustra as peculiaridades de cada
+%representação.
+
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=.7\textwidth]{fig/todo.pdf}
+%\caption{Exemplo ilustrativo dos modelos multinomial e de Bernoulli}
+%\label{fig:exemplo_bayes}
+%\end{figure}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.7\textwidth]{fig/todo.pdf}
-\caption{Exemplo ilustrativo dos modelos multinomial e de Bernoulli}
-\label{fig:exemplo_bayes}
+\begin{tabular}{*4{c}}
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (1)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Por motivo \\ de segurança, \\
+    comunicamos a todos os clientes que atualizem sua senha por email.}}
+    \end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (2)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Atualização \\ urgente de \\  senha.
+    \\ \\ Clique aqui.}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (3)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Você foi \\ sorteado e \\ acaba de
+    ganhar 1 milhão de reais. Clique aqui e saiba como resgatar seu prêmio.}}
+    \end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (4)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Perca peso fácil e de forma divertida.
+    Pare de sofrer!}}\end{overpic} \\
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (5)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Emagreça 10kg em duas semanas! Clique
+    aqui e descubra como.}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (6)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Compre viagra com 69\% de desconto!}}
+    \end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (7)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Se você não pode mudar sua vida, mude
+    pelo menos a sua bolsa!}}\end{overpic} &
+\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (8)}
+  \put(5,44){\parbox{1.8cm}{\scriptsize Aprenda a investir na bolsa em uma
+    semana.}}\end{overpic}
+\end{tabular}
+\caption{Coleção de documentos classificados em \emph{spam} e \emph{não-spam}}
+\label{fig:colecao}
 \end{figure}
 
 \vspace{0.3cm} \hspace{-1.4cm}
@@ -803,7 +895,7 @@ métodos de escolha:
     classe. Informação mútua máxima significa que o atributo é um indicador
     perfeito para pertencimento a uma classe, que acontece quando um objeto
     apresenta o atributo se e somente se o objeto pertence à classe;
-  \item[Independência de eventos.] Aplicação do teste estatístico $X^2$ para
+  \item[Independência de eventos.] Aplicação do teste estatístico $\chi^2$ para
     avaliar a independência de dois eventos -- neste caso, um atributo e uma
     classe. Se os dois eventos são dependentes, então a ocorrência do atributo
     torna a ocorrência da classe mais provável.
@@ -845,11 +937,20 @@ na tabela \ref{tab:knn_distancia}.
   \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
   \begin{tabular}{| l | l |}
     \hline
-    Distância euclidiana & \T\B$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    Distância euclidiana &
+    \T\B$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
     \hline
-    Similaridade de cossenos & $sim(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|} = \frac{\sum_{1\leq i \leq n} x_i \times y_i}{\sqrt{\sum_{1\leq i \leq n} x_i^2}\times\sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
+    Similaridade de cosseno &
+    $sim(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
+              = \frac{\textstyle \sum_{1\leq i \leq n} x_i \times y_i}
+                     {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}\times
+                      \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
     \hline
-    Coeficiente de \emph{Pearson} & $p(X,Y) = \frac{\T\sum_{1 \leq i \leq n} (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}\times\sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
+    Coeficiente de \emph{Pearson} &
+    $p(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
+                                     (y_i-\bar{y})}
+                   {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
+                    \times\sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
     \hline
   \end{tabular}
 \end{table}
@@ -941,20 +1042,27 @@ consegue detectar todos os conjuntos frequentes sem a necessidade de calcular o
 suporte para todos os $2^n$ subconjuntos possíveis.
 
 A descoberta de conjuntos frequentes acontece por níveis, como uma busca em
-largura no diagrama de Hasse começando pelos conjuntos unitários (figura
-\ref{fig:diagrama_apriori}). Ao invés de gerar os conjuntos candidatos a partir
-da base de dados, a cada nível da busca é feita uma combinação dos elementos
-para gerar os candidatos do nível seguinte. Neste ponto a solução se beneficia
-do seguinte princípio: qualquer subconjunto de um conjunto frequente também é
-um conjunto frequente. Portanto, só devem participar da nova combinação os
-elementos que apresentarem um suporte superior ao limite, pois um conjunto que
-não é frequente não será jamais subconjunto de um conjunto frequente
-\cite{Agrawal:94}.
+largura no diagrama de Hasse começando pelos conjuntos unitários. Ao invés de
+gerar os conjuntos candidatos a partir da base de dados, a cada nível da busca
+é feita uma combinação dos elementos para gerar os candidatos do nível
+seguinte. Neste ponto a solução se beneficia do seguinte princípio: qualquer
+subconjunto de um conjunto frequente também é um conjunto frequente. Portanto,
+só devem participar da nova combinação os elementos que apresentarem um suporte
+superior ao limite, pois um conjunto que não é frequente não será jamais
+subconjunto de um conjunto frequente \cite{Agrawal:94}.
+
+A figura \ref{fig:diagrama_apriori} ilustra a descoberta dos conjuntos
+frequentes em contraposição com o conjunto das partes do conjunto $U =
+\{a,b,c,d,e\}$. Neste exemplo, os subconjuntos $\{e\}$, $\{a,b\}$ e $\{b,d\}$
+apresentaram suporte inferior ao limite, consequentemente todos os conjuntos
+dos quais estes são subconjuntos foram desconsiderados como conjuntos
+candidatos (nós em cinza na figura). Portanto, apenas os nós em branco teriam
+o suporte calculado.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{fig/diagrama_apriori.pdf}
-\caption{Descarte de conjuntos candidatos pelo algoritmo Apriori}
+\caption{Geração de conjuntos candidatos pelo algoritmo Apriori}
 \label{fig:diagrama_apriori}
 \end{figure}
 
@@ -1020,8 +1128,8 @@ itens semelhantes aos que eles já se interessaram no passado
 itens, por exemplo, através da identificação de atributos (autores e temas de
 livros, por exemplo). A partir dos atributos dos itens, aplica-se técnicas de
 recuperação da informação (por exemplo, \emph{tf-idf} e \emph{BM25}) para
-encontrar itens semelhantes ou de classificação (por exemplo, \emph{naïve
-Bayes}) para encontrar itens relevantes. Em uma livraria, sugerir ao cliente
+encontrar itens semelhantes ou de classificação (por exemplo, \emph{Bayes
+ingênuo}) para encontrar itens relevantes. Em uma livraria, sugerir ao cliente
 outros livros do mesmo autor ou tema de livros previamente selecionados é uma
 estratégia amplamente adotada.
 
@@ -1569,7 +1677,7 @@ apresentados na seção \ref{sec:selecao_atributos}.
 \begin{enumerate}[(a)]
   \item \textbf{Baseada em conteúdo}
 
-Pretende-se implementar as técnicas \emph{BM25} e \emph{naïve Bayes} para
+Pretende-se implementar as técnicas \emph{BM25} e \emph{Bayes ingênuo} para
 recomendações de pacotes com base na descrição dos pacotes já instalados
 pelo usuário.
 
@@ -1626,7 +1734,7 @@ composição das sugestões, alguns dos quais são descritos abaixo.
 O desenvolvimento de software será majoritariamente realizado na linguagem de
 programação \emph{Python}\footnote{\url{http://www.python.org/}},
 principalmente pela facilidade de integração com outras ferramentas do Debian
-também desenvolvidas nesta liguagem. Ademais, a vasta documentação e grande
+também desenvolvidas nesta linguagem. Ademais, a vasta documentação e grande
 variedade de bibliotecas de utilidade para o trabalho, a exemplo da
 \emph{NLTK}\footnote{\url{http://www.nltk.org/}}
 e \emph{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que contribuiram
