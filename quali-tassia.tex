@@ -12,6 +12,7 @@
 \usepackage{rotfloat}
 \usepackage{overpic}
 \usepackage{slashbox}
+\usepackage{ulem}
 
 \pagestyle{plain}
 
@@ -97,7 +98,7 @@ repositórios para compartilhamento de fotografia e vídeo, como Flickr
 entre outros. Considerando a produção em termos de software, observa-se o
 exemplo das comunidades de software livre e/ou de código aberto
 (FOSS\footnote{Termo consolidado no idioma inglês, acrônimo para
-\emph{Free/Open-Source Software}, que diz respeito aos programas licenciados
+\textit{Free/Open-Source Software}, que diz respeito aos programas licenciados
 livremente para garantir aos usuários o direito de uso, estudo e modificação,
 por meio da disponibilidade do seu código-fonte.}), que propiciam a construção
 coletiva de uma ampla gama de softwares de qualidade em constante atualização
@@ -105,7 +106,7 @@ e evolução, organizados na forma de um rossio \cite{Simon:08}.
 
 A grande diversidade de opções disponíveis nestes ambientes, apesar de positiva,
 representa uma sobrecarga de informações que pode confundir o usuário final.
-\cite{Yyengar:10} afirma que ``mais é menos'' (em inglês, \emph{``more is less''}), no
+\cite{Yyengar:10} afirma que ``mais é menos'' (em inglês, \textit{``more is less''}), no
 sentindo de que quanto maior for a disponibilidade de escolhas, menor será a
 satisfação do usuário. O fato é que comumente o indivíduo possui pouca ou
 nenhuma experiência pessoal para realizar escolhas em determinado contexto
@@ -184,22 +185,6 @@ dificuldades em distinguir qualitativamente e definir quantitativamente os
 fatores que a determinam. Portanto, com a ressalva de que estas medidas não
 representam necessariamente a realidade, as pontuações são usadas como
 aproximações, pois têm como base as avaliações registradas pelos próprios usuários.
-
-%Segundo \cite{Adomavicius:05}, o problema da recomendação pode ser formalizado
-%da seguinte maneira: Seja $C$ o conjunto de todos os usuários e $S$ o conjunto
-%de todos os itens que podem ser recomendados, como livros, filmes ou
-%restaurantes. O espaço $S$ de itens possíveis pode ser muito grande, variando
-%de centenas de milhares até milhões de itens em algumas aplicações.
-%Similarmente, o espaço de usuários também pode ser muito grande, milhões em
-%alguns casos. Seja $u$ uma função que mede a utilidade do item $s$ para o
-%usuário $c$, isto é, $u: C x S \rightarrow R$, onde $R$ é um conjunto ordenado
-%(por e\-xemplo, inteiros não negativos ou números reais num determinado
-%intervalo). Então, para cada usuário $c \in C$, deve-se escolher o item $s' \in
-%S$ que maximiza a função de utilidade. Mais formalmente, temos:
-%
-%\begin{equation}
-%\forall c \in C, s'_c = arg_{s \in S} max u(c,s)
-%\end{equation}
 
 \subsection{Ações} \label{sec:acoes}
 
@@ -300,33 +285,31 @@ por \cite{Vozalis:03} e são citadas a seguir.
 
 O desenvolvimento de sistemas de recomendação tem suas raízes em áreas
 distintas e o problema computacional a ser tratado está fortemente
-relacionado com outros problemas clássicos, como busca por informação e
-classificação.
+relacionado com outros problemas clássicos, como recuperação de informação em
+documentos de texto e classificação.
 
 A fim de obter a informação desejada, o usuário de uma ferramenta de busca
-deve traduzir suas necessidades de informação para uma consulta (\emph{query}
-em inglês), que normalmente é representada por um conjunto de
-\emph{palavras-chave}. A coleção de palavras-chave presentes no universo de
-busca, é denominado \emph{dicionário}. No cenário de recuperação da informação
-numa coleção de documentos de texto, o desafio do buscador é recuperar os
-documentos que sejam relevantes para a consulta, a partir dos termos da mesma.
+deve traduzir suas necessidades de informação para uma consulta (\textit{query}
+em inglês), que geralmente é representada por um conjunto de \textit{palavras-
+chave}. O desafio do buscador é recuperar os documentos da coleção que são
+relevantes para a consulta, baseando-se nos termos que a constituem.
 Ademais, visto que a busca pode retornar um número excessivo de documentos, é
 desejável que este resultado seja apresentado ao usuário em ordem decrescente
 de relevância, aumentando assim as chances de a informação desejada ser
 encontrada com rapidez. Para tanto, cada documento da coleção deve ter uma
 pontuação (peso) que indique seu grau de importância para a referida
-\emph{query}. Traçando um paralelo com o problema de recomendação, a identidade
-e/ou o comportamento do usuário representaria a consulta ao sistema de busca,
-que provocaria o retorno dos itens de maior peso, ou seja, com maior potencial
-de aceitação pelo usuário.
+\textit{query}. Traçando um paralelo com o problema de recomendação, a
+identidade e/ou o comportamento do usuário representaria a consulta ao sistema
+de busca, que provocaria o retorno dos itens de maior peso, ou seja, com maior
+potencial de aceitação pelo usuário.
 
 Na busca por informação, assume-se que as necessidades do usuário são
-particulares e passageiras, e por isso a reincidência de \emph{queries} não é
+particulares e passageiras, e por isso a reincidência de \textit{queries} não é
 muito frequente \cite{Manning:09}. Porém, em situações onde se observa que as
 mesmas consultas são aplicadas com uma certa frequência, é interessante que o
 sistema suporte consultas permanentes. Desta forma a computação necessária pode
 ser realizada previamente e apresentada sempre que a consulta for requisitada.
-Se a classe de documentos que satisfazem a uma dessas \emph{queries}
+Se a classe de documentos que satisfazem a uma dessas \textit{queries}
 permanentes é tida como uma categoria, o processo de realização das consultas
 prévias pode ser caracterizado como uma classificação. O problema da
 classificação diz respeito à determinação de relacionamentos entre um dado
@@ -349,33 +332,79 @@ que também são utilizadas na construção de sistemas de recomendação, dando
 suporte às estratégias apresentadas na seção \ref{sec:estrategias}.
 
 \vspace{-0.3cm}
-\subsubsection{Medida \emph{tf-idf}}
+\subsubsection{Medida \textit{tf-idf}}
 
-Acrônimo para \emph{term frequency - inverse document frequency}, o
-$\tfidf$ é uma medida de peso clássica utilizada por buscadores para ordenar o
-resultado da consulta pela relevância dos itens.
+Acrônimo para \textit{term frequency - inverse document frequency}, $\tfidf$ é
+uma medida de peso clássica utilizada em ferramentas de busca em texto para
+ordenação do resultado da consulta pela relevância dos documentos.
 
-No cálculo de relevância normalmente são desconsiderados alguns termos,
-designados como \emph{stop words}, que são muito frequentes e pouco
-informativos acerca do teor do documento. Artigos e pronomes, por exemplo,
-normalmente figuram nesta categoria. Geralmente é realizada também uma
-normalização morfológica com o intuito de identificar os radicais e eliminar
-variações como plurais e flexões verbais. No idioma inglês, este processo é
-denominado \emph{stemming}.
+O universo da busca é uma coleção de documentos de texto. Um documento por sua
+vez é uma coleção de palavras, geralmente referenciadas como \textit{termos do
+documento}. O conjunto de todas as palavras presentes nos documentos da
+coleção é denominado \textit{dicionário} ou \textit{vocabulário}. Desta forma,
+um documento $d$ composto por $n$ termos do vocabulário $V$ pode ser
+representado como $d = \{t_1, t_2, ..., t_n | 1 \leq i \leq n, t_i \in V\}$.
 
-A simples presença de um termo da \emph{query} em um documento da coleção já é
-um indicativo de que o mesmo tem alguma relação com a consulta, que pode ser
-forte ou fraca, em diversos graus. Porém, para a recuperação de informações,
-além da presença também é importante conhecer a frequência dos termos em
-um documento. Intuitivamente, os documentos que referenciam os termos de uma
-\emph{query} com mais frequência estão mais fortemente relacionados com a
-mesma, e por isso deveriam receber uma pontuação maior. Desta forma, para cada
-termo do documento é atribuído um peso proporcional ao número de ocorrências do
-mesmo, designado como $\tf_{t,d}$ (\emph{term frequency}). Em sua
-abordagem mais simples, $\tf_{t,d}$ é igual ao número de ocorrências do
-termo $t$ no documento $d$. A figura \ref{fig:colecao} ilustra uma coleção de
-documentos e na tabela \ref{tab:tfidf} estão os valores de $\tf_{t,d}$ de
-cada documento para alguns termos do dicionário.
+Contudo, alguns termos do vocabulário, designados como \textit{stop words}, são
+normalmente desconsiderados no cálculo de relevância dos documentos por serem
+muito frequentes na coleção e, em decorrência disto, pouco informativos acerca
+do teor dos textos. Artigos e pronomes, por exemplo, geralmente figuram nesta
+categoria.
+
+Outra consideração acerca da representação dos documentos como conjuntos de
+termos é a realização de normalizações morfológicas. Diferentes palavras que
+dizem respeito ao mesmo conceito podem ser utilizadas ao longo de uma coleção,
+por exemplo, os termos \textit{casa}, \textit{casinha} e \textit{casas}. Em
+certos contextos, deseja-se que a busca por uma determinada variante retorne
+ocorrências de todas as outras possibilidades. Neste caso, os termos devem ser
+tratados em sua forma normalizada, eliminando variações como plurais e flexões
+verbais. Os processos mais comuns de normalização são: \textit{stemming}, que
+reduz a palavra ao seu radical; e \textit{lematização}, que reduz a palavra à
+sua forma canônica (por exemplo, verbos no infinitivo, substantivos no singular
+masculino etc). A figura \ref{fig:normalizacao} apresenta um documento de texto
+numa coleção hipotética e a sua representação após eliminação de \textit{stop
+words} e um procedimento de \textit{stemming}.
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{*3{c}}
+\begin{overpic}[width=2.8cm]{fig/doc_background.png}
+  \put(12,44){\parbox{1.8cm}{\scriptsize August\sout{a}, graç\sout{as} \sout{a}
+    deus, entr\sout{e} \sout{você} \sout{e} \sout{a} Angél\sout{ica},
+    \sout{eu} encontr\sout{ei} \sout{a} Consol\sout{ação}, \sout{que}
+    v\sout{eio} olh\sout{ar} \sout{por} \sout{mim} \sout{e} \sout{me}
+    d\sout{eu} \sout{a} mão.}}\end{overpic}  &
+\raisebox{1.5cm}{\Huge $\Longrightarrow$} &
+\begin{overpic}[width=2.8cm]{fig/doc_background.png}
+  \put(12,44){\parbox{1.8cm}{\scriptsize august \ \ \ grac \\ deus entr angel
+    encontr consol v\ \ \  olh\ \ \  d\ \ \  mão}}\end{overpic}
+\end{tabular}
+\caption{Eliminação de \textit{stop words} e normalização do documento por
+         \textit{stemming}}
+\label{fig:normalizacao}
+\end{figure}
+
+A simples presença de um termo da \textit{query} em um documento da coleção já
+é um indicativo de que o mesmo tem alguma relação com a consulta. No entanto, a
+quantidade de vezes que o termo ocorre é mais informativo sobre sua relação com
+o conteúdo do documento. Intuitivamente, os documentos que referenciam os
+termos de uma \textit{query} com mais frequência estão mais fortemente
+relacionados com a mesma, e por isso deveriam receber uma maior pontuação de
+relevância. O peso $\tf_{t,d}$ (\textit{term frequency}) quantifica esta noção
+intuitiva, relacionando documentos da coleção e termos do dicionário de acordo
+com a frequência destes nos documentos. Em sua abordagem mais simples,
+$\tf_{t,d}$ é igual ao número de ocorrências do termo $t$ no documento $d$.
+
+A figura \ref{fig:colecao} ilustra uma coleção de documentos, cujos valores de
+$\tf_{t,d}$ para alguns termos do dicionário são apresentados na tabela
+\ref{tab:tf}. Por exemplo, a palavra \textit{morena} ocorre duas vezes
+no documento $(1)$, por isso $\tf_{\mathit{moren},1} = 2$. O cálculo do
+$\tf$s já considera os radicais dos termos, resultantes de um processo de
+\textit{stemming}. Em razão disto, $\tf_{\mathit{olh},2} = 3$, pois tanto a
+palavra \textit{olho} quanto as diferentes flexões do verbo \textit{olhar}
+contribuem para a contagem de frequência do termo \textit{olh}. Na tabela, os
+radicais dos vocábulos são seguidos por algumas variações, a título de
+ilustração.
 
 \begin{figure}[ht]
 \centering
@@ -410,137 +439,190 @@ cada documento para alguns termos do dicionário.
 \label{fig:colecao}
 \end{figure}
 
+\begin{table}[h]
+  \caption{Frequência dos termos nos documentos da coleção}
+  \label{tab:tf}
+  \centering
+  \begin{tabular}{| l | c | c | c | c | c | c | c | c |}
+    \hline
+    \multicolumn{9}{|c|}{\textbf{\textit{tf$_{t,d}$}}}\\
+    \hline
+    \backslashbox{\textbf{\textit{Termo}}}{\vspace{-0.2cm}\textbf{\textit{Doc}}}&
+    \textbf{\small{(1)}}&\textbf{\small{(2)}}&\textbf{\small{(3)}}&
+    \textbf{\small{(4)}}&\textbf{\small{(5)}}&\textbf{\small{(6)}}&
+    \textbf{\small{(7)}}&\textbf{\small{(8)}}\\
+    \hline
+    moren \textit{\{a,o\}} & $2$ & $1$ & $0$ & $1$ & $0$ & $1$ & $1$ & $1$ \\
+    \hline
+    roup \textit{\{a,ão\}} & $2$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+    \hline
+    don \textit{\{a,o\}} & $2$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+    \hline
+    crav \textit{\{o,eiro\}} & $0$ & $0$ & $2$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+    \hline
+    canel \textit{\{a,eira\}} & $0$ & $1$ & $0$ & $0$ & $0$ & $1$ & $0$ & $1$ \\
+    \hline
+    olh \textit{\{o,ar\}} & $0$ & $3$ & $0$ & $2$ & $0$ & $0$ & $0$ & $0$ \\
+    \hline
+    ros \textit{\{a,eira\}} & $0$ & $0$ & $1$ & $0$ & $2$ & $0$ & $2$ & $0$ \\
+    \hline
+    bob \textit{\{o,agem\}} & $0$ & $0$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
 O conjunto de pesos determinado pelos $\tf$s dos termos de um documento
 pode ser entendido como um resumo quantitativo do mesmo. Esta visão do
 documento é comumente referenciada na literatura como ``saco de palavras'' (em
-inglês, \emph{``bag of words''}), onde a disposição das palavras é ignorada e
+inglês, \textit{``bag of words''}), onde a disposição das palavras é ignorada e
 apenas a quantidade de ocorrências para cada termo é considerada.
 
 No entanto, alguns termos têm pouco poder de discriminação na determinação
 de relevância de um documento, por estarem presentes em quase todos os
 documentos. Ao passo que existem outros muito raros que quando presentes
-são forte indicativo de relevância. Por exemplo, supondo uma \emph{query}
-composta por dois termos, um muito frequente e outro muito raro, dois
-documentos que contenham apenas um deles com a mesma frequência terão o mesmo
-valor de $\tf$. Porém, enquanto este valor de $\tf$ se repete ao longo
-da coleção para o termo frequente, ele pode ser único para o termo raro, o que
-de fato diferencia tal documento dos outros. O $\idf_t$ (\emph{inverse
-document frequency}) foi então introduzido para atenuar o efeito de termos
-usuais no cálculo de relevância, diminuindo o peso de um termo por um fator que
-cresce com sua frequência na coleção. Na equação \eqref{eq:idf}, $N$ representa
-o número de documentos da coleção e $\df_t$ (\emph{document frequency})
-é o número de documentos que contém o termo $t$. Valores de $\idf_t$ para
-a coleção da figura \ref{fig:colecao} são apresentados na tabela
-\ref{tab:tfidf}.
+são forte indicativo de relevância. No contexto da coleção da figura
+\ref{fig:colecao}, por exemplo, a \textit{query} \{morena, bobagem\} é composta
+por um termo muito frequente e outro muito raro. Coincidentemente, os
+documentos $(3)$ e $(5)$, contém apenas um dos dois elementos da consulta,
+porém ambos apresentam $\tf_{t,d}=1$ para os respectivos termos. Todavia,
+enquanto esta frequência se repete ao longo da coleção múltiplas vezes para o
+termo \textit{morena}, ela é única para o termo \textit{bobagem}, o que de fato
+diferencia o documento $(5)$ dos demais.
+
+O $\idf_t$ (\textit{inverse document frequency}) foi então introduzido para
+atenuar o efeito de termos muito comuns no cálculo de relevância, diminuindo o
+peso de um termo por um fator que cresce com sua frequência em documentos na
+coleção \cite{Manning:09}. A equação \eqref{eq:idf} apresenta a forma clássica
+do $\idf$, na qual $N$ representa o número de documentos da coleção e $\df_t$
+(\textit{document frequency}) é o número de documentos que contém o termo $t$.
+É comum que o universo da busca seja uma coleção de documentos de alta
+cardinalidade, o que provoca valores de $\df_t$ muito discrepantes. O uso do
+$\log$ diminui a escala de valores, permitindo que frequências muito grandes e
+muito pequenas sejam comparadas sem problemas.
 
 \begin{equation}
 \label{eq:idf}
-\idf_t = log \frac{N}{\df_t}
+\idf_t = \log \frac{N}{\df_t}
 \end{equation}
 
-A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
-\eqref{eq:tfidf}), produzindo um peso composto com as seguintes propriedades
-\cite{Manning:09}:
+Valores de $\idf_t$ para a coleção da figura \ref{fig:colecao} são apresentados
+na tabela \ref{tab:idf}. Novamente os radicais dos termos são considerados:
+$\idf_\mathit{morena} = \idf_\mathit{moren} = \log \frac{8}{6} = 0.12$,
+enquanto $\idf_\mathit{bobagem} = \idf_\mathit{bob} = \log \frac{8}{1} = 0.9$.
 
-\begin{enumerate}
-  \item É alta quando ocorre muitas vezes em poucos documentos;
-  \item Diminui quando ocorre menos vezes num documento ou em muitos documentos;
-  \item É muito baixa quando o termo ocorre em quase todos os documentos.
-\end{enumerate}
-
-\begin{equation}
-\label{eq:tfidf}
-\tfidf_{t,d} = \tf_{t,d} \times \idf_t
-\end{equation}
-
-\begin{table}
-  \caption{Valores de $\tf_{t,d}$ e $\idf_t$ para documentos da coleção}
-  \label{tab:tfidf}
+\begin{table}[h]
+  \caption{Valores de \textbf{\textit{idf$_t$}} para termos do dicionário}
+  \label{tab:idf}
   \centering
-  \begin{tabular}{| l | c | c | c | c | c | c | c | c | c |}
+  \begin{tabular}{| l | c | c | c | c | c | c | c | c |}
     \hline
-    \multirow{2}{*}{\backslashbox{\textbf{\emph{Termo}}}
-                                 {\textbf{\emph{Doc}}}}&
-    \textbf{\small{(1)}}&\textbf{\small{(2)}}&\textbf{\small{(3)}}&
-    \textbf{\small{(4)}}&\textbf{\small{(5)}}&\textbf{\small{(6)}}&
-    \textbf{\small{(7)}}&\textbf{\small{(8)}}&
-    \multirow{2}{*}{\textbf{$\idf_t$}}\\
-    \cline{2-9}
-    &\multicolumn{8}{c|}{\textbf{$\tf_{t,d}$}}&\\
+    \textbf{\textit{Termo}} &
+    moren & roup & don & crav & canel & olh & ros & bob\\
     \hline
-    morena & $2$ & $1$ & & $1$ & & $1$ & $1$ & $1$ & $0.12$\\
-    \hline
-    roupa & $2$ & & & & & & & & $0.9$\\
-    \hline
-    dona & $2$ & & & & & & & $1$ & $0.6$\\
-    \hline
-    cravo & & & $2$ & & & & & $1$ & $0.6$\\
-    \hline
-    canela & & $1$ & &  & & $1$ & & $1$ & $0.42$\\
-    \hline
-    olhos & & $1$ & & $4$ & & & & & $0.6$\\
-    \hline
-    rosa & & & $1$ & & $2$ & & $2$ & & $0.42$\\
-    \hline
-    angola & & & & & & $1$ & & & $0.9$\\
+    \textbf{\textit{idf$_t$}} &
+    $0.12$ & $0.9$ & $0.6$ & $0.6$ & $0.42$ & $0.6$ & $0.42$ & $0.9$\\
     \hline
   \end{tabular}
 \end{table}
 
-Considerando os pesos $\tfidf$ dos termos do dicionário em cada
-documento, um cálculo possível de pontuação de um documento para uma
-determinada \emph{query} seria a soma dos pesos dos termos da consulta
-(equação \eqref{eq:ranking}). A tabela \ref{tab:tfidf-resultado}
-apresentam o resultado das respectivas consultas ao sistema de busca, no
-que diz respeito à ordenação dos documentos.
+A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
+\eqref{eq:tfidf}), produzindo um peso composto com as seguintes propriedades:
+
+\begin{enumerate}
+  \item É alto quando $t$ ocorre muitas vezes em $d$ e em poucos documentos da
+        coleção (ambos $\tf$ e $\idf$ são altos);
+  \item Diminui quando ocorre menos vezes em $d$ ($\tf$ mais baixo) ou em
+        muitos documentos da coleção ($\idf$ mais baixo);
+  \item É muito baixa quando o termo ocorre em quase todos os documentos
+        (mesmo para valores altos de $\tf$, para termos muito comuns o peso
+        $\idf$ domina a fórmula, em decorrência do uso do $\log$).
+\end{enumerate}
+
+\begin{equation}
+\label{eq:tfidf}
+\tfidf_{t,d} = \tf_{t,d} \cdot \idf_t
+\end{equation}
+
+Considerando os pesos $\tfidf$ dos termos do dicionário em cada documento, a
+pontuação de relevância de um documento para uma determinada \textit{query}
+($R_{d,q}$) pode ser determinada pela soma dos pesos dos termos da consulta
+(equação \eqref{eq:ranking}).
 
 \begin{equation}
 \label{eq:ranking}
 R_{d,q} = \sum_{t \in q} \tfidf_{t,d}
 \end{equation}
 
+A tabela \ref{tab:tfidf-resultado} apresenta a ordenação dos documentos da
+coleção como resultado do cálculo de relevância por $\tfidf$ para as
+consultas $q_1 = \{\mathsf{morena}\}$, $q_2 = \{\mathsf{morena, bobagem}\}$ e
+$q_3 = \{\mathsf{morena, dona, rosa}\}$. Os valores $\tfidf_{t,d}$ foram
+obtidos a partir da equação \eqref{eq:tfidf}, com os pesos das tabelas
+\ref{tab:tf} e \ref{tab:idf}. Por exemplo, $\tfidf_{\mathit{morena,1}} =
+\tf_{\mathit{morena,1}} \cdot \idf_{\mathit{morena}} = 2 \cdot 0.12 = 0.24$.
+
 \begin{table}[h]
-  \caption{Ordenação dos documentos como resultado de consultas.}
+  \caption{Ordenação dos documentos como resultado de consultas}
   \label{tab:tfidf-resultado}
   \centering
-  \begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c |}
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    \multirow{2}{*}{doc} & query & \multirow{2}{*}{$R_{d,q}$} & &
-    \multirow{2}{*}{doc} & \multicolumn{2}{|c|}{query} & \multirow{2}{*}{$R_{d,q}$} &&
-    \multirow{2}{*}{doc} & \multicolumn{2}{|c|}{query} & \multirow{2}{*}{$R_{d,q}$} \\
-    \cline{2-2}\cline{6-7}\cline{11-12}
-    & \emph{morena} & & & & \emph{morena} & \emph{canela} & & & & \emph{morena} &\emph{rosa} & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    (1) & $0.24$ & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    (2) & $0.12$ & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    (4) & $0.12$ & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    (6) & $0.12$ & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    (7) & $0.12$ & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    (8) & $0.12$ & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    & & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
-    & & & & & & & & & & & & \\
-    \cline{1-3}\cline{5-8}\cline{10-13}
+  \small
+  \begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c | c |}
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    \multirow{2}{*}{doc} & $q_1$ & \multirow{2}{*}{$R_{d,q}$} & &
+    \multirow{2}{*}{doc} & \multicolumn{2}{|c|}{$q_2$} & \multirow{2}{*}{$R_{d,q}$} &&
+    \multirow{2}{*}{doc} & \multicolumn{3}{|c|}{$q_3$} & \multirow{2}{*}{$R_{d,q}$} \\
+    \cline{2-2}\cline{6-7}\cline{11-13}
+    & \textit{morena} & & & &
+      \textit{morena} & \textit{bobagem} & & & &
+      \textit{morena} &\textit{dona} & \textit{rosa} & \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (1) & $0.24$ & $0.24$ & &
+    (5) & $0$ & $0.9$ & $0.9$ & &
+    (1) & $0.24$ & $1.2$ & $0$ & $1.44$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (2) & $0.12$ & $0.12$ & &
+    (1) & $0.12$ & $0$ & $0.12$ & &
+    (8) & $0.12$ & $1.2$ & $0$ & $1.32$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (4) & $0.12$ & $0.12$ & &
+    (2) & $0.12$ & $0$ & $0.12$ & &
+    (7) & $0.12$ & $0$ & $0.84$ & $0.96$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (6) & $0.12$ & $0.12$ & &
+    (4) & $0.12$ & $0$ & $0.12$ & &
+    (5) & $0$ & $0$ & $0.84$ & $0.84$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (7) & $0.12$ & $0.12$ & &
+    (6) & $0.12$ & $0$ & $0.12$ & &
+    (3) & $0$ & $0$ & $0.42$ & $0.42$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (8) & $0.12$ & $0.12$ & &
+    (7) & $0.12$ & $0$ & $0.12$ & &
+    (2) & $0.12$ & $0$ & $0$ & $0.12$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (3) & $0$ & $0$ & &
+    (8) & $0.12$ & $0$ & $0.12$ & &
+    (4) & $0.12$ & $0$ & $0$ & $0.12$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
+    (5) & $0$ & $0$ & &
+    (3) & $0$ & $0$ & $0$ & &
+    (6) & $0.12$ & $0$ & $0$ & $0.12$ \\
+    \cline{1-3}\cline{5-8}\cline{10-14}
   \end{tabular}
 \end{table}
 
 Existem diversas variantes para o cálculo da medida $\tfidf_{t,d}$,
-propostas ao longo do tempo com o intuito de resolver anomalias e aperfeiçoar
-a busca. Por exemplo, é pouco provável que a presença de uma palavra 20 vezes
-num documento tenha de fato 20 vezes mais representatividade que uma ocorrência
-única. O logaritmo pode ser incorporado no cálculo do $\tf$ para atenuar o
-crescimento do peso para valores crescentes de frequência. Outras abordagens
-alternativas utilizam normalizações por diversas medidas: pelo comprimento do
-documento, pelo comprimento médio dos documentos da coleção, pelo $\tf$
-máximo ou médio entre os $\tf$s de todos os termos do documento, entre
-outros. É comum também que elementos constantes sejam introduzidos para
-suavizar um ou outro fator da fórmula.
+propostas com o intuito de resolver anomalias nas fórmulas mais simples e
+aperfeiçoar o processo de busca. Por exemplo, é pouco provável que a presença
+de uma palavra 20 vezes num documento tenha de fato 20 vezes mais
+representatividade do que uma ocorrência única. O logaritmo pode ser
+incorporado também ao cálculo do $\tf$ para atenuar o crescimento do peso para
+valores crescentes de frequência. Outras abordagens alternativas utilizam
+normalizações por diversas medidas: pelo comprimento do documento, pelo
+comprimento médio dos documentos da coleção, pelo $\tf$ máximo ou médio entre
+os $\tf$s de todos os termos do documento, entre outros. É comum também que
+elementos constantes sejam introduzidos para suavizar um ou outro fator da
+fórmula.
 
 \vspace{0.3cm}
 \hspace{-1.4cm}
@@ -551,8 +633,46 @@ sendo cada documento descrito como um vetor de termos do dicionário e os
 respectivos pesos $\tfidf$ no documento. Tem-se como resultado uma visão
 da coleção como uma matriz de dimensões $M \times N$, na qual as linhas
 representam os $M$ termos do dicionário e as colunas os $N$ documentos da
-coleção. Esta representação, conhecida como \emph{modelo de espaço vetorial}, é
-amplamente utilizada em soluções para recuperação da informação.
+coleção. Esta representação, conhecida como \textit{modelo de espaço vetorial},
+é amplamente utilizada em soluções para recuperação da informação.
+
+Assumindo que o vocabulário se restringe apenas aos termos para os quais os
+valores de $\tf$ e $\idf$ foram calculados (tabelas \ref{tab:tf} e
+\ref{tab:idf}), a coleção de documentos da figura \ref{fig:colecao} pode ser
+representada no modelo de espaço vetorial pela matriz da tabela
+\ref{tab:colecao_mev}.
+
+\begin{table}[h]
+  \caption{Representação da coleção no modelo de espaço vetorial}
+  \label{tab:colecao_mev}
+  \centering
+  \begin{tabular}{| l | c | c | c | c | c | c | c | c |}
+    \hline
+    \multicolumn{9}{|c|}{\textbf{\textit{tf-idf$_{t,d}$}}}\\
+    \hline
+    \backslashbox{\textbf{\textit{Termo}}}{\vspace{-0.2cm}\textbf{\textit{Doc}}}&
+    \textbf{\small{(1)}}&\textbf{\small{(2)}}&\textbf{\small{(3)}}&
+    \textbf{\small{(4)}}&\textbf{\small{(5)}}&\textbf{\small{(6)}}&
+    \textbf{\small{(7)}}&\textbf{\small{(8)}}\\
+    \hline
+    moren & $0.24$ & $0.12$ & $0$ & $0.12$ & $0$ & $0.12$ & $0.12$ & $0.12$ \\
+    \hline
+    roup & $1.8$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+    \hline
+    don & $1.2$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0.6$ \\
+    \hline
+    crav & $0$ & $0$ & $1.2$ & $0$ & $0$ & $0$ & $0$ & $0.6$ \\
+    \hline
+    canel & $0$ & $0.42$ & $0$ & $0$ & $0$ & $0.42$ & $0$ & $0.42$ \\
+    \hline
+    olh & $0$ & $1.8$ & $0$ & $1.2$ & $0$ & $0$ & $0$ & $0$ \\
+    \hline
+    ros & $0$ & $0$ & $0.42$ & $0$ & $0.84$ & $0$ & $0.84$ & $0$ \\
+    \hline
+    bob & $0$ & $0$ & $0$ & $0$ & $0.9$ & $0$ & $0$ & $0$ \\
+    \hline
+  \end{tabular}
+\end{table}
 
 %\newpage
 \vspace{0.3cm}
@@ -581,32 +701,38 @@ cosseno com $d$. Para tanto, pode-se calcular os valores $sim(d,d_i)$ entre
 $d$ e os demais $d_i$ documentos da coleção e os maiores valores indicarão os
 documentos mais semelhantes.
 
-Considerando o fato de que \emph{queries}, assim como documentos, são um
+Considerando o fato de que \textit{queries}, assim como documentos, são um
 conjunto me palavras, elas também podem ser representadas como vetores no
 modelo de espaço vetorial. Portanto a similaridade de cosseno pode ser
 utilizada na busca por documentos relevantes para uma consulta, que serão os
-que mais se assemelham à referida \emph{query}. Após o cálculo de similaridade
-de cosseno entre os vetores da \emph{query} e dos documentos da coleção, os
-maiores valores indicarão os documentos mais relevantes para a mesma.
+que mais se assemelham à referida \textit{query}. Após o cálculo de
+similaridade de cosseno entre os vetores da \textit{query} e dos documentos da
+coleção, os maiores valores indicarão os documentos mais relevantes para a
+mesma.
+
+A figura \ref{} ilustra o cálculo de relevância por similaridade de cosseno,
+reconsiderando as consultas $q_1$, $q_2$ e $q_3$ no espaço vetorial da tabela
+\ref{tab:colecao_mev}.
+
 
 \subsubsection{Okapi BM25}
 
-O modelo \emph{Okapi BM25} figurou por diversos anos como o melhor esquema de
-pesos probabilísticos nas avaliações do TREC\footnote{O \emph{Text Retrieval
-Conference (TREC)} é uma conferência anual realizada pelo \emph{U.S. National
+O modelo \textit{Okapi BM25} figurou por diversos anos como o melhor esquema de
+pesos probabilísticos nas avaliações do TREC\footnote{O \textit{Text Retrieval
+Conference (TREC)} é uma conferência anual realizada pelo \textit{U.S. National
 Institute of Standards and Technology (NIST)} que promove uma ampla competição
 em recuperação da informação de grandes coleções de texto com o intuito de
 incentivar pesquisas na área.} e é considerado o estado da arte em recuperação
 da informação \cite{Perez:09}. É uma evolução de outros dois esquemas,
-\emph{BM11} e \emph{BM15} (\emph{BM} de \emph{"Best Match"}), sendo
+\textit{BM11} e \textit{BM15} (\textit{BM} de \textit{"Best Match"}), sendo
 fundamentado teoricamente na disciplina de probabilidade discreta, ao modelar
 a frequência de termos em documentos utilizando distribuições de
-\emph{Poisson}. Seu nome advém do primeiro sistema no qual foi implementado, denominado \emph{Okapi}.
+\textit{Poisson}. Seu nome advém do primeiro sistema no qual foi implementado, denominado \textit{Okapi}.
 
-O \emph{BM25} utiliza os componentes estatísticos do $\tfidf$, porém numa
+O \textit{BM25} utiliza os componentes estatísticos do $\tfidf$, porém numa
 combinação diferente, além de considerar informações como o comprimento dos
-documentos, a frequência dos termos na \emph{query} e outros fatores
-constantes. A fórmula do \emph{BM25} é melhor compreendida através da análise
+documentos, a frequência dos termos na \textit{query} e outros fatores
+constantes. A fórmula do \textit{BM25} é melhor compreendida através da análise
 de seus três componentes principais, que neste trabalho são denominados de
 $\pt$, $\pd$ e $\pq$.
 
@@ -632,13 +758,13 @@ adicional é mínimo \cite{Jones:00}.
 
 O parâmetro $b \in [0,1]$ foi introduzido para ajustar o grau de normalização
 pelo comprimento dos documentos. Se a configuração for $b=1$, a normalização
-tem efeito completo (equivalente ao modelo \emph{BM11}). Valores menores
+tem efeito completo (equivalente ao modelo \textit{BM11}). Valores menores
 reduzem este efeito. Se $b=0$, o comprimento do documento não afeta a pontuação
-final, (como no modelo \emph{BM15}).
+final, (como no modelo \textit{BM15}).
 
 O segundo componente do peso ($\pd$) considera informações da atestação de
-relevância provida pelo usuário (em inglês, \emph{relevance feedback}\footnote{
-\emph{Relevance feedback} é o mecanismo através do qual o usuário avalia o
+relevância provida pelo usuário (em inglês, \textit{relevance feedback}\footnote{
+\textit{Relevance feedback} é o mecanismo através do qual o usuário avalia o
 resultado da consulta, marcando os itens retornados como relevantes ou
 irrelevantes, informação que é posteriormente utilizada para refinar a
 consulta}), quando disponível. Na equação \eqref{eq:pd_rf}, $N$ é o número
@@ -648,7 +774,7 @@ documentos relevantes que contém o termo $t$.
 
 \begin{equation}
 \label{eq:pd_rf}
-  \pd_t = log \frac{(r+0.5)(N-\df_t-R+r+0.5)}
+  \pd_t = \log \frac{(r+0.5)(N-\df_t-R+r+0.5)}
                                {(R-r+0.5)(\df_t-r+0.5)}
 \end{equation}
 
@@ -659,13 +785,13 @@ $\pd$ a partir do estabelecimento de que $R=r=0$ na equação acima (equação
 
 \begin{equation}
 \label{eq:pd}
-  \pd_t = log \frac{N-\df_t+0.5}{\df_t+0.5}
+  \pd_t = \log \frac{N-\df_t+0.5}{\df_t+0.5}
 \end{equation}
 
 A terceira parte da expressão, definida aqui como $\pq_{t,q}$ (equação
-\eqref{eq:pq}, permite a consideração da frequência do termo na \emph{query},
+\eqref{eq:pq}, permite a consideração da frequência do termo na \textit{query},
 que é apropriada para o caso de consultas longas, podendo ser desconsiderada
-para \emph{queries} com poucos termos.
+para \textit{queries} com poucos termos.
 
 \begin{equation}
 \label{eq:pq}
@@ -673,26 +799,26 @@ para \emph{queries} com poucos termos.
 \end{equation}
 
 De forma análoga ao $\tfidf$, o cálculo da pontuação do documento $d$ para
-a \emph{query} $q$ no modelo \emph{BM25} pode ser realizado através da fórmula
+a \textit{query} $q$ no modelo \textit{BM25} pode ser realizado através da fórmula
 \eqref{eq:bm25}.
 
 \begin{equation}
 \label{eq:bm25}
-R_{d,q} = \sum_{t \in q} \pt_{t,d} \times pd_t \times pq_{t,q}
+R_{d,q} = \sum_{t \in q} \pt_{t,d} \cdot pd_t \cdot pq_{t,q}
 \end{equation}
 
-O \emph{BM25} é amplamente utilizado em diversos tipos de busca e coleções.
+O \textit{BM25} é amplamente utilizado em diversos tipos de busca e coleções.
 Este modelo tem obtido sucesso especialmente nas avaliações do TREC, o que
 provocou sua adoção por muitos grupos \cite{Jones:00}. A título de exemplo,
 o Xapian\footnote{\url{http://xapian.org/}} e o
 Lucene\footnote{\url{http://lucene.apache.org/}}, bibliotecas livres para
 construção de ferramentas de busca, são projetos de grande destaque na
-comunidade que utilizam o \emph{BM25} como medida de pesos \cite{Betts:07}
+comunidade que utilizam o \textit{BM25} como medida de pesos \cite{Betts:07}
 \cite{Perez:09}.
 
 \subsubsection{Classificador bayesiano}
 
-\emph{Bayes ingênuo} é uma solução para classificação que figura entre os
+\textit{Bayes ingênuo} é uma solução para classificação que figura entre os
 algoritmos de aprendizado de máquina supervisionados. Tais métodos fundamentam-
 se na construção de um classificador que ``aprende'' na medida em que lhe são
 apontados exemplos de objetos classificados. São caracterizados como
@@ -707,7 +833,7 @@ ausência de um atributo em uma classe não estaria relacionada com a incidência
 de nenhum outro atributo.
 
 A decisão acerca da classe a qual um objeto pertence é tomada de acordo com o
-modelo de probabilidade máxima posterior (em inglês, \emph{maximum a posteriori
+modelo de probabilidade máxima posterior (em inglês, \textit{maximum a posteriori
 probability (MAP)}), indicada na equação \eqref{eq:map}. Dado que $C$ é o
 conjunto de classes e $x$ objeto a ser classificado, a classe atribuída a este
 será a que apresentar maior probabilidade condicionada a $x$. $\hat{P}$ é
@@ -742,7 +868,7 @@ a ocorrência de atributos acontece independentemente, tem-se que:
 \begin{equation}
 \label{eq:independencia}
   \hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c) = \hat{P}(x_1|c)
-                 \times \hat{P}(x_2|c) \times ... \times \hat{P}(x_n|c)
+                 \cdot \hat{P}(x_2|c) \cdot ... \cdot \hat{P}(x_n|c)
 \end{equation}
 
 Portanto, a função de decisão pode ser reescrita através da equação
@@ -757,7 +883,7 @@ enquanto que $\hat{P}(c)$ é a frequência relativa da classe $c$.
 \end{equation}
 
 Os parâmetros são obtidos através da estimativa de maior probabilidade (em
-inglês, \emph{maximum likelihood estimate (MLE)}), que corresponde ao valor
+inglês, \textit{maximum likelihood estimate (MLE)}), que corresponde ao valor
 mais provável de cada parâmetro de acordo com os dados de treinamento. A
 equação \eqref{eq:p_c} traz a estimativa de $\hat{P}(c)$, onde $N_c$ é o
 número de objetos da classe $c$ e $N$ é o número total de documentos.
@@ -778,7 +904,7 @@ classe $c$ e $V$ é o conjunto de atributos que os objetos podem apresentar.
                       {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}}
 \end{equation}
 
-No entanto, a estimativa \emph{MLE} é zero para combinações atributo-classe que
+No entanto, a estimativa \textit{MLE} é zero para combinações atributo-classe que
 não ocorrem nos dados de treinamento. Considerando que as probabilidades
 condicionais de todos os atributos serão multiplicadas (equação
 \eqref{eq:bayes_prod}), a simples ocorrência de uma probabilidade zerada
@@ -794,7 +920,7 @@ zeros, adiciona-se $1$ a cada termo da equação \eqref{eq:p_xc}:
 \end{equation}
 
 Apesar de a independência de atributos não ser verificada para a maioria
-dos domínios de aplicação, na prática o Naive Bayes apresenta resultados
+dos domínios de aplicação, na prática o Bayes ingênuo apresenta resultados
 satisfatórios. \cite{Zhang:04} atribui a surpreendente boa performance deste
 método ao fato de que pode haver dependência forte entre dois atributos, desde
 que as dependências sejam distribuídas igualmente nas classes. Segundo este
@@ -808,23 +934,23 @@ representado na matriz por uma dimensão ortogonal a todas as outras.
 \textbf{Variantes do modelo Bayes ingênuo}
 
 As duas principais variantes de implementação do classificador bayesiano são
-denominadas modelo \emph{multinomial} e modelo de \emph{Bernoulli} e diferem
+denominadas modelo \textit{multinomial} e modelo de \textit{Bernoulli} e diferem
 fundamentalmente na maneira como os objetos são representados.
 
 O primeiro modelo utiliza uma representação que de certa forma preserva
 informações espaciais sobre o objeto. Na classificação de documentos de
 texto, por exemplo, o modelo gera um atributo que corresponde a um termo do
-vocabulário para cada posição do documento. Já o modelo de \emph{Bernoulli}
+vocabulário para cada posição do documento. Já o modelo de \textit{Bernoulli}
 produz um indicador para cada possível atributo (no caso de texto, termo do
 vocabulário), onde $1$ representa a presença e $0$ a ausência do atributo no
 objeto.
 
 A escolha da representação de documentos adequada é uma decisão crítica no
 projeto de um classificador. O próprio significado de um atributo depende da
-representação. No \emph{multinomial}, um atributo pode assumir como valor
+representação. No \textit{multinomial}, um atributo pode assumir como valor
 qualquer termo do vocabulário, o que resulta numa representação do documento
 correspondente à sequência de termos do mesmo. Já para o modelo de
-\emph{Bernoulli}, um atributo pode assumir apenas os valores $0$ e $1$, e a
+\textit{Bernoulli}, um atributo pode assumir apenas os valores $0$ e $1$, e a
 representação do documento é uma sequência de $0$s e $1$s do tamanho do
 vocabulário.
 
@@ -868,8 +994,8 @@ vocabulário.
   \put(5,44){\parbox{1.8cm}{\scriptsize Aprenda a investir na bolsa em uma
     semana.}}\end{overpic}
 \end{tabular}
-\caption{Coleção de documentos classificados em \emph{spam} e \emph{não-spam}}
-\label{fig:colecao}
+\caption{Coleção de documentos classificados em \textit{spam} e \textit{não-spam}}
+\label{fig:colecao_spam}
 \end{figure}
 
 \vspace{0.3cm} \hspace{-1.4cm}
@@ -879,7 +1005,7 @@ Uma grande quantidade de atributos a ser considerados resulta em alta
 complexidade computacional, além de geralmente mascarar a presença de ruídos
 nos dados, que prejudicam a acurácia da classificação. A fim de amenizar estes
 problemas, é comum que seja feita uma seleção de atributos (em inglês,
-\emph{feature selection}), que consiste em escolher alguns atributos que
+\textit{feature selection}), que consiste em escolher alguns atributos que
 ocorrem no conjunto de treinamento e utilizar apenas estes como parâmetro para
 a classificação. Esta seleção equivale à substituição de um classificador
 complexo por um mais simples. Especialmente quando a quantidade de dados de
@@ -912,7 +1038,7 @@ gulosos são raramente utilizados devido a seu custo computacional
 
 \subsubsection{K-NN} \label{sec:knn}
 
-\emph{K-nearest neighbors} (k-NN), em português \emph{k vizinhos mais
+\textit{K-nearest neighbors} (k-NN), em português \textit{k vizinhos mais
 próximos}, é mais um algoritmo de aprendizado supervisionado para
 classificação. Este método baseia-se no conceito de vizinhança, que representa
 um conjunto de objetos com características semelhantes.
@@ -942,15 +1068,15 @@ na tabela \ref{tab:knn_distancia}.
     \hline
     Similaridade de cosseno &
     $sim(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
-              = \frac{\textstyle \sum_{1\leq i \leq n} x_i \times y_i}
-                     {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}\times
+              = \frac{\textstyle \sum_{1\leq i \leq n} x_i y_i}
+                     {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}
                       \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
     \hline
-    Coeficiente de \emph{Pearson} &
+    Coeficiente de \textit{Pearson} &
     $p(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
                                      (y_i-\bar{y})}
                    {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
-                    \times\sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
+                    \sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
     \hline
   \end{tabular}
 \end{table}
@@ -971,7 +1097,7 @@ beneficiada pelo processo de seleção de atributos descrito na seção
 %FIXME [Desenvolver o tema: agrupamento]
 %\subsubsection{Agrupamento}
 %
-%Agrupamento, \emph{clustering} em inglês, é uma técnica de aprendizado de
+%Agrupamento, \textit{clustering} em inglês, é uma técnica de aprendizado de
 %máquina não supervisionado, ou seja, tenta identificar algum padrão de
 %organização dos dados sem que haja uma classificação prévia dos exemplos.
 %
@@ -983,17 +1109,17 @@ A mineração de Dados, também referenciada como descoberta de conhecimento em
 bases de dados, é a área da ciência da computação destinada à descoberta de
 correlações e padrões frequentes num conjunto de dados. Informações extraídas
 de uma base de dados de transações de venda, por exemplo, têm alto valor para
-organizações que pretendem realizar processos de \emph{marketing} guiados por
-informação -- modelo denominado, em inglês, \emph{market basket analysis}.
+organizações que pretendem realizar processos de \textit{marketing} guiados por
+informação -- modelo denominado, em inglês, \textit{market basket analysis}.
 Outros domínios de aplicação que também utilizam técnicas de mineração são:
-detecção de intrusão através da análise de \emph{logs} de sistemas
+detecção de intrusão através da análise de \textit{logs} de sistemas
 computacionais, pesquisas na área de saúde sobre a correlação entre doenças,
 sequenciamento de DNA etc \cite{Hegland:03}.
 
 Os padrões frequentes podem ser descritos por conjuntos de itens que ocorrem
 simultaneamente ou por implicações na forma $X \Rightarrow Y$, denominadas de
-\emph{regras de associação}, sendo $X$ e $Y$ conjuntos de itens disjuntos ($X
-\cap Y = \emptyset$). \emph{Suporte} e \emph{confiança} são duas métricas para
+\textit{regras de associação}, sendo $X$ e $Y$ conjuntos de itens disjuntos ($X
+\cap Y = \emptyset$). \textit{Suporte} e \textit{confiança} são duas métricas para
 quantificar a força dos padrões de acordo com a sua representatividade no banco
 de dados de transações. O suporte de um conjunto de itens é a frequência
 com a qual ele ocorre numa base de dados. Para uma regra de associação $X
@@ -1001,13 +1127,13 @@ com a qual ele ocorre numa base de dados. Para uma regra de associação $X
 de uma regra é medida pela frequência de $Y$ nos registros que contém $X$,
 representando o grau de co-ocorrência de $X$ e $Y$.
 
-O \emph{Apriori} é um algoritmo para mineração de regras de associação
+O \textit{Apriori} é um algoritmo para mineração de regras de associação
 sustentadas por medidas mínimas de suporte e confiança numa base de dados.
 Este problema é comumente decomposto em dois sub-problemas:
 
 \begin{enumerate}[(1)]
   \item Identificação de todos os conjuntos de itens que extrapolam um valor de
-    suporte mínimo na base de dados (denominados de \emph{conjuntos
+    suporte mínimo na base de dados (denominados de \textit{conjuntos
     frequentes}).
   \item Produção de regras de associação a partir dos conjuntos frequentes,
     selecionando apenas as que satisfazem a condição de confiança mínima.
@@ -1017,8 +1143,8 @@ Este problema é comumente decomposto em dois sub-problemas:
     seu valor de confiança.
 \end{enumerate}
 
-O \emph{Apriori} foi o primeiro algoritmo eficiente para tratar do sub-problema
-\emph{(1)}, que de fato é o mais desafiador. Uma solução ingênua para tal
+O \textit{Apriori} foi o primeiro algoritmo eficiente para tratar do sub-problema
+\textit{(1)}, que de fato é o mais desafiador. Uma solução ingênua para tal
 problema seria: listar todos os conjuntos candidatos (conjunto das partes do
 universo de itens) e selecionar os conjuntos frequentes a partir do cálculo de
 suporte para cada um. No entanto, esta é uma estratégia extremamente custosa
@@ -1035,7 +1161,7 @@ itens $U=\{a,b,c\}$.
 \label{fig:diagrama_hasse}
 \end{figure}
 
-A inovação do \emph{Apriori} sobre a abordagem ingênua é a redução da
+A inovação do \textit{Apriori} sobre a abordagem ingênua é a redução da
 quantidade de conjuntos candidatos pelo descarte de certos conjuntos que
 comprovadamente não são conjuntos frequentes. Desta forma o algoritmo
 consegue detectar todos os conjuntos frequentes sem a necessidade de calcular o
@@ -1072,7 +1198,7 @@ o suporte calculado.
 %\textbf{Soluções alternativas para mineração de regras}
 %\label{sec:variacoes_apriori}
 
-A introdução do \emph{Apriori} representou um marco para o desenvolvimento de
+A introdução do \textit{Apriori} representou um marco para o desenvolvimento de
 soluções para mineração de dados, motivando o surgimento de inúmeras variantes
 baseadas no mesmo princípio. Entre elas, surgiram algumas propostas específicas
 para situações onde os dados têm características adicionais conhecidas como,
@@ -1080,7 +1206,7 @@ por exemplo, base de dados particionada, dados que satisfazem à determinadas
 restrições ou que fazem parte de uma taxonomia conhecida \cite{Hegland:03}.
 
 Apesar de apresentar um processo inovador para geração de regras de associação,
-o \emph{Apriori} também apresenta fraquezas, sendo a principal delas a
+o \textit{Apriori} também apresenta fraquezas, sendo a principal delas a
 necessidade de percorrer a base de dados múltiplas vezes para cálculo de
 suporte e confiança dos conjuntos de itens. Algumas soluções alternativas
 fazem uso de estruturas de dados auxiliares para armazenar informações
@@ -1091,8 +1217,8 @@ binárias são algumas dessas estruturas \cite{Kotsiantis:06}.
 \subsection{Estratégias de recomendação} \label{sec:estrategias}
 
 Sistemas de recomendação são comumente classificados em três grandes grupos, de
-acordo com a estratégia utilizada para o cálculo de recomendações: \emph{(1)}
-baseada em conteúdo, \emph{(2)} colaborativa e \emph{(3)} híbrida.
+acordo com a estratégia utilizada para o cálculo de recomendações: \textit{(1)}
+baseada em conteúdo, \textit{(2)} colaborativa e \textit{(3)} híbrida.
 \cite{Cazella:10} propõe uma classificação um pouco mais abrangente, na qual
 este trabalho se baseou.
 
@@ -1108,7 +1234,7 @@ imparcialidade dos usuários em suas opiniões, que de fato não pode ser
 verificada devido a seu caráter subjetivo e estritamente pessoal. Atualmente
 existem serviços especializados em reputação de produtos que não realizam
 venda associada, apenas disponibilizam as avaliações. É o caso do
-\emph{Internet Movie Database} \footnote{\url{http://www.imdb.com/}},
+\textit{Internet Movie Database} \footnote{\url{http://www.imdb.com/}},
 apresentado na figura \ref{fig:imdb}.
 
 \begin{figure}[h]
@@ -1127,8 +1253,8 @@ itens semelhantes aos que eles já se interessaram no passado
 \cite{Herlocker:2000}. O ponto chave desta estratégia é a caracterização dos
 itens, por exemplo, através da identificação de atributos (autores e temas de
 livros, por exemplo). A partir dos atributos dos itens, aplica-se técnicas de
-recuperação da informação (por exemplo, \emph{tf-idf} e \emph{BM25}) para
-encontrar itens semelhantes ou de classificação (por exemplo, \emph{Bayes
+recuperação da informação (por exemplo, \textit{tf-idf} e \textit{BM25}) para
+encontrar itens semelhantes ou de classificação (por exemplo, \textit{Bayes
 ingênuo}) para encontrar itens relevantes. Em uma livraria, sugerir ao cliente
 outros livros do mesmo autor ou tema de livros previamente selecionados é uma
 estratégia amplamente adotada.
@@ -1209,13 +1335,13 @@ Dado um conjunto de associações, a recomendação para determinado usuário é
 produzida de acordo com as regras satisfeitas pelo conjunto de itens que ele
 já tenha selecionado. Por exemplo, a regra ${A,B,C} \Rightarrow {D}$ seria
 satisfeita por usuários que possuem os itens $A$, $B$ e $C$, resultando na
-indicação do item $D$: \emph{``Clientes que compraram os itens A, B e C também
+indicação do item $D$: \textit{``Clientes que compraram os itens A, B e C também
 compraram o item D''}.
 
 As técnicas mais utilizadas na implementação desta classe de recomendadores são
 variações do algoritmos Apriori, apresentado na seção \ref{sec:apriori}
 \cite{Kotsiantis:06}. Um exemplo de recomendação por associação é encontrado na
-loja virtual da empresa \emph{Amazon}\footnote{\url{http://www.amazon.com/}}
+loja virtual da empresa \textit{Amazon}\footnote{\url{http://www.amazon.com/}}
 (figura \ref{fig:amazon}).
 
 \begin{figure}[h]
@@ -1245,12 +1371,12 @@ metodológicas ao longo dos testes.
 
 A escolha do conjunto de dados adequado é um fator chave para uma investigação
 consistente. \cite{Herlocker:2004} classificam as avaliações de sistemas de
-recomendação como \emph{(a)} análises \emph{offline}, que utilizam bases de
-dados previamente coletadas e \emph{(b)} experimentos ``ao vivo'', realizados
+recomendação como \textit{(a)} análises \textit{offline}, que utilizam bases de
+dados previamente coletadas e \textit{(b)} experimentos ``ao vivo'', realizados
 diretamente com usuários, seja num ambiente controlado (laboratório) ou em
 campo.
 
-Análises \emph{offline} geralmente são objetivas, com foco na acurácia das
+Análises \textit{offline} geralmente são objetivas, com foco na acurácia das
 predições e performance das soluções \cite{Vozalis:03}. Inicialmente os dados
 são particionados em porções de treinamento e de testes. Utiliza-se como base
 os dados de treinamento para prever recomendações para itens da porção de
@@ -1302,16 +1428,16 @@ Em 1983 Richard Stallman criou o projeto GNU\footnote{\url{hhtp://www.gnu.org}}
 com o objetivo principal de desenvolver um sistema operacional livre em
 alternativa ao UNIX\footnote{\url{http://www.unix.org/}} -- solução comercial
 amplamente difundida na indústria -- e que fosse compatível com os padrões
-POSIX\footnote{Acrônimo para \emph{Portable Operating System Interface}, é uma
+POSIX\footnote{Acrônimo para \textit{Portable Operating System Interface}, é uma
 família de normas definidas pelo IEEE com foco na portabilidade entre sistemas
 operacionais.}\footnote{\url{http://standards.ieee.org/develop/wg/POSIX.html}}.
 Nos anos 90 o projeto GNU já havia atraído muitos colaboradores, que num curto
 espaço de tempo haviam desenvolvido inúmeros aplicativos para compor o sistema
-operacional. No entanto, o desenvolvimento do núcleo do sistema (\emph{GNU
+operacional. No entanto, o desenvolvimento do núcleo do sistema (\textit{GNU
 Hurd}) não acompanhou o ritmo dos demais aplicativos.
 
 Em outubro de 1991 o estudante finlandês Linus Torvalds publicou a versão
-0.02 do Freax, o núcleo de um sistema operacional (\emph{kernel}, em inglês)
+0.02 do Freax, o núcleo de um sistema operacional (\textit{kernel}, em inglês)
 desenvolvido por ele na universidade. Nem o próprio Linus imaginava que aquele
 projeto, desenvolvido sem grandes pretensões, teria a dimensão do que hoje
 conhecemos como Linux \cite{Linus:01}.
@@ -1320,7 +1446,7 @@ Com o anúncio de Torvalds, Stallman vislumbrou a possibilidade de acelerar o
 lançamento do sistema operacional livre, se os aplicativos GNU que já estavam
 prontos fossem combinados com o núcleo recém-lançado -- de fato, a primeira
 versão estável do GNU Hurd foi lançada apenas em 2001. Em 1992 o Linux foi
-licenciado sob a GNU GPL (\emph{General Public License\footnote{Suporte legal
+licenciado sob a GNU GPL (\textit{General Public License\footnote{Suporte legal
 para a distribuição livre de softwares}}) e as equipes dos dois projetos
 começaram a trabalhar na adaptação do kernel Linux para o ambiente GNU. Este
 esforço conjunto desencadeou o surgimento das distribuições GNU/Linux, que
@@ -1332,9 +1458,9 @@ diferentes ``sabores'' do sistema operacional, constituídos por aplicativos
 selecionados por seus desenvolvedores. As distribuições reduzem a
 complexidade de instalação e atualização do sistema para usuários finais
 \cite{Cosmo:08}. Os mantenedores da distribuição atuam como intermediários
-entre os usuários e os autores dos softwares (chamados de \emph{upstreams}),
+entre os usuários e os autores dos softwares (chamados de \textit{upstreams}),
 através do encapsulamento de componentes de software em abstrações denominadas
-\emph{pacotes}.
+\textit{pacotes}.
 
 O processo de desenvolvimento e manutenção de uma distribuição varia bastante
 de uma para outra e está diretamente ligado à constituição do projeto. Quando
@@ -1358,7 +1484,7 @@ interferência da comunidade, como descrito acima. Este é um ponto chave no
 desenvolvimento, pois é um dos fatores que mais influenciam a escolha dos
 usuários pela distribuição. O impacto que tal seleção tem para a comunidade de
 usuários resulta em frequentes polêmicas em torno do tema, como a gerada pelo
-anúncio de que o projeto \emph{Ubuntu} abandonaria o \emph{Gnome} como
+anúncio de que o projeto \textit{Ubuntu} abandonaria o \textit{Gnome} como
 interface padrão de usuário \cite{Paul:10}.
 
 Softwares adicionais para atender a demandas específicas dos usuários
@@ -1370,11 +1496,11 @@ assim, a seleção dos programas é de responsabilidade do usuário do sistema.
 \subsection{Escolha da plataforma}
 
 A escolha da distribuição na qual o desenvolvimento do trabalho será baseado
-foi pautada pelos seguintes critérios: \emph{(1)} Existência de um esquema
-consistente de distribuição de software; \emph{(2)} Existência de dados
+foi pautada pelos seguintes critérios: \textit{(1)} Existência de um esquema
+consistente de distribuição de software; \textit{(2)} Existência de dados
 estatísticos referentes ao uso de pacotes por usuários e possibilidade de
-acesso aos mesmos; \emph{(3)} Possibilidade de integração dos resultados do
-trabalho com os serviços disponibilizados pela distribuição; \emph{(4)}
+acesso aos mesmos; \textit{(3)} Possibilidade de integração dos resultados do
+trabalho com os serviços disponibilizados pela distribuição; \textit{(4)}
 Popularidade da distribuição.
 
 As seguir estão descritos os fatores que contribuíram para a opção pelo
@@ -1383,21 +1509,21 @@ Debian GNU/Linux como plataforma de desenvolvimento.
 \begin{enumerate}
 
 \item O gerenciamento de pacotes em sistemas Debian GNU/Linux é realizado
-através do \emph{APT (Advanced Packaging
+através do \textit{APT (Advanced Packaging
 Tool)}\footnote{\url{http://wiki.debian.org/Apt}}. Ações como a busca,
 obtenção, instalação, atualização e remoção de pacotes são disparadas pelo
-\emph{APT}, que num nível mais baixo faz uso do \emph{dpkg}, ferramenta que de
-fato realiza instalações e remoções de softwares. O \emph{APT} também gerencia
+\textit{APT}, que num nível mais baixo faz uso do \textit{dpkg}, ferramenta que de
+fato realiza instalações e remoções de softwares. O \textit{APT} também gerencia
 de maneira eficiente as relações de conflito e dependência entre pacotes.
 
-\item O \emph{Popcon (Popularity Contest)}\footnote{\url{http://popcon.debian.org}}
+\item O \textit{Popcon (Popularity Contest)}\footnote{\url{http://popcon.debian.org}}
 é a concurso de popularidade entre pacotes. Os usuários que aceitam participar
 do concurso enviam periodicamente a sua lista de pacotes instalados no sistema,
 que são armazenados no servidor do Popcon. Diariamente as listas recebidas são
 processadas e dados estatísticos acerca do uso dos pacotes são gerados e
 disponibilizados no website do projeto.
 
-\item Segundo o \emph{contrato social
+\item Segundo o \textit{contrato social
 Debian}\footnote{\url{http://www.debian.org/social_contract.pt.html}},
 o desenvolvimento do projeto é guiado pelas necessidades dos usuários e da
 comunidade. Portanto, as iniciativas de colaboradores individuais, sejam eles
@@ -1408,18 +1534,18 @@ considerados úteis para a comunidade.
 \item O Debian é um projeto de destaque no ecossistema do software livre. Desde
 o lançamento da primeira versão de sua distribuição, em 1993, o projeto cresceu
 bastante em termos de componentes de software (atualmente provê mais de 25.000
-pacotes), colaboradores e usuários. A \emph{Distrowatch}, que tem 323
+pacotes), colaboradores e usuários. A \textit{Distrowatch}, que tem 323
 distribuições ativas em sua base de dados\footnote{Consulta realizada em 24 de
 janeiro de 2011.}, classifica o Debian GNU/Linux entre as 10 distribuições mais
 populares\footnote{\url{http://distrowatch.com/dwres.php?resource=major}}.
 O Debian aparece na quinta posição em suas estatísticas de páginas visitadas
 \footnote{\url{http://distrowatch.com/stats.php?section=popularity}}. Já o
-\emph{Linux Counter\footnote{\url{http://counter.li.org/reports/machines.php}}}
+\textit{Linux Counter\footnote{\url{http://counter.li.org/reports/machines.php}}}
 apresenta o Debian como a segunda distribuição mais popular entre as máquinas
 cadastradas que rodam o kernel Linux ($16\%$), ficando atrás apenas do
 Ubuntu\footnote{\url{http://www.ubuntu.com/community/ubuntu-and-debian}}
 ($24\%$), que é uma distribuição derivada do Debian. Nas pesquisas da
-\emph{W$^{\textrm{3}}$Techs} sobre tecnologias para serviços
+\textit{W$^{\textrm{3}}$Techs} sobre tecnologias para serviços
 web\footnote{\url{http://w3techs.com/technologies/history_details/os-linux}}, o
 Debian aparece em segundo lugar, estando presente em $27\%$ dos servidores. Na
 primeira posição está o CentOS com $31\%$.
@@ -1451,7 +1577,7 @@ Grande parte das distribuições GNU/Linux têm investido no desenvolvimento de
 interfaces para facilitar o gerenciamento de aplicativos e a forma como se obtém
 informações sobre os mesmos. Entre os dias 18 e 21 de janeiro 2011 aconteceu a
 primeira reunião sobre a temática com a presença de desenvolvedores de
-distribuições variadas (\emph{Cross-distribution Meeting on Application
+distribuições variadas (\textit{Cross-distribution Meeting on Application
 Installer}). O encontro teve como principais objetivos a definição de padrões
 entre os diferentes projetos no que diz respeito a: procedimentos de instalação
 de aplicações; metadados associados aos pacotes; o modo como tais informações
@@ -1483,31 +1609,31 @@ de usuários e desenvolvedores.
   \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
   \begin{tabularx}{25cm}{| c | X | c |}
     \hline
-    \normalsize \textbf{\emph{Solução}}\T\B & \normalsize \textbf{\emph{Descrição}} & \normalsize \textbf{\emph{Estratégia de recomendação}}\\
-    \hline BTS \T & \multirow{3}{13cm}{Sistema de acompanhamento de \emph{bugs}, alimentado pelos usuários e desenvolvedores da distribuição. Reúne todo o histórico referente ao relatório e correção de erros em pacotes.} & \multirow{10}{*}{Reputação}\\
-    \emph{Bug Tracking System}& & \\
+    \normalsize \textbf{\textit{Solução}}\T\B & \normalsize \textbf{\textit{Descrição}} & \normalsize \textbf{\textit{Estratégia de recomendação}}\\
+    \hline BTS \T & \multirow{3}{13cm}{Sistema de acompanhamento de \textit{bugs}, alimentado pelos usuários e desenvolvedores da distribuição. Reúne todo o histórico referente ao relatório e correção de erros em pacotes.} & \multirow{10}{*}{Reputação}\\
+    \textit{Bug Tracking System}& & \\
     \scriptsize{\url{http://bugs.debian.org}} & & \\
     & & \\
     \cline{1-2}
     Popcon \T & \multirow{3}{13cm}{Concurso de popularidade entre pacotes realizado diariamente, disponibiliza estatísticas de uso dos pacotes do repositório. Provê gráficos específicos por pacote, por arquitetura, por desenvolvedor etc.} & \\
-    \emph{Popularity Contest}& & \\
+    \textit{Popularity Contest}& & \\
     \scriptsize{\url{http://popcon.debian.org}} & & \\
     & & \\
     \cline{1-2}
-    PTS \T & \multirow{3}{13cm}{Sistema de acompanhamento de pacotes, reúne informações relativas à manutenção dos pacotes: versão, mantenedor, \emph{upstream}, \emph{bugs} abertos por tipo, últimas atualizações no repositório etc.} & \\
-    \emph{Package Tracking System}& & \\
+    PTS \T & \multirow{3}{13cm}{Sistema de acompanhamento de pacotes, reúne informações relativas à manutenção dos pacotes: versão, mantenedor, \textit{upstream}, \textit{bugs} abertos por tipo, últimas atualizações no repositório etc.} & \\
+    \textit{Package Tracking System}& & \\
     \scriptsize{\url{http://packages.qa.debian.org}} & & \\
     & & \\
     \cline{1-2}
     UDD \T & \multirow{3}{13cm}{{Iniciativa recente do time de qualidade criada com o intuito de reunir informações de diversos aspectos do Debian numa base de dados única. Usuários avançados podem consultar esta base para tomar decisões acerca de que pacotes utilizar.}} & \\
-    \emph{Ultimate Debian Database}& & \\
+    \textit{Ultimate Debian Database}& & \\
     \scriptsize{\url{http://udd.debian.org}}& & \\
     & & \\
     \hline
     Debtags \T & \multirow{2}{13.5cm}{Caracterização dos pacotes por múltiplos atributos, realizada manualmente por usuários e desenvolvedores, que auxilia a navegação e busca no repositório de pacotes.} & \multirow{2}{*}{Baseada em conteúdo}\\
     Classificação de pacotes & & \\
     \cline{2-3}
-    \scriptsize{\url{http://debtags.alioth.debian.org}} & \multirow{2}{*}{Novas \emph{tags} (atributos) são sugeridas a partir das \emph{tags} já associadas ao pacote.} & \multirow{2}{*}{Associação}\\
+    \scriptsize{\url{http://debtags.alioth.debian.org}} & \multirow{2}{*}{Novas \textit{tags} (atributos) são sugeridas a partir das \textit{tags} já associadas ao pacote.} & \multirow{2}{*}{Associação}\\
     & & \\
     \hline
   \end{tabularx}
@@ -1571,13 +1697,13 @@ da seguinte maneira: dada a lista de pacotes instalados no sistema de
 determinado usuário (como representação de sua identidade), o recomendador deve
 retornar uma lista de sugestão de pacotes, que representam pacotes de potencial
 interesse para tal usuário. Desta forma, a ação principal do sistema é definida
-como \emph{encontrar itens relevantes} (ver seção \ref{sec:acoes}).
+como \textit{encontrar itens relevantes} (ver seção \ref{sec:acoes}).
 
 Neste trabalho as recomendações devem ser geradas a partir do comportamento do
 usuário. Não serão consideradas informações registradas no BTS, fóruns ou em
 listas de discussão. Pretende-se calcular a recomendação a partir de dados do
-\emph{Popcon}, que contém listas de pacotes instalados de milhares de sistemas
-em produção, e do \emph{Debtags}, como fonte de metadados sobre os pacotes. O
+\textit{Popcon}, que contém listas de pacotes instalados de milhares de sistemas
+em produção, e do \textit{Debtags}, como fonte de metadados sobre os pacotes. O
 uso de perfis também está sendo considerado, através do preenchimento de um
 formulário simples com macro-temas de interesse do usuário.
 
@@ -1595,7 +1721,7 @@ previsto. Por outro lado, se $A$ conflita com $C$, a instalação de ambos os
 programas pode provocar um comportamento anômalo ou até comprometer o
 funcionamento de todo o sistema.
 
-O sistema de gerenciamento de pacotes (no caso do Debian, o \emph{APT}), ao
+O sistema de gerenciamento de pacotes (no caso do Debian, o \textit{APT}), ao
 receber um pedido de modificação da configuração do sistema -- por exemplo,
 a instalação de um novo componente -- tenta satisfazer a requisição a partir
 do conhecimento de como obter os componentes (endereço dos repositórios de
@@ -1632,7 +1758,7 @@ e estabelecidas como meta de desenvolvimento da presente proposta.
 
 \subsubsection{Coleta de dados}
 
-Os dados estatísticos disponíveis publicamente no site do \emph{Popcon} não
+Os dados estatísticos disponíveis publicamente no site do \textit{Popcon} não
 preservam os relacionamentos usuário-item, essenciais para a utilização de
 estratégias colaborativas. Por questões relativas à
 privacidade\footnote{\url{http://popcon.debian.org/FAQ}}, as listas de pacotes
@@ -1658,10 +1784,10 @@ pelo usuário. Em ambos os casos a recomendação de tais pacotes certamente não
 interessaria ao usuário, portanto todos eles podem ser desconsiderados sem
 prejuízo.
 
-Os dados coletados pelo \emph{Popcon} também possuem informações temporais.
+Os dados coletados pelo \textit{Popcon} também possuem informações temporais.
 A data de instalação do pacote no sistema é obtida através do atributo
-\emph{ctime} do arquivo, que indica a data de sua criação no sistema de
-arquivos, enquanto a data de última utilização é indicada pelo \emph{atime},
+\textit{ctime} do arquivo, que indica a data de sua criação no sistema de
+arquivos, enquanto a data de última utilização é indicada pelo \textit{atime},
 com a data do último acesso. Apesar destes dados não serem seguramente
 confiáveis\footnote{\url{http://popcon.debian.org/README}}, a possibilidade
 de uso dos mesmo será investigada. Seria interessante, por exemplo, atribuir
@@ -1677,25 +1803,25 @@ apresentados na seção \ref{sec:selecao_atributos}.
 \begin{enumerate}[(a)]
   \item \textbf{Baseada em conteúdo}
 
-Pretende-se implementar as técnicas \emph{BM25} e \emph{Bayes ingênuo} para
+Pretende-se implementar as técnicas \textit{BM25} e \textit{Bayes ingênuo} para
 recomendações de pacotes com base na descrição dos pacotes já instalados
 pelo usuário.
 
-\hspace{1cm}A caracterização dos pacotes através de \emph{Debtags} é essencial
+\hspace{1cm}A caracterização dos pacotes através de \textit{Debtags} é essencial
 para a implementação de estratégias baseadas em conteúdo. Fazendo um paralelo
 com uma coleção de documentos de texto compostos por palavras-chave, o cenário
 neste contexto é de uma coleção de descrições de pacotes compostas por
-\emph{tags}. O modelo de espaço vetorial neste caso é representado por uma
-matriz de pacotes por \emph{tags}.
+\textit{tags}. O modelo de espaço vetorial neste caso é representado por uma
+matriz de pacotes por \textit{tags}.
 
 \vspace{0.3cm}
   \item \textbf{Colaborativa}
 
 Através de estratégias colaborativas, pretende-se implementar recomendadores
 que analisem as escolhas de pacotes de outros usuários para compor a sua lista
-de sugestões, com base na técnica \emph{K-NN}.
+de sugestões, com base na técnica \textit{K-NN}.
 
-\hspace{1cm}O \emph{Popcon} é a fonte de dados disponível atualmente para
+\hspace{1cm}O \textit{Popcon} é a fonte de dados disponível atualmente para
 soluções colaborativas de recomendação. Neste caso, listas de pacotes
 representam a identidade do usuário, que receberá recomendações com base
 no que outros usuários com interesses semelhantes aos dele têm instalado
@@ -1705,7 +1831,7 @@ em seus sistemas e ele não tem.
   \item \textbf{Híbrida}
 
 A primeira estratégia híbrida a ser implementada será uma recomendação
-colaborativa a partir das \emph{tags} dos pacotes de cada usuário (como
+colaborativa a partir das \textit{tags} dos pacotes de cada usuário (como
 representação de conteúdo). Outras soluções híbridas podem ser projetadas à
 medida que os recomendadores das estratégias puras forem sendo implementados
 e posteriormente combinados.
@@ -1719,10 +1845,10 @@ composição das sugestões, alguns dos quais são descritos abaixo.
     exemplo, a indicação de bibliotecas de desenvolvimento de software para um
     usuário que não é programador;
   \item[Popularidade:] pacotes que figuram entre os mais populares no
-    \emph{Popcon} devem receber maior pontuação nos cálculos, ainda que este seja
+    \textit{Popcon} devem receber maior pontuação nos cálculos, ainda que este seja
     apenas um critério de desempate;
-  \item[Bugs:] muitos \emph{bugs} abertos são um indicativo de problemas,
-    principalmente se forem \emph{bugs} graves. Devido ao número reduzido de
+  \item[Bugs:] muitos \textit{bugs} abertos são um indicativo de problemas,
+    principalmente se forem \textit{bugs} graves. Devido ao número reduzido de
     pacotes em cada recomendação, deve-se dar prioridade à incluir aqueles que
     recebem atenção constante de seu mantenedor.
 \end{description}
@@ -1732,21 +1858,21 @@ composição das sugestões, alguns dos quais são descritos abaixo.
 \subsection{Codificação}
 
 O desenvolvimento de software será majoritariamente realizado na linguagem de
-programação \emph{Python}\footnote{\url{http://www.python.org/}},
+programação \textit{Python}\footnote{\url{http://www.python.org/}},
 principalmente pela facilidade de integração com outras ferramentas do Debian
 também desenvolvidas nesta linguagem. Ademais, a vasta documentação e grande
 variedade de bibliotecas de utilidade para o trabalho, a exemplo da
-\emph{NLTK}\footnote{\url{http://www.nltk.org/}}
-e \emph{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que contribuiram
+\textit{NLTK}\footnote{\url{http://www.nltk.org/}}
+e \textit{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que contribuiram
 para esta escolha.
 
 \subsection{Avaliação}
 
-Diante da inexistência de dados que possibilitem a análise \emph{offline}
+Diante da inexistência de dados que possibilitem a análise \textit{offline}
 de acurácia das recomendação, optou-se pela realização de experimentos
-diretamente com usuários, por meio de um \emph{survey} eletrônico. Algumas
-ferramentas estão sendo avaliadas para a construção do \emph{survey}, entre
-elas, o \emph{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
+diretamente com usuários, por meio de um \textit{survey} eletrônico. Algumas
+ferramentas estão sendo avaliadas para a construção do \textit{survey}, entre
+elas, o \textit{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
 
 A consulta será guiada através dos seguintes passos:
 \begin{enumerate}
@@ -1763,7 +1889,7 @@ A consulta será guiada através dos seguintes passos:
     métricas apresentadas na seção \ref{sec:metricas}.
 \end{enumerate}
 
-Ao término do período de aplicação do \emph{survey}, os dados de avaliações
+Ao término do período de aplicação do \textit{survey}, os dados de avaliações
 individuais serão compilados numa análise de esfera global. Os gráficos
 e considerações resultantes serão apresentados na versão final deste trabalho.
 
@@ -1782,7 +1908,7 @@ intermediárias foram estabelecidas e apresentadas na tabela \ref{tab:plano}.
   \newcommand\B{\rule[-1.5ex]{0pt}{0pt}}
   \begin{tabularx}{\textwidth}{| X | c | c | c | c | c | c | c |}
     \hline
-    \T\B \textbf{\emph{Atividade}} & \textbf{\emph{Janeiro}} & \textbf{\emph{Fevereiro}} & \textbf{\emph{Março}} & \textbf{\emph{Abril}} & \textbf{\emph{Maio}} & \textbf{\emph{Junho}} & \textbf{\emph{Julho}}\\
+    \T\B \textbf{\textit{Atividade}} & \textbf{\textit{Janeiro}} & \textbf{\textit{Fevereiro}} & \textbf{\textit{Março}} & \textbf{\textit{Abril}} & \textbf{\textit{Maio}} & \textbf{\textit{Junho}} & \textbf{\textit{Julho}}\\
     \hline \small \T
     Preparação e realiza-ção da qualificação & \multirow{2}{*}{X} & \multirow{2}{*}{X} & & & & & \\
     \hline \small \T
@@ -1790,7 +1916,7 @@ intermediárias foram estabelecidas e apresentadas na tabela \ref{tab:plano}.
     \hline \small \T
     Testes e ajustes na implementação & & & & \multirow{2}{*}{X} & \multirow{2}{*}{X} & & \\
     \hline \small \T
-    Preparação e aplicação do \emph{survey} & & & & & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \\
+    Preparação e aplicação do \textit{survey} & & & & & \multirow{2}{*}{X} & \multirow{2}{*}{X} & \\
     \hline \small \T
     Escrita da dissertação & & & & & X & X & X \\
     \hline
@@ -1800,7 +1926,7 @@ intermediárias foram estabelecidas e apresentadas na tabela \ref{tab:plano}.
 \section{Conclusão} \label{sec:conclusao}
 
 A conclusão do trabalho será pautada pela análise dos resultados obtidos com
-a aplicação do \emph{survey}, seguida por uma proposta de integração de um
+a aplicação do \textit{survey}, seguida por uma proposta de integração de um
 recomendador com a infraestrutura de pacotes do projeto Debian.
 
 \bibliographystyle{sbc}
