@@ -12,7 +12,8 @@
 \usepackage{rotfloat}
 \usepackage{overpic}
 \usepackage{slashbox}
-\usepackage{ulem}
+\usepackage[normalem]{ulem}
+\usepackage{cancel}
 
 \pagestyle{plain}
 
@@ -26,9 +27,9 @@
 \newcommand\tf{\mathit{tf}}
 \newcommand\idf{\mathit{idf}}
 \newcommand\df{\mathit{df}}
-\newcommand\pd{\mathit{pd}}
-\newcommand\pt{\mathit{pt}}
-\newcommand\pq{\mathit{pq}}
+\newcommand\rW{\mathit{RW}_{t}}
+\newcommand\rD{\mathit{RD}_{t,D}}
+\newcommand\rQ{\mathit{RQ}_{t,Q}}
 
 \sloppy
 %FIXME [Definir titulo]
@@ -89,7 +90,7 @@ conteúdo à disposição dos usuários. Um dos fatores para este aumento é que
 os usuários, que anteriormente eram considerados meros consumidores,
 apresentam-se atualmente como produtores de conteúdo. \cite{Castells:06} analisa
 este fenômeno e afirma que a maioria da população acredita que pode influenciar
-outras pessoas, atuando no mundo através da sua força de vontade e
+outras pessoas atuando no mundo através da sua força de vontade e
 utilizando seus próprios meios. Isto pode ser observado no surgimento e
 proliferação de serviços criados e mantidos pelos usuários: blogs, enciclopédias
 colaborativas, como a Wikipedia\footnote{\url{http://wikipedia.org}},
@@ -106,17 +107,16 @@ e evolução, organizados na forma de um rossio \cite{Simon:08}.
 
 A grande diversidade de opções disponíveis nestes ambientes, apesar de positiva,
 representa uma sobrecarga de informações que pode confundir o usuário final.
-\cite{Yyengar:10} afirma que ``mais é menos'' (em inglês, \textit{``more is less''}), no
-sentindo de que quanto maior for a disponibilidade de escolhas, menor será a
-satisfação do usuário. O fato é que comumente o indivíduo possui pouca ou
-nenhuma experiência pessoal para realizar escolhas em determinado contexto
-\cite{Cazella:10}. Sendo assim, recomendações de outras pessoas são de grande
-utilidade, pois reduzem as dúvidas e auxiliam o processo de escolha dentre as
-muitas alternativas apresentadas. No entanto, diante do número de usuários e do
-volume de conteúdo que usualmente deve ser considerado, recomendações no estilo
-``boca a boca'' tornam-se ineficientes, pois exigem a comunicação direta entre
-os pares. A tecnologia assume então papel fundamental neste processo
-\cite{Shardanand:95}.
+\cite{Yyengar:10} afirma que ``mais é menos'', no sentindo de que quanto maior
+for a disponibilidade de escolhas, menor será a satisfação do usuário. O fato é
+que comumente o indivíduo possui pouca ou nenhuma experiência pessoal para
+realizar escolhas em determinado contexto \cite{Cazella:10}. Sendo assim,
+recomendações de outras pessoas são de grande utilidade, pois reduzem as
+dúvidas e auxiliam o processo de escolha dentre as muitas alternativas
+apresentadas. No entanto, diante do número de usuários e do volume de conteúdo
+que usualmente deve ser considerado, recomendações no estilo ``boca a boca''
+tornam-se ineficientes, pois exigem a comunicação direta entre os pares. A
+tecnologia assume então papel fundamental neste processo \cite{Shardanand:95}.
 
 Sistemas de recomendação emergiram como uma área de pesquisa independente na
 década de 90, tendo como fonte de estratégias para a automatização de
@@ -124,19 +124,21 @@ recomendações soluções nas áreas de ciência cognitiva, teoria da aproximação,
 recuperação da informação, teorias de predição, administração e marketing
 \cite{Adomavicius:05}. O tema ganhou destaque com o crescimento do comércio
 eletrônico, onde apresentar o que o usuário tem interesse pode significar
-conquistar o cliente. Os Sistemas de Recomendação fazem a associação entre
-objetos de interesse e pessoas neles interessadas, filtrando as informações de
-forma a apresentar somente aquilo que seja relevante para o usuário. Além da
-agilidade para encontrar o que se deseja, tais sistemas possibilitam a
-personalização de serviços e conteúdos, que são apresentados de maneira
-individualizada a partir da identificação de interesses pessoais.
+conquistar o cliente.
+
+Os sistemas recomendadores fazem a associação entre objetos de interesse e
+pessoas neles interessadas, filtrando as informações de forma a apresentar
+somente aquilo que seja relevante para o usuário. Além da agilidade para
+encontrar o que se deseja, tais sistemas possibilitam a personalização de
+serviços e conteúdos, que são apresentados de maneira individualizada a partir
+da identificação de interesses pessoais.
 
 Este trabalho se insere no contexto de desenvolvimento de componentes de
 software, no qual os usuários são modelados como clientes e os componentes
 desenvolvidos como itens pelos quais os usuários têm interesse ou não.
 Assume-se que cada usuário tem um sistema operacional instalado e deve escolher
 quais aplicativos extras deseja obter para suprir suas necessidades pessoais.
-Diante da enorme quantidade de software disponível nas mais diversas áreas de
+Diante da enorme quantidade de programas disponíveis nas mais diversas áreas de
 aplicação, configura-se um cenário onde um sistema de recomendação traria
 benefícios imediatos ao usuário, por auxiliá-lo a tomar decisões acerca da
 configuração do seu ambiente de trabalho.
@@ -152,26 +154,26 @@ arte em sistemas de recomendação.
 O presente texto está organizado como segue: a seção \ref{sec:recomendacao}
 traz uma introdução sobre sistemas de recomendação, seus desafios,
 as principais técnicas e estratégias utilizadas em seu desenvolvimento, além de
-métodos de avaliação destes sistemas; o ambiente de desenvolvimento deste
-estudo, distribuições GNU/Linux, é descrito na seção \ref{sec:distribuicoes},
-seguida pela exibição de soluções existentes para a recomendação neste domínio
-(seção \ref{sec:rec_distro}); na seção \ref{sec:metodologia} é apresentada a
+métodos de avaliação destes sistemas; a seção \ref{sec:distribuicoes} descreve
+o ambiente de desenvolvimento deste estudo, distribuições GNU/Linux, seguida
+pela exibição de soluções existentes para a recomendação neste domínio (seção
+\ref{sec:rec_distro}); na seção \ref{sec:metodologia} é apresentada a
 metodologia de realização deste trabalho e, por fim, a seção
 \ref{sec:conclusao} traz a conclusão preliminar deste projeto, até a presente
 etapa de execução.
 
 \section{Sistemas de recomendação}\label{sec:recomendacao}
 
-Os Sistemas de Recomendação aumentam a capacidade e eficácia de um processo de
-indicação que é bastante popular nas relações sociais \cite{Resnick:97}.
-Existem recomendações que são produzidas exclusivamente por especialistas na
-área, a exemplo de indicações de filmes por críticos de arte publicadas nos
-principais jornais e revistas do país. Nos últimos anos, porém, a opinião e o
-comportamento de usuários não especializados passaram a ser considerados nas
-recomendações, por agregarem valor às mesmas. Isto pode acontecer de forma
-explícita, quando o próprio usuário escreve sua opinião ou avalia a qualidade
-de um item, ou implícita, quando suas preferências, comportamentos e transações
-são analisados e incorporados à recomendação de forma transparente aos usuários.
+Segundo \cite{Resnick:97}, os sistemas de recomendação aumentam a capacidade e
+eficácia de um processo de indicação bastante popular nas relações sociais.
+Existem recomendações produzidas exclusivamente por especialistas, a exemplo de
+indicações de filmes publicadas nos principais jornais e revistas do país por
+críticos de arte. Nos últimos anos, porém, a opinião e o comportamento de
+usuários não especializados passaram a ser considerados nas recomendações, por
+agregarem valor às mesmas. O que acontece de forma explícita, quando o
+próprio usuário escreve sua opinião ou avalia a qualidade de um item, ou
+implícita, quando suas preferências, comportamentos e transações são analisados
+e incorporados à recomendação de forma transparente ao usuário.
 
 O problema da recomendação é comumente formalizado através de uma estrutura de
 pontuação como representação computacional da utilidade dos itens para os
@@ -191,7 +193,7 @@ aproximações, pois têm como base as avaliações registradas pelos próprios usuári
 Sistemas de recomendação são implementados nos mais diversos contextos
 e podem ser projetados com finalidades distintas. Abaixo estão descritas
 algumas ações relacionadas a estes sistemas identificadas por
-\cite{Herlocker:2004}.
+\cite{Herlocker:04}.
 
 \begin{description}
 
@@ -200,7 +202,7 @@ algumas ações relacionadas a estes sistemas identificadas por
   num contexto), e auxiliavam os usuários a selecionarem as mensagens a serem
   lidas dentro de cada contexto.
 
-\item[Encontrar itens relevantes.] O sistema deve sugerir itens para o usuário
+\item[Encontrar itens relevantes.] O sistema sugere itens para o usuário
   através de uma lista ordenada de forma decrescente, de acordo com a
   probabilidade do item ser considerado relevante pelo usuário. Esta é a ação
   mais comum entre os sistemas de recomendação comerciais, atraindo grande
@@ -216,8 +218,9 @@ algumas ações relacionadas a estes sistemas identificadas por
 
 \item[Expressão de opinião.] A recomendação em si muitas vezes não é o que
   atrai usuários desses sistemas. Alguns estão interessados simplesmente em
-  emitir suas opiniões. Muito comum em ambientes que disponibilizam um espaço
-  para os usuários registrarem suas avaliações sobre os produtos.
+  emitir suas opiniões. Esta ação é comum em ambientes que disponibilizam um
+  espaço para os usuários registrarem seus comentários e avaliações sobre os
+  produtos.
 
 \item[Ajudar usuários.] Alguns usuários utilizam sistemas de recomendação
   por acreditarem que a comunidade se beneficia da sua contribuição. Apesar de
@@ -240,33 +243,39 @@ contorná-las na medida do possível. Alguns destas questões foram apontadas
 por \cite{Vozalis:03} e são citadas a seguir.
 
 \begin{description}
+
   \item[Qualidade das recomendações.] Usuários esperam recomendações nas
     quais eles possam confiar. Esta confiabilidade é alcançada na medida em
     que se diminui a incidência de falsos positivos, em outras palavras,
     recomendações que não interessam ao usuário;
-  \item[Esparsidade.] A existência de poucas relações usuários-item por
-    usuário resulta numa matriz de relacionamentos esparsa, o que dificulta
-    a localização de usuários com preferências semelhantes (relações de
-    vizinhança), resultando em recomendações fracas.
+
+  \item[Esparsidade.] A existência de poucas relações usuário-item resulta
+     numa matriz de relacionamentos esparsa, o que dificulta a localização de
+     usuários com preferências semelhantes (relações de vizinhança) e
+     resulta em recomendações fracas.
+
   \item[Escalabilidade.] A complexidade do cálculo de recomendações cresce
     tanto com o número de clientes quanto com a quantidade de itens,
     portanto a escalabilidade dos algoritmos é um ponto importante a ser
     considerado.
-  \item[Perda de transitividade de vizinhança.] Usuários que têm comportamento
+
+  \item[Transitividade de vizinhança.] Usuários que têm comportamento
     semelhante a um determinado usuário não necessariamente têm
     comportamento semelhante entre si. A captura deste tipo de relação pode ser
     desejável mas em geral esta informação não é resguardada, exigindo a
     aplicação de métodos específicos para tal.
+
   \item[Sinônimos.] Quando o universo de itens possibilita a existência
     de sinônimos, a solução deve levar esta informação em conta para prover
     melhores resultados.
-  \item[Problema da primeira avaliação.] Um item só pode ser recomendado
-    se ele tiver sido escolhido por um usuário anteriormente. Portanto, novos
-    itens precisam ter um tratamento especial até que sua presença seja
-    ``notada''.
-  \item[Problema do usuário incomum.] Indivíduos com opiniões que fogem
-    do usual, que não concordam nem discordam consistentemente com nenhum
-    grupo, normalmente não se beneficiam de sistemas de recomendações.
+
+  \item[Primeira avaliação.] Um item só pode ser recomendado se ele tiver sido
+    escolhido por um usuário anteriormente. Portanto, novos itens precisam ter
+    um tratamento especial até que sua presença seja ``notada''.
+
+  \item[Usuário incomum.] Indivíduos com opiniões que fogem do usual, que não
+    concordam nem discordam consistentemente com nenhum grupo, normalmente não
+    se beneficiam de sistemas de recomendações.
 
 \end{description}
 
@@ -280,23 +289,23 @@ por \cite{Vozalis:03} e são citadas a seguir.
 %\subsection{Privacidade}
 
 %FIXME [Analisar complexidade de cada tecnica]
-%FIXME [Produzir figuras ilustrativas para cada tecnica]
+%FIXME [Produzir figuras ilustrativas do naive bayes]
 \subsection{Técnicas} \label{sec:tecnicas}
 
 O desenvolvimento de sistemas de recomendação tem suas raízes em áreas
-distintas e o problema computacional a ser tratado está fortemente
-relacionado com outros problemas clássicos, como recuperação de informação em
-documentos de texto e classificação.
+distintas e o problema computacional a ser tratado está fortemente relacionado
+com outros problemas clássicos, como classificação e recuperação de informação
+em documentos de texto.
 
 A fim de obter a informação desejada, o usuário de uma ferramenta de busca
-deve traduzir suas necessidades de informação para uma consulta (\textit{query}
-em inglês), que geralmente é representada por um conjunto de \textit{palavras-
-chave}. O desafio do buscador é recuperar os documentos da coleção que são
-relevantes para a consulta, baseando-se nos termos que a constituem.
-Ademais, visto que a busca pode retornar um número excessivo de documentos, é
-desejável que este resultado seja apresentado ao usuário em ordem decrescente
-de relevância, aumentando assim as chances de a informação desejada ser
-encontrada com rapidez. Para tanto, cada documento da coleção deve ter uma
+deve traduzir suas necessidades de informação para uma consulta
+(\textit{query}, em inglês), que geralmente é representada por um conjunto de
+\textit{palavras-chave}. O desafio do buscador é recuperar os documentos da
+coleção que são relevantes para a consulta, baseando-se nos termos que a
+constituem.  Ademais, visto que a busca pode retornar um número excessivo de
+documentos, é desejável que este resultado seja apresentado ao usuário em ordem
+decrescente de relevância, aumentando assim as chances de a informação desejada
+ser encontrada com rapidez. Para tanto, cada documento da coleção deve ter uma
 pontuação (peso) que indique seu grau de importância para a referida
 \textit{query}. Traçando um paralelo com o problema de recomendação, a
 identidade e/ou o comportamento do usuário representaria a consulta ao sistema
@@ -315,24 +324,294 @@ prévias pode ser caracterizado como uma classificação. O problema da
 classificação diz respeito à determinação de relacionamentos entre um dado
 objeto e um conjunto de classes pré-definidas.
 
-O problema de recomendação pode ser visto como uma classificação, na qual os
-itens devem ser categorizados entre duas classes: relevantes ou irrelevantes --
-os relevantes seriam recomendados. Porém, a definição de consultas ou regras
-fixas para uma busca não é uma estratégia eficiente neste caso, porque a
-consulta estaria diretamente relacionada com a identidade do usuário e
-portanto deveria ser escrita especialmente para ele.
+A recomendação pode ser vista como uma classificação, na qual os itens são
+categorizados entre duas classes: relevantes e irrelevantes -- os relevantes
+seriam recomendados. Porém, a definição de consultas ou regras fixas para uma
+busca não é uma estratégia eficiente neste caso, porque a consulta estaria
+diretamente relacionada com a identidade do usuário e portanto deveria ser
+escrita especialmente para ele.
 
 Todavia, a disciplina de inteligência artificial aborda a questão da
 classificação através de estratégias que não se baseiam em busca. Algoritmos
 de aprendizado de máquina são utilizados para a construção de modelos de
-classificação ``inteligentes'', que aprendem através da análise de exemplos.
+classificação ``inteligentes'', que ``aprendem'' através da análise de
+exemplos. Os métodos supervisionados fundamentam-se na construção de um
+classificador que aprende na medida em que lhe são apontados exemplos de
+objetos classificados. São caracterizados como supervisionados porque as
+classes atribuídas aos objetos de treinamento são determinadas por um ser
+humano, que atua como um supervisor orientando o processo de aprendizado
+\cite{Manning:09}. Por outro lado, algoritmos não supervisionados procuram
+identificar padrões de organização nos dados sem que haja uma classificação
+prévia dos exemplos.
 
-A seguir são apresentadas algumas técnicas para resolução destes problemas
+A seguir são apresentadas algumas técnicas para tratamento destes problemas
 que também são utilizadas na construção de sistemas de recomendação, dando
 suporte às estratégias apresentadas na seção \ref{sec:estrategias}.
 
-\vspace{-0.3cm}
-\subsubsection{Medida \textit{tf-idf}}
+\subsubsection{K-NN} \label{sec:knn}
+
+\textit{K-nearest neighbors (k-NN)}, em português \textit{k vizinhos mais
+próximos}, é mais um algoritmo de aprendizado supervisionado para
+classificação. Este método baseia-se no conceito de vizinhança, que representa
+um conjunto de objetos que estão próximos no espaço.
+
+O \textit{K-NN} não exige nenhum treinamento prévio com os dados de exemplo,
+que podem ser diretamente armazenados como vetores de atributos acompanhados
+por suas devidas classes. A classificação de um novo objeto parte do cálculo da
+vizinhança do mesmo, que é composta por $k$ objetos.
+
+A determinação da vizinha está diretamente relacionada com o conceito de
+proximidade entre objetos, que pode ser expressa em termos de similaridade ou
+de distância entre os mesmos (quanto maior a distância, menor a similaridade).
+Existem diversas medidas para mensurar estes conceitos, deve-se adotar a
+métrica que melhor se adequa ao domínio da aplicação e conjunto de dados.
+A tabalea \ref{tab:knn_distancia} apresenta algumas dessas medidas. Os objetos
+$X$ e $Y$ são representados por seus vetores $\vec{X} = (x_1,...,x_n)$ e
+$\vec{Y} = (y_1,...,y_n)$.
+
+\begin{table}[h!]
+  \caption{K-NN: Medidas de distância e similaridade entre objetos}
+  \label{tab:knn_distancia}
+  \centering
+  \newcommand\T{\rule{0pt}{2.8ex}}
+  \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
+  \begin{tabular}{| l | l |}
+    \hline
+    Distância euclidiana &
+    \T\B$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    \hline
+    Similaridade de cosseno &
+    $\mathit{sim}(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
+                       = \frac{\textstyle \sum_{1\leq i \leq n} x_i y_i}
+                              {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}
+                               \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
+    \hline
+    Coeficiente de \textit{Pearson} &
+    $p(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
+                                     (y_i-\bar{y})}
+                   {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
+                    \sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
+    \hline
+  \end{tabular}
+\end{table}
+
+Após a definição de vizinhança, a classe mais frequente entre seus $k$ vizinhos
+é atribuída ao novo objeto. Desta forma, a similaridade também pode ser
+entendida como grau de influência entre os objetos. Os objetos mais semelhantes
+a um novo objeto terão maior influência no cálculo de sua classificação.
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Seleção de atributos} \label{sec:selecao_atributos}
+
+Uma grande quantidade de atributos a ser considerada resulta em alta
+complexidade computacional, além de geralmente mascarar a presença de ruídos
+(dados que prejudicam a acurácia da classificação quando considerados).
+A fim de amenizar este problema, é comum a realização de um processo denominado
+seleção de atributos, que consiste em escolher alguns atributos dos dados e
+utilizar apenas estes como conjunto de treinamento para a classificação. Esta
+seleção equivale à substituição de um classificador complexo por um mais
+simples. \cite{Manning:09} defende que, especialmente quando a quantidade de
+dados de treinamento é limitada, modelos mais fracos são preferíveis.
+
+A seleção de atributos geralmente é realizada para cada classe em separado,
+seguida pela combinação dos diversos conjuntos. Abaixo são apresentados alguns
+métodos de escolha.
+
+\begin{description}
+
+  \item[Informação mútua.] Análise de quanto a presença ou ausência de um
+    atributo contribui para a tomada de decisão correta por uma determinada
+    classe. Informação mútua máxima significa que o atributo é um indicador
+    perfeito para pertencimento a uma classe. Isto acontece quando um objeto
+    apresenta o atributo se e somente se o objeto pertence à classe;
+
+  \item[Independência de eventos.] Aplicação do teste estatístico $\chi^2$ para
+    avaliar a independência de dois eventos -- neste caso, um atributo e uma
+    classe. Se os dois eventos são dependentes, então a ocorrência do atributo
+    torna a ocorrência da classe mais provável.
+
+  \item[Baseado em frequência.] Seleção dos atributos mais comuns para uma
+    classe.
+
+\end{description}
+
+Os métodos apresentados acima são ``gulosos'', ou seja, assumem escolhas ótimas
+locais na esperança de serem ótimas globais. Como resultado, podem selecionar
+atributos que não acrescentam nenhuma informação para a classificação quando
+considerados outros previamente escolhidos. Apesar disto, algoritmos não
+gulosos são raramente utilizados devido a seu custo computacional
+\cite{Manning:09}.
+
+\subsubsection{Classificador bayesiano}
+
+\textit{Bayes ingênuo} é uma solução para classificação que figura entre os
+algoritmos de aprendizado de máquina supervisionados. O classificador apoia-se
+num modelo probabilístico que aplica o teorema de Bayes com fortes suposições
+de independência de atributos -- por esta razão o método é considerado ingênuo.
+Em outras palavras, a presença ou ausência de um atributo em um objeto de uma
+classe não estaria relacionada com a incidência de nenhum outro atributo.
+
+A decisão acerca da classe a qual um objeto pertence é tomada de acordo com o
+modelo de probabilidade máxima posterior \textit{(MAP)}, indicada na equação
+\ref{eq:map}. Dado que $C$ é o conjunto de classes e $x$ objeto a ser
+classificado, a classe atribuída a este será a que apresentar maior
+probabilidade condicionada a $x$. $\hat{P}$ é utilizado ao invés de $P$ porque
+geralmente não se sabe o valor exato das probabilidades, que são estimadas a
+partir dos dados de treinamento.
+
+\begin{equation}
+\label{eq:map}
+  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
+\end{equation}
+
+A equação \ref{eq:bayes} aplica o Teorema de Bayes para probabilidades
+condicionadas. Na prática, apenas o numerador da fração interessa, visto que o
+denominador é constante para todas as classes, portanto não afeta o
+$\operatorname{arg\ max}$ (equação \ref{eq:bayes_no_deno}).
+
+\begin{eqnarray}
+\label{eq:bayes}
+  c_{\mathit{map}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
+                         \frac{\hat{P}(x|c) \hat{P}(c)}{\cancel{\hat{P}(x)}} \\
+                {} & {} & {} \nonumber \\
+\label{eq:bayes_no_deno}
+                   & = & \underset{c \in C}{\operatorname{arg\ max}} \
+                         \hat{P}(x|c) \hat{P}(c)
+\end{eqnarray}
+
+É neste ponto que a independência de atributos é importante. Considera-se que
+um documento $x$ pode ser caracterizado por uma série de atributos $x_i$ -- no
+caso de documentos de texto, os atributos são os próprios termos. Assumindo que
+a ocorrência de atributos acontece independentemente, tem-se que:
+
+\begin{equation}
+\label{eq:independencia}
+  \hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c)
+               = \hat{P}(x_1|c) \hat{P}(x_2|c)\ ...\ \hat{P}(x_n|c)
+\end{equation}
+
+Portanto, a função de decisão pode ser reescrita através da equação
+\ref{eq:bayes_prod}. Cada parâmetro condicional $\hat{P}(x_i|c)$ é um peso
+que representa a qualidade do atributo $x_i$ como indicador da classe $c$,
+enquanto que $\hat{P}(c)$ é a frequência relativa da classe $c$.
+
+\begin{equation}
+\label{eq:bayes_prod}
+  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
+                     \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
+\end{equation}
+
+Os parâmetros são obtidos através da estimativa de maior probabilidade
+\textit{(MLE)}, que corresponde ao valor mais provável de cada parâmetro de
+acordo com os dados de treinamento. A equação \ref{eq:p_c} traz a estimativa de
+$\hat{P}(c)$, onde $N_c$ é o número de objetos da classe $c$ e $N$ é o número
+total de documentos.
+
+\begin{equation}
+\label{eq:p_c}
+  \hat{P}(c) = \frac{N_c}{N}
+\end{equation}
+
+As probabilidades condicionais são estimadas como a frequência relativa do
+atributo $x$ em objetos que pertencem à classe $c$. Na equação \ref{eq:p_xc},
+$T_{\mathit{cx}}$ é o número de ocorrências de $x$ em objetos de exemplo da
+classe $c$ e $V$ é o conjunto de atributos que os objetos podem apresentar.
+
+\begin{equation}
+\label{eq:p_xc}
+  \hat{P}(x|c) = \frac{T_{\mathit{cx}}}
+                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}}
+\end{equation}
+
+No entanto, a estimativa \textit{MLE} é zero para combinações atributo-classe
+que não ocorrem nos dados de treinamento. Considerando que as probabilidades
+condicionais de todos os atributos serão multiplicadas (equação
+\ref{eq:bayes_prod}), a simples ocorrência de uma probabilidade zerada resulta
+na desconsideração da classe na referida classificação. E de fato, dados de
+treinamento nunca são abrangentes o suficiente para representar a frequência de
+eventos raros de forma adequada \cite{Manning:09}. Para eliminar
+$\mathit{zeros}$, adiciona-se $1$ a cada termo da equação \ref{eq:p_xc}:
+
+\begin{equation}
+\label{eq:p_xc+1}
+  \hat{P}(x|c) = \frac{T_{\mathit{cx}}+1}
+                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}+1}
+\end{equation}
+
+O classificador bayesiano também é sensível a ruídos, logo, sua performance é
+igualmente beneficiada pelo processo de seleção de atributos descrito na seção
+\ref{sec:selecao_atributos}.
+
+Apesar de a independência de atributos não ser verificada para a maioria
+dos domínios de aplicação, na prática o Bayes ingênuo apresenta resultados
+satisfatórios. \cite{Zhang:04} atribui a surpreendente boa performance deste
+método ao fato de que a mera existência de dependências entre atributos não
+prejudicaria a classificação, mas sim o modo como as dependências estão
+distribuídas ao longo das classes. Segundo o autor, desde que as dependências
+estejam distribuídas igualmente nas classes, não há problema em haver
+dependência forte entre dois atributos.
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Variantes do modelo Bayes ingênuo}
+
+As duas principais variantes de implementação do classificador bayesiano,
+denominadas de modelo \textit{multinomial} e de \textit{Bernoulli}, diferem
+fundamentalmente na maneira como os objetos são representados.
+
+O primeiro modelo utiliza uma representação que considera informações espaciais
+sobre o objeto. Na classificação de documentos de texto, por exemplo, o modelo
+gera um atributo para cada posição do documento, que corresponde a um termo do
+vocabulário. Já o modelo de \textit{Bernoulli} produz um indicador de
+presença ou ausência para cada possível atributo (no caso de texto, cada termo
+do vocabulário).
+
+A escolha da representação de documentos adequada é uma decisão crítica no
+projeto de um classificador, visto que o próprio significado de um atributo
+depende da representação. No \textit{multinomial}, um atributo pode assumir
+como valor qualquer termo do vocabulário, o que resulta numa representação do
+documento correspondente à sequência de termos do mesmo. Já para o modelo de
+\textit{Bernoulli}, um atributo pode assumir apenas os valores $0$ e $1$, e a
+representação do documento é uma sequência de $0$s e $1$s do tamanho do
+vocabulário.
+
+%A figura \ref{fig:exemplo_bayes} ilustra as peculiaridades de cada
+%representação.
+%
+%\begin{figure}[ht]
+%\centering
+%\begin{tabular}{*4{c}}
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (1)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Por motivo \\ de segurança, \\
+%    comunicamos a todos os clientes que atualizem sua senha por email.}}
+%    \end{overpic} &
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (2)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Atualização \\ urgente de \\  senha.
+%    \\ \\ Clique aqui.}}\end{overpic} &
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (3)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Você foi \\ sorteado e \\ acaba de
+%    ganhar 1 milhão de reais. Clique aqui e saiba como resgatar seu prêmio.}}
+%    \end{overpic} &
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (4)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Perca peso fácil e de forma divertida.
+%    Pare de sofrer!}}\end{overpic} \\
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (5)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Emagreça 10kg em duas semanas! Clique
+%    aqui e descubra como.}}\end{overpic} &
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (6)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Compre viagra com 69\% de desconto!}}
+%    \end{overpic} &
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (7)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Se você não pode mudar sua vida, mude
+%    pelo menos a sua bolsa!}}\end{overpic} &
+%\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (8)}
+%  \put(5,44){\parbox{1.8cm}{\scriptsize Aprenda a investir na bolsa em uma
+%    semana.}}\end{overpic}
+%\end{tabular}
+%\caption{Coleção de documentos classificados em \textit{spam} e \textit{não-spam}}
+%\label{fig:colecao_spam}
+%\end{figure}
+
+\subsubsection{Medida $\boldsymbol{\tfidf}$}
 
 Acrônimo para \textit{term frequency - inverse document frequency}, $\tfidf$ é
 uma medida de peso clássica utilizada em ferramentas de busca em texto para
@@ -362,8 +641,10 @@ verbais. Os processos mais comuns de normalização são: \textit{stemming}, que
 reduz a palavra ao seu radical; e \textit{lematização}, que reduz a palavra à
 sua forma canônica (por exemplo, verbos no infinitivo, substantivos no singular
 masculino etc). A figura \ref{fig:normalizacao} apresenta um documento de texto
-numa coleção hipotética e a sua representação após eliminação de \textit{stop
-words} e um procedimento de \textit{stemming}.
+numa coleção hipotética\footnote{Os textos utilizados nos exemplos desta seção
+são excertos de letras de música de diversos compositores brasileiros.} e a sua
+representação após eliminação de \textit{stop words} e procedimento de
+\textit{stemming}.
 
 \begin{figure}[ht]
 \centering
@@ -386,14 +667,15 @@ words} e um procedimento de \textit{stemming}.
 
 A simples presença de um termo da \textit{query} em um documento da coleção já
 é um indicativo de que o mesmo tem alguma relação com a consulta. No entanto, a
-quantidade de vezes que o termo ocorre é mais informativo sobre sua relação com
-o conteúdo do documento. Intuitivamente, os documentos que referenciam os
-termos de uma \textit{query} com mais frequência estão mais fortemente
-relacionados com a mesma, e por isso deveriam receber uma maior pontuação de
-relevância. O peso $\tf_{t,d}$ (\textit{term frequency}) quantifica esta noção
-intuitiva, relacionando documentos da coleção e termos do dicionário de acordo
-com a frequência destes nos documentos. Em sua abordagem mais simples,
-$\tf_{t,d}$ é igual ao número de ocorrências do termo $t$ no documento $d$.
+quantidade de vezes que o termo ocorre é ainda mais informativo sobre sua
+relação com o conteúdo do documento. Intuitivamente, os documentos que
+referenciam os termos de uma \textit{query} com mais frequência estão mais
+fortemente relacionados com a mesma, e por isso deveriam receber uma maior
+pontuação de relevância. O peso $\tf_{t,d}$ (\textit{term frequency})
+quantifica esta noção intuitiva, relacionando documentos da coleção e termos do
+dicionário de acordo com a frequência destes nos documentos. Em sua abordagem
+mais simples, $\tf_{t,d}$ é igual ao número de ocorrências do termo $t$ no
+documento $d$.
 
 A figura \ref{fig:colecao} ilustra uma coleção de documentos, cujos valores de
 $\tf_{t,d}$ para alguns termos do dicionário são apresentados na tabela
@@ -402,9 +684,9 @@ no documento $(1)$, por isso $\tf_{\mathit{moren},1} = 2$. O cálculo do
 $\tf$s já considera os radicais dos termos, resultantes de um processo de
 \textit{stemming}. Em razão disto, $\tf_{\mathit{olh},2} = 3$, pois tanto a
 palavra \textit{olho} quanto as diferentes flexões do verbo \textit{olhar}
-contribuem para a contagem de frequência do termo \textit{olh}. Na tabela, os
-radicais dos vocábulos são seguidos por algumas variações, a título de
-ilustração.
+contribuem para a contagem de frequência do termo \textit{olh}. Na tabela
+\ref{tab:tf}, os radicais dos vocábulos são seguidos por algumas variações, a
+título de ilustração.
 
 \begin{figure}[ht]
 \centering
@@ -439,18 +721,19 @@ ilustração.
 \label{fig:colecao}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[h!]
   \caption{Frequência dos termos nos documentos da coleção}
   \label{tab:tf}
   \centering
+  \small
   \begin{tabular}{| l | c | c | c | c | c | c | c | c |}
     \hline
-    \multicolumn{9}{|c|}{\textbf{\textit{tf$_{t,d}$}}}\\
+    \multicolumn{9}{|c|}{$\boldsymbol{\tf_{t,d}}$}\\
     \hline
     \backslashbox{\textbf{\textit{Termo}}}{\vspace{-0.2cm}\textbf{\textit{Doc}}}&
-    \textbf{\small{(1)}}&\textbf{\small{(2)}}&\textbf{\small{(3)}}&
-    \textbf{\small{(4)}}&\textbf{\small{(5)}}&\textbf{\small{(6)}}&
-    \textbf{\small{(7)}}&\textbf{\small{(8)}}\\
+    \textbf{(1)}&\textbf{(2)}&\textbf{(3)}&
+    \textbf{(4)}&\textbf{(5)}&\textbf{(6)}&
+    \textbf{(7)}&\textbf{(8)}\\
     \hline
     moren \textit{\{a,o\}} & $2$ & $1$ & $0$ & $1$ & $0$ & $1$ & $1$ & $1$ \\
     \hline
@@ -473,17 +756,26 @@ ilustração.
 
 O conjunto de pesos determinado pelos $\tf$s dos termos de um documento
 pode ser entendido como um resumo quantitativo do mesmo. Esta visão do
-documento é comumente referenciada na literatura como ``saco de palavras'' (em
-inglês, \textit{``bag of words''}), onde a disposição das palavras é ignorada e
-apenas a quantidade de ocorrências para cada termo é considerada.
+documento é comumente referenciada na literatura como ``saco de palavras'',
+onde a disposição das palavras é ignorada e apenas a quantidade de ocorrências
+para cada termo é considerada.
+
+Uma medida de relevância baseada simplesmente na incidência dos termos da
+\textit{query} nos documentos (\textit{RI}) poderia ser calculada através da
+equação \ref{eq:relevancia_tf}.
+
+\begin{equation}
+\label{eq:relevancia_tf}
+  \mathit{RI}_{d,q} = \sum_{t \in q} \tf_{t,d}
+\end{equation}
 
 No entanto, alguns termos têm pouco poder de discriminação na determinação
 de relevância de um documento, por estarem presentes em quase todos os
 documentos. Ao passo que existem outros muito raros que quando presentes
 são forte indicativo de relevância. No contexto da coleção da figura
-\ref{fig:colecao}, por exemplo, a \textit{query} \{morena, bobagem\} é composta
-por um termo muito frequente e outro muito raro. Coincidentemente, os
-documentos $(3)$ e $(5)$, contém apenas um dos dois elementos da consulta,
+\ref{fig:colecao}, por exemplo, a \textit{query} $\{\mathsf{morena, bobagem}\}$
+é composta por um termo muito frequente e outro muito raro. Coincidentemente,
+os documentos $(3)$ e $(5)$, contém apenas um dos dois elementos da consulta,
 porém ambos apresentam $\tf_{t,d}=1$ para os respectivos termos. Todavia,
 enquanto esta frequência se repete ao longo da coleção múltiplas vezes para o
 termo \textit{morena}, ela é única para o termo \textit{bobagem}, o que de fato
@@ -491,14 +783,14 @@ diferencia o documento $(5)$ dos demais.
 
 O $\idf_t$ (\textit{inverse document frequency}) foi então introduzido para
 atenuar o efeito de termos muito comuns no cálculo de relevância, diminuindo o
-peso de um termo por um fator que cresce com sua frequência em documentos na
-coleção \cite{Manning:09}. A equação \eqref{eq:idf} apresenta a forma clássica
-do $\idf$, na qual $N$ representa o número de documentos da coleção e $\df_t$
-(\textit{document frequency}) é o número de documentos que contém o termo $t$.
-É comum que o universo da busca seja uma coleção de documentos de alta
-cardinalidade, o que provoca valores de $\df_t$ muito discrepantes. O uso do
-$\log$ diminui a escala de valores, permitindo que frequências muito grandes e
-muito pequenas sejam comparadas sem problemas.
+peso relacionado a um termo por um fator que cresce com sua frequência em
+documentos na coleção \cite{Manning:09}. A equação \ref{eq:idf} apresenta a
+forma clássica do $\idf$, na qual $N$ representa o número de documentos da
+coleção e $\df_t$ (\textit{document frequency}) é o número de documentos que
+contém o termo $t$. É comum que o universo da busca seja uma coleção de
+documentos de altíssima dimensão, resultando em valores de $\df_t$ muito
+discrepantes. O uso do $\log$ diminui a escala de valores, permitindo que
+frequências muito grandes e muito pequenas sejam comparadas sem problemas.
 
 \begin{equation}
 \label{eq:idf}
@@ -510,23 +802,24 @@ na tabela \ref{tab:idf}. Novamente os radicais dos termos são considerados:
 $\idf_\mathit{morena} = \idf_\mathit{moren} = \log \frac{8}{6} = 0.12$,
 enquanto $\idf_\mathit{bobagem} = \idf_\mathit{bob} = \log \frac{8}{1} = 0.9$.
 
-\begin{table}[h]
-  \caption{Valores de \textbf{\textit{idf$_t$}} para termos do dicionário}
+\begin{table}[h!]
+  \caption{Valores de $\boldsymbol{\idf_t}$ para termos do dicionário}
   \label{tab:idf}
   \centering
+  \small
   \begin{tabular}{| l | c | c | c | c | c | c | c | c |}
     \hline
     \textbf{\textit{Termo}} &
     moren & roup & don & crav & canel & olh & ros & bob\\
     \hline
-    \textbf{\textit{idf$_t$}} &
+    $\boldsymbol{\idf_t}$ &
     $0.12$ & $0.9$ & $0.6$ & $0.6$ & $0.42$ & $0.6$ & $0.42$ & $0.9$\\
     \hline
   \end{tabular}
 \end{table}
 
 A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
-\eqref{eq:tfidf}), produzindo um peso composto com as seguintes propriedades:
+\ref{eq:tfidf}), produzindo um peso composto com as seguintes propriedades:
 
 \begin{enumerate}
   \item É alto quando $t$ ocorre muitas vezes em $d$ e em poucos documentos da
@@ -543,34 +836,35 @@ A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
 \tfidf_{t,d} = \tf_{t,d} \cdot \idf_t
 \end{equation}
 
-Considerando os pesos $\tfidf$ dos termos do dicionário em cada documento, a
-pontuação de relevância de um documento para uma determinada \textit{query}
-($R_{d,q}$) pode ser determinada pela soma dos pesos dos termos da consulta
-(equação \eqref{eq:ranking}).
+A medida de relevância apresentada na equação \ref{eq:relevancia_tf} pode ser
+refinada para somar os pesos $\tfidf$ do documento $d$ com relação aos termos
+da \textit{query} $q$, resultando na media $R_{d,q}$ apresentada na equação
+\ref{eq:relevancia} \cite{Manning:09}.
 
 \begin{equation}
-\label{eq:ranking}
+\label{eq:relevancia}
 R_{d,q} = \sum_{t \in q} \tfidf_{t,d}
 \end{equation}
 
 A tabela \ref{tab:tfidf-resultado} apresenta a ordenação dos documentos da
 coleção como resultado do cálculo de relevância por $\tfidf$ para as
-consultas $q_1 = \{\mathsf{morena}\}$, $q_2 = \{\mathsf{morena, bobagem}\}$ e
-$q_3 = \{\mathsf{morena, dona, rosa}\}$. Os valores $\tfidf_{t,d}$ foram
-obtidos a partir da equação \eqref{eq:tfidf}, com os pesos das tabelas
+consultas $q_1=\{\mathsf{morena}\}$, $q_2=\{\mathsf{morena, bobagem}\}$ e
+$q_3=\{\mathsf{morena, dona, rosa}\}$. Os valores $\tfidf_{t,d}$ foram
+obtidos a partir da equação \ref{eq:tfidf}, com os pesos das tabelas
 \ref{tab:tf} e \ref{tab:idf}. Por exemplo, $\tfidf_{\mathit{morena,1}} =
 \tf_{\mathit{morena,1}} \cdot \idf_{\mathit{morena}} = 2 \cdot 0.12 = 0.24$.
 
-\begin{table}[h]
-  \caption{Ordenação dos documentos como resultado de consultas}
+\begin{table}[h!]
+  \caption{Ordenação dos documentos como resultado das consultas
+           $\boldsymbol{q_1}$, $\boldsymbol{q_2}$ e $\boldsymbol{q_3}$}
   \label{tab:tfidf-resultado}
   \centering
-  \small
+  \footnotesize
   \begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c | c |}
     \cline{1-3}\cline{5-8}\cline{10-14}
-    \multirow{2}{*}{doc} & $q_1$ & \multirow{2}{*}{$R_{d,q}$} & &
-    \multirow{2}{*}{doc} & \multicolumn{2}{|c|}{$q_2$} & \multirow{2}{*}{$R_{d,q}$} &&
-    \multirow{2}{*}{doc} & \multicolumn{3}{|c|}{$q_3$} & \multirow{2}{*}{$R_{d,q}$} \\
+    \multirow{2}{*}{\textbf{doc}} & $\boldsymbol{q_1}$ & \multirow{2}{*}{$\boldsymbol{R_{d,q}}$} & &
+    \multirow{2}{*}{\textbf{doc}} & \multicolumn{2}{|c|}{$\boldsymbol{q_2}$} & \multirow{2}{*}{$\boldsymbol{R_{d,q}}$} &&
+    \multirow{2}{*}{\textbf{doc}} & \multicolumn{3}{|c|}{$\boldsymbol{q_3}$} & \multirow{2}{*}{$\boldsymbol{R_{d,q}}$} \\
     \cline{2-2}\cline{6-7}\cline{11-13}
     & \textit{morena} & & & &
       \textit{morena} & \textit{bobagem} & & & &
@@ -581,7 +875,7 @@ obtidos a partir da equação \eqref{eq:tfidf}, com os pesos das tabelas
     (1) & $0.24$ & $1.2$ & $0$ & $1.44$ \\
     \cline{1-3}\cline{5-8}\cline{10-14}
     (2) & $0.12$ & $0.12$ & &
-    (1) & $0.12$ & $0$ & $0.12$ & &
+    (1) & $0.24$ & $0$ & $0.24$ & &
     (8) & $0.12$ & $1.2$ & $0$ & $1.32$ \\
     \cline{1-3}\cline{5-8}\cline{10-14}
     (4) & $0.12$ & $0.12$ & &
@@ -611,26 +905,36 @@ obtidos a partir da equação \eqref{eq:tfidf}, com os pesos das tabelas
   \end{tabular}
 \end{table}
 
-Existem diversas variantes para o cálculo da medida $\tfidf_{t,d}$,
-propostas com o intuito de resolver anomalias nas fórmulas mais simples e
-aperfeiçoar o processo de busca. Por exemplo, é pouco provável que a presença
-de uma palavra 20 vezes num documento tenha de fato 20 vezes mais
-representatividade do que uma ocorrência única. O logaritmo pode ser
-incorporado também ao cálculo do $\tf$ para atenuar o crescimento do peso para
-valores crescentes de frequência. Outras abordagens alternativas utilizam
-normalizações por diversas medidas: pelo comprimento do documento, pelo
-comprimento médio dos documentos da coleção, pelo $\tf$ máximo ou médio entre
-os $\tf$s de todos os termos do documento, entre outros. É comum também que
-elementos constantes sejam introduzidos para suavizar um ou outro fator da
-fórmula.
+Existem diversas variantes para o cálculo dos pesos $\tf_{t,d}$ e $\idf_t$,
+propostas com o intuito de aperfeiçoar o processo de busca. Por exemplo,
+geralmente a presença de uma palavra 20 vezes num documento não tem de fato
+20 vezes mais representatividade do que uma ocorrência única. Documentos
+distintos podem referenciar o mesmo conceito de forma concisa ou prolixa, e
+simplesmente este fato não deve ser motivo para pesos muito discrepantes com
+relação a uma \textit{query}, visto que o teor do texto é o mesmo. A variante
+denominada \textit{$\tf$ sub-linear} incorpora o logaritmo ao cálculo do $\tf$
+para atenuar o crescimento do peso para valores crescentes de frequência
+(equação \ref{eq:tfsub}).
 
-\vspace{0.3cm}
-\hspace{-1.4cm}
+\begin{equation}
+  \label{eq:tfsub}
+  \mathit{tf\mhyphen sub}_{t,d} =
+  \begin{cases}
+    1+\log \tf_{t,d} & \text{, se}\ \tf_{t,d}>0 \\
+    0                & \text{, caso contrário}
+  \end{cases}
+\end{equation}
+
+Outras abordagens alternativas utilizam normalizações por diversas medidas:
+comprimento do documento, comprimento médio dos documentos da coleção, $\tf$
+máximo ou médio entre os $\tf$s de todos os termos do documento, entre outros.
+
+\vspace{0.3cm} \hspace{-1.4cm}
 \textbf{Modelo de espaço vetorial}
 
 Uma coleção de documentos pode ser representada por um conjunto de vetores,
 sendo cada documento descrito como um vetor de termos do dicionário e os
-respectivos pesos $\tfidf$ no documento. Tem-se como resultado uma visão
+respectivos pesos $\tfidf$ do documento. Tem-se como resultado uma visão
 da coleção como uma matriz de dimensões $M \times N$, na qual as linhas
 representam os $M$ termos do dicionário e as colunas os $N$ documentos da
 coleção. Esta representação, conhecida como \textit{modelo de espaço vetorial},
@@ -642,18 +946,18 @@ valores de $\tf$ e $\idf$ foram calculados (tabelas \ref{tab:tf} e
 representada no modelo de espaço vetorial pela matriz da tabela
 \ref{tab:colecao_mev}.
 
-\begin{table}[h]
+\begin{table}[h!]
   \caption{Representação da coleção no modelo de espaço vetorial}
   \label{tab:colecao_mev}
   \centering
+  \small
   \begin{tabular}{| l | c | c | c | c | c | c | c | c |}
     \hline
-    \multicolumn{9}{|c|}{\textbf{\textit{tf-idf$_{t,d}$}}}\\
+    \multicolumn{9}{|c|}{$\boldsymbol{\tfidf_{t,d}}$}\\
     \hline
-    \backslashbox{\textbf{\textit{Termo}}}{\vspace{-0.2cm}\textbf{\textit{Doc}}}&
-    \textbf{\small{(1)}}&\textbf{\small{(2)}}&\textbf{\small{(3)}}&
-    \textbf{\small{(4)}}&\textbf{\small{(5)}}&\textbf{\small{(6)}}&
-    \textbf{\small{(7)}}&\textbf{\small{(8)}}\\
+    \backslashbox{\textbf{\textit{Termo}}}
+                 {\vspace{-0.2cm}\textbf{\textit{Doc}}}&
+    (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)\\
     \hline
     moren & $0.24$ & $0.12$ & $0$ & $0.12$ & $0$ & $0.12$ & $0.12$ & $0.12$ \\
     \hline
@@ -674,8 +978,8 @@ representada no modelo de espaço vetorial pela matriz da tabela
   \end{tabular}
 \end{table}
 
-%\newpage
-\vspace{0.3cm}
+\newpage
+%\vspace{0.3cm}
 \hspace{-1.4cm}
 \textbf{Similaridade de cosseno}
 
@@ -686,422 +990,466 @@ vetores de pesos de dois documentos for usada como medida para avaliação de
 similaridade entre os mesmos, pode acontecer de documentos com conteúdo similar
 serem considerados diferentes simplesmente porque um é muito maior que o outro.
 Para compensar o efeito do comprimento dos documentos utiliza-se como medida de
-similaridade o cosseno dos vetores que os representam, apresentado na equação
-\eqref{eq:sim-cos}. O numerador representa o produto escalar dos dois vetores e
-o denominador a distância euclidiana entre os mesmos.
+similaridade o cosseno do ângulo entre os vetores que os representam
+($\theta$), apresentada na equação \ref{eq:sim-cos}. O numerador representa o
+produto escalar dos dois vetores e o denominador a distância euclidiana entre
+os mesmos.
 
 \begin{equation}
 \label{eq:sim-cos}
-sim(d_1,d_2) = \frac{\vec{V}(d_1) \cdot \vec{V}(d_2)}{|\vec{V}(d_1)| |\vec{V}(d_2)|}
+  \mathit{sim}(d_1,d_2) = \cos(\theta)
+                        = \frac{\vec{V(d_1)} \cdot \vec{V(d_2)}}
+                               {|\vec{V(d_1)}| |\vec{V(d_2)}|}
 \end{equation}
 
 Dado um documento $d$, para encontrar os documentos de uma coleção que mais se
-assemelham mais a este, basta encontrar aqueles com maior similaridade de
-cosseno com $d$. Para tanto, pode-se calcular os valores $sim(d,d_i)$ entre
+assemelham a este, basta encontrar aqueles com maior similaridade de cosseno
+com $d$. Para tanto, pode-se calcular os valores $\mathit{sim}(d,d_i)$ entre
 $d$ e os demais $d_i$ documentos da coleção e os maiores valores indicarão os
 documentos mais semelhantes.
 
 Considerando o fato de que \textit{queries}, assim como documentos, são um
 conjunto me palavras, elas também podem ser representadas como vetores no
-modelo de espaço vetorial. Portanto a similaridade de cosseno pode ser
-utilizada na busca por documentos relevantes para uma consulta, que serão os
-que mais se assemelham à referida \textit{query}. Após o cálculo de
-similaridade de cosseno entre os vetores da \textit{query} e dos documentos da
-coleção, os maiores valores indicarão os documentos mais relevantes para a
-mesma.
-
-A figura \ref{} ilustra o cálculo de relevância por similaridade de cosseno,
-reconsiderando as consultas $q_1$, $q_2$ e $q_3$ no espaço vetorial da tabela
-\ref{tab:colecao_mev}.
-
-
-\subsubsection{Okapi BM25}
-
-O modelo \textit{Okapi BM25} figurou por diversos anos como o melhor esquema de
-pesos probabilísticos nas avaliações do TREC\footnote{O \textit{Text Retrieval
-Conference (TREC)} é uma conferência anual realizada pelo \textit{U.S. National
-Institute of Standards and Technology (NIST)} que promove uma ampla competição
-em recuperação da informação de grandes coleções de texto com o intuito de
-incentivar pesquisas na área.} e é considerado o estado da arte em recuperação
-da informação \cite{Perez:09}. É uma evolução de outros dois esquemas,
-\textit{BM11} e \textit{BM15} (\textit{BM} de \textit{"Best Match"}), sendo
-fundamentado teoricamente na disciplina de probabilidade discreta, ao modelar
-a frequência de termos em documentos utilizando distribuições de
-\textit{Poisson}. Seu nome advém do primeiro sistema no qual foi implementado, denominado \textit{Okapi}.
-
-O \textit{BM25} utiliza os componentes estatísticos do $\tfidf$, porém numa
-combinação diferente, além de considerar informações como o comprimento dos
-documentos, a frequência dos termos na \textit{query} e outros fatores
-constantes. A fórmula do \textit{BM25} é melhor compreendida através da análise
-de seus três componentes principais, que neste trabalho são denominados de
-$\pt$, $\pd$ e $\pq$.
-
-$\pt$ é a porção do peso que considera a frequência do termo no documento
-($\tf_{t,d}$), permitindo haver normalização pelo tamanho do documento. Na
-fórmula \eqref{eq:pt}, $l_d$ representa o comprimento do documento $d$ e
-$l_{\mathit{avg}}$ o comprimento médio dos documentos da coleção.
+modelo de espaço vetorial. A tabela \ref{tab:queries_mev} apresenta as
+consultas $q_1$, $q_2$ e $q_3$ neste espaço. Logo, a similaridade de cosseno
+também pode ser utilizada em buscas, considerando que os documentos mais
+similares a determinada \textit{query} são os mais relevantes para a mesma
+(equação \ref{eq:tfidf_r_sim}).
 
 \begin{equation}
-\label{eq:pt}
-  \pt_{t,d} = \frac{\tf_{t,d}(k_1+1)}
-                  {k_1((1-b)+b\frac{l_d}{l_{\mathit{avg}}})+\tf_{t,d}}
+\label{eq:tfidf_r_sim}
+  R_{d,q} = \mathit{sim}(d,q)
 \end{equation}
 
-A constante $k_1$ determina o quanto o peso do documento deve ser afetado por
-um acréscimo no valor de $\tf$. Se $k_1=0$, este componente da formula é
-eliminado, portanto $\tf$ passa a não interferir no peso. Para valores altos de
-$k_1$, o peso passa a ter um crescimento linear com relação a $\tf$. De acordo
-com experimentos do TREC, valores entre $1.2$ e $2$ são os mais indicados.
-Valores dentro deste intervalo implicam numa interferência de $\tf$ altamente
-não linear, isto é, após 3 ou 4 ocorrências o impacto de uma ocorrência
-adicional é mínimo \cite{Jones:00}.
-
-O parâmetro $b \in [0,1]$ foi introduzido para ajustar o grau de normalização
-pelo comprimento dos documentos. Se a configuração for $b=1$, a normalização
-tem efeito completo (equivalente ao modelo \textit{BM11}). Valores menores
-reduzem este efeito. Se $b=0$, o comprimento do documento não afeta a pontuação
-final, (como no modelo \textit{BM15}).
-
-O segundo componente do peso ($\pd$) considera informações da atestação de
-relevância provida pelo usuário (em inglês, \textit{relevance feedback}\footnote{
-\textit{Relevance feedback} é o mecanismo através do qual o usuário avalia o
-resultado da consulta, marcando os itens retornados como relevantes ou
-irrelevantes, informação que é posteriormente utilizada para refinar a
-consulta}), quando disponível. Na equação \eqref{eq:pd_rf}, $N$ é o número
-total de documentos na coleção, $\df_t$ é o número de documentos que contém o
-termo $t$, $R$ é o número total de documentos relevantes e $r$ é o número de
-documentos relevantes que contém o termo $t$.
-
-\begin{equation}
-\label{eq:pd_rf}
-  \pd_t = \log \frac{(r+0.5)(N-\df_t-R+r+0.5)}
-                               {(R-r+0.5)(\df_t-r+0.5)}
-\end{equation}
-
-Se não houver informações provenientes da atestação de relevância, o $\idf_t$
-clássico pode ser utilizado (equação \eqref{eq:idf}), ou ainda, uma variação de
-$\pd$ a partir do estabelecimento de que $R=r=0$ na equação acima (equação
-\eqref{eq:pd}).
-
-\begin{equation}
-\label{eq:pd}
-  \pd_t = \log \frac{N-\df_t+0.5}{\df_t+0.5}
-\end{equation}
-
-A terceira parte da expressão, definida aqui como $\pq_{t,q}$ (equação
-\eqref{eq:pq}, permite a consideração da frequência do termo na \textit{query},
-que é apropriada para o caso de consultas longas, podendo ser desconsiderada
-para \textit{queries} com poucos termos.
-
-\begin{equation}
-\label{eq:pq}
-  pq_{t,q} = \frac{(k_3+1)\mathit{qtf}_{t,q}}{k_3+\mathit{qtf}_{t,q}}
-\end{equation}
-
-De forma análoga ao $\tfidf$, o cálculo da pontuação do documento $d$ para
-a \textit{query} $q$ no modelo \textit{BM25} pode ser realizado através da fórmula
-\eqref{eq:bm25}.
-
-\begin{equation}
-\label{eq:bm25}
-R_{d,q} = \sum_{t \in q} \pt_{t,d} \cdot pd_t \cdot pq_{t,q}
-\end{equation}
-
-O \textit{BM25} é amplamente utilizado em diversos tipos de busca e coleções.
-Este modelo tem obtido sucesso especialmente nas avaliações do TREC, o que
-provocou sua adoção por muitos grupos \cite{Jones:00}. A título de exemplo,
-o Xapian\footnote{\url{http://xapian.org/}} e o
-Lucene\footnote{\url{http://lucene.apache.org/}}, bibliotecas livres para
-construção de ferramentas de busca, são projetos de grande destaque na
-comunidade que utilizam o \textit{BM25} como medida de pesos \cite{Betts:07}
-\cite{Perez:09}.
-
-\subsubsection{Classificador bayesiano}
-
-\textit{Bayes ingênuo} é uma solução para classificação que figura entre os
-algoritmos de aprendizado de máquina supervisionados. Tais métodos fundamentam-
-se na construção de um classificador que ``aprende'' na medida em que lhe são
-apontados exemplos de objetos classificados. São caracterizados como
-supervisionados porque as classes atribuídas aos objetos de treinamento são
-determinadas por um ser humano, que atua como um supervisor orientando o
-processo de aprendizado \cite{Manning:09}.
-
-O classificador bayesiano apoia-se num modelo probabilístico que aplica o
-teorema de Bayes com fortes suposições de independência de atributos -- por
-esta razão o método é considerado ingênuo. Em outras palavras, a presença ou
-ausência de um atributo em uma classe não estaria relacionada com a incidência
-de nenhum outro atributo.
-
-A decisão acerca da classe a qual um objeto pertence é tomada de acordo com o
-modelo de probabilidade máxima posterior (em inglês, \textit{maximum a posteriori
-probability (MAP)}), indicada na equação \eqref{eq:map}. Dado que $C$ é o
-conjunto de classes e $x$ objeto a ser classificado, a classe atribuída a este
-será a que apresentar maior probabilidade condicionada a $x$. $\hat{P}$ é
-utilizado ao invés de $P$ porque geralmente não se sabe o valor exato das
-probabilidades, elas são estimadas a partir dos dados de treinamento.
-
-\begin{equation}
-\label{eq:map}
-  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
-\end{equation}
-
-A equação \eqref{eq:bayes} aplica o Teorema de Bayes para probabilidades
-condicionadas. Na prática, apenas o numerador da fração interessa, visto que o
-denominador é constante para todas as classes, portanto não afeta o $arg max$
-(equação \eqref{eq:bayes_no_deno}).
-
-\begin{eqnarray}
-\label{eq:bayes}
-  c_{\mathit{map}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
-                         \frac{\hat{P}(x|c) \hat{P}(c)}{\hat{P}(x)} \\
-                {} & {} & {} \nonumber \\
-\label{eq:bayes_no_deno}
-                   & = & \underset{c \in C}{\operatorname{arg\ max}} \
-                         \hat{P}(x|c) \hat{P}(c)
-\end{eqnarray}
-
-É neste ponto que a independência de atributos é importante. Considera-se que
-um documento $x$ pode ser caracterizado por uma série de atributos $x_i$ -- no
-caso de documentos de texto, os atributos são os próprios termos. Assumindo que
-a ocorrência de atributos acontece independentemente, tem-se que:
-
-\begin{equation}
-\label{eq:independencia}
-  \hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c) = \hat{P}(x_1|c)
-                 \cdot \hat{P}(x_2|c) \cdot ... \cdot \hat{P}(x_n|c)
-\end{equation}
-
-Portanto, a função de decisão pode ser reescrita através da equação
-\eqref{eq:bayes_prod}. Cada parâmetro condicional $\hat{P}(x_i|c)$ é um peso
-que representa a qualidade do atributo $x_i$ como indicador da classe $c$,
-enquanto que $\hat{P}(c)$ é a frequência relativa da classe $c$.
-
-\begin{equation}
-\label{eq:bayes_prod}
-  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
-                     \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
-\end{equation}
-
-Os parâmetros são obtidos através da estimativa de maior probabilidade (em
-inglês, \textit{maximum likelihood estimate (MLE)}), que corresponde ao valor
-mais provável de cada parâmetro de acordo com os dados de treinamento. A
-equação \eqref{eq:p_c} traz a estimativa de $\hat{P}(c)$, onde $N_c$ é o
-número de objetos da classe $c$ e $N$ é o número total de documentos.
-
-\begin{equation}
-\label{eq:p_c}
-  \hat{P}(c) = \frac{N_c}{N}
-\end{equation}
-
-As probabilidades condicionais são estimadas como a frequência relativa do
-atributo $x$ em objetos que pertencem à classe $c$. Na equação \eqref{eq:p_xc},
-$T_{\mathit{cx}}$ é o número de ocorrências de $x$ em objetos de exemplo da
-classe $c$ e $V$ é o conjunto de atributos que os objetos podem apresentar.
-
-\begin{equation}
-\label{eq:p_xc}
-  \hat{P}(x|c) = \frac{T_{\mathit{cx}}}
-                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}}
-\end{equation}
-
-No entanto, a estimativa \textit{MLE} é zero para combinações atributo-classe que
-não ocorrem nos dados de treinamento. Considerando que as probabilidades
-condicionais de todos os atributos serão multiplicadas (equação
-\eqref{eq:bayes_prod}), a simples ocorrência de uma probabilidade zerada
-resulta na desconsideração da classe na referida classificação. E de fato,
-dados de treinamento nunca são abrangentes o suficiente para representar a
-frequência de eventos raros de forma adequada \cite{Manning:09}. Para eliminar
-zeros, adiciona-se $1$ a cada termo da equação \eqref{eq:p_xc}:
-
-\begin{equation}
-\label{eq:p_xc+1}
-  \hat{P}(x|c) = \frac{T_{\mathit{cx}}+1}
-                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}+1}
-\end{equation}
-
-Apesar de a independência de atributos não ser verificada para a maioria
-dos domínios de aplicação, na prática o Bayes ingênuo apresenta resultados
-satisfatórios. \cite{Zhang:04} atribui a surpreendente boa performance deste
-método ao fato de que pode haver dependência forte entre dois atributos, desde
-que as dependências sejam distribuídas igualmente nas classes. Segundo este
-argumento, a mera existência de dependências entre atributos não prejudicaria
-a classificação, mas sim o modo como as dependências estão distribuídas ao
-longo das classes. Por outro lado, segundo \cite{Manning}, a suposição de
-independência é análoga no modelo de espaço vetorial, onde cada atributo é
-representado na matriz por uma dimensão ortogonal a todas as outras.
-
-\vspace{0.3cm} \hspace{-1.4cm}
-\textbf{Variantes do modelo Bayes ingênuo}
-
-As duas principais variantes de implementação do classificador bayesiano são
-denominadas modelo \textit{multinomial} e modelo de \textit{Bernoulli} e diferem
-fundamentalmente na maneira como os objetos são representados.
-
-O primeiro modelo utiliza uma representação que de certa forma preserva
-informações espaciais sobre o objeto. Na classificação de documentos de
-texto, por exemplo, o modelo gera um atributo que corresponde a um termo do
-vocabulário para cada posição do documento. Já o modelo de \textit{Bernoulli}
-produz um indicador para cada possível atributo (no caso de texto, termo do
-vocabulário), onde $1$ representa a presença e $0$ a ausência do atributo no
-objeto.
-
-A escolha da representação de documentos adequada é uma decisão crítica no
-projeto de um classificador. O próprio significado de um atributo depende da
-representação. No \textit{multinomial}, um atributo pode assumir como valor
-qualquer termo do vocabulário, o que resulta numa representação do documento
-correspondente à sequência de termos do mesmo. Já para o modelo de
-\textit{Bernoulli}, um atributo pode assumir apenas os valores $0$ e $1$, e a
-representação do documento é uma sequência de $0$s e $1$s do tamanho do
-vocabulário.
-
-%A figura \ref{fig:exemplo_bayes} ilustra as peculiaridades de cada
-%representação.
-
-%\begin{figure}[ht]
-%\centering
-%\includegraphics[width=.7\textwidth]{fig/todo.pdf}
-%\caption{Exemplo ilustrativo dos modelos multinomial e de Bernoulli}
-%\label{fig:exemplo_bayes}
-%\end{figure}
-
-\begin{figure}[ht]
-\centering
-\begin{tabular}{*4{c}}
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (1)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Por motivo \\ de segurança, \\
-    comunicamos a todos os clientes que atualizem sua senha por email.}}
-    \end{overpic} &
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (2)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Atualização \\ urgente de \\  senha.
-    \\ \\ Clique aqui.}}\end{overpic} &
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (3)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Você foi \\ sorteado e \\ acaba de
-    ganhar 1 milhão de reais. Clique aqui e saiba como resgatar seu prêmio.}}
-    \end{overpic} &
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (4)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Perca peso fácil e de forma divertida.
-    Pare de sofrer!}}\end{overpic} \\
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (5)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Emagreça 10kg em duas semanas! Clique
-    aqui e descubra como.}}\end{overpic} &
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (6)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Compre viagra com 69\% de desconto!}}
-    \end{overpic} &
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (7)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Se você não pode mudar sua vida, mude
-    pelo menos a sua bolsa!}}\end{overpic} &
-\begin{overpic}[width=2.3cm]{fig/doc_background.png}\put(60,5){\scriptsize (8)}
-  \put(5,44){\parbox{1.8cm}{\scriptsize Aprenda a investir na bolsa em uma
-    semana.}}\end{overpic}
-\end{tabular}
-\caption{Coleção de documentos classificados em \textit{spam} e \textit{não-spam}}
-\label{fig:colecao_spam}
-\end{figure}
-
-\vspace{0.3cm} \hspace{-1.4cm}
-\textbf{Seleção de atributos} \label{sec:selecao_atributos}
-
-Uma grande quantidade de atributos a ser considerados resulta em alta
-complexidade computacional, além de geralmente mascarar a presença de ruídos
-nos dados, que prejudicam a acurácia da classificação. A fim de amenizar estes
-problemas, é comum que seja feita uma seleção de atributos (em inglês,
-\textit{feature selection}), que consiste em escolher alguns atributos que
-ocorrem no conjunto de treinamento e utilizar apenas estes como parâmetro para
-a classificação. Esta seleção equivale à substituição de um classificador
-complexo por um mais simples. Especialmente quando a quantidade de dados de
-treinamento é limitada, modelos mais fracos são preferíveis \cite{Manning:09}.
-
-A seleção de atributos geralmente é realizada para cada classe em separado,
-seguida pela combinação dos diversos conjuntos. Abaixo são apresentados alguns
-métodos de escolha:
-
-\begin{description}
-  \item[Informação mútua.] Análise do quanto a presença ou ausência de um
-    atributo contribui para a tomada de decisão correta por uma determinada
-    classe. Informação mútua máxima significa que o atributo é um indicador
-    perfeito para pertencimento a uma classe, que acontece quando um objeto
-    apresenta o atributo se e somente se o objeto pertence à classe;
-  \item[Independência de eventos.] Aplicação do teste estatístico $\chi^2$ para
-    avaliar a independência de dois eventos -- neste caso, um atributo e uma
-    classe. Se os dois eventos são dependentes, então a ocorrência do atributo
-    torna a ocorrência da classe mais provável.
-  \item[Baseado em frequência.] Seleção dos atributos mais comuns para uma
-    classe.
-\end{description}
-
-Os métodos apresentados acima são ``gulosos'', ou seja, assumem escolhas ótimas
-locais na esperança de serem ótimas globais. Como resultado, podem selecionar
-atributos que não acrescentam nenhuma informação para a classificação quando
-considerados outros previamente escolhidos. Apesar disto, algoritmos não
-gulosos são raramente utilizados devido a seu custo computacional
-\cite{Manning:09}.
-
-\subsubsection{K-NN} \label{sec:knn}
-
-\textit{K-nearest neighbors} (k-NN), em português \textit{k vizinhos mais
-próximos}, é mais um algoritmo de aprendizado supervisionado para
-classificação. Este método baseia-se no conceito de vizinhança, que representa
-um conjunto de objetos com características semelhantes.
-
-O K-NN não exige nenhum treinamento prévio com os dados de exemplo, que podem
-ser diretamente armazenados como vetores de atributos acompanhados por suas
-devidas classes. A classificação de um novo objeto parte do cálculo da
-vizinhança do mesmo, sendo composta por $k$ objetos.
-
-A determinação da vizinha está diretamente relacionada com o conceito de
-similaridade entre objetos e a medida de distância adotada, que vai depender do
-domínio da aplicação e conjunto de dados. Algumas medidas comuns para distância
-entre dois objetos $X$ e $Y$, representados por seus vetores $\vec{X} =
-(x_1,...,x_n)$ e $\vec{Y} = (y_1,...,y_n)$, são apresentadas nas equações
-na tabela \ref{tab:knn_distancia}.
-
-\begin{table}[h]
-  \caption{K-NN: Medidas de distância entre objetos}
-  \label{tab:knn_distancia}
+\begin{table}[h!]
+  \caption{Representação das queries no modelo de espaço vetorial}
+  \label{tab:queries_mev}
   \centering
-  \newcommand\T{\rule{0pt}{2.8ex}}
-  \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
-  \begin{tabular}{| l | l |}
+  \small
+  \begin{tabular}{| l | c | c | c |}
     \hline
-    Distância euclidiana &
-    \T\B$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    \multicolumn{4}{|c|}{$\boldsymbol{\tfidf_{t,d}}$}\\
     \hline
-    Similaridade de cosseno &
-    $sim(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
-              = \frac{\textstyle \sum_{1\leq i \leq n} x_i y_i}
-                     {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}
-                      \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
+    \backslashbox{\textbf{\textit{Termo}}}
+                  {\vspace{-0.2cm}\textbf{\textit{Query}}}&
+    $\boldsymbol{q_1}$ & $\boldsymbol{q_2}$ & $\boldsymbol{q_3}$\\
     \hline
-    Coeficiente de \textit{Pearson} &
-    $p(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
-                                     (y_i-\bar{y})}
-                   {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
-                    \sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
+    moren & $0.12$ & $0.12$ & $0.12$ \\
+    \hline
+    roup & $0$ & $0$ & $0$ \\
+    \hline
+    don & $0$ & $0$ & $0.6$ \\
+    \hline
+    crav & $0$ & $0$ & $0$ \\
+    \hline
+    canel & $0$ & $0$ & $0$ \\
+    \hline
+    olh & $0$ & $0$ & $0$ \\
+    \hline
+    ros & $0$ & $0$ & $0.42$ \\
+    \hline
+    bob & $0$ & $0.9$ & $0$ \\
     \hline
   \end{tabular}
 \end{table}
 
-Após o cálculo de distância e definição de vizinhança, a classe mais
-frequente entre os $k$ vizinhos é atribuída ao novo objeto. Neste ponto, a
-similaridade também pode ser usada como grau de influência entre os objetos.
-Os objetos mais semelhantes geralmente têm peso maior no cálculo da
-classificação.
+%\begin{table}[h!]
+%  \caption{Relevância por similaridade de cosseno}
+%  \label{tab:queries_cosseno}
+%  \centering
+%  \small
+%  \begin{tabular}{| c | c | c | c |}
+%    \hline
+%    \multicolumn{4}{|c|}{$\boldsymbol{\mathit{sim}(d,q)}$}\\
+%    \hline
+%    \backslashbox{\textbf{\textit{Doc}}}
+%                  {\vspace{-0.2cm}\textbf{\textit{Query}}}&
+%    \textbf{$q_1$}&\textbf{$q_2$}&\textbf{$q_3$}\\
+%    \hline
+%    (1) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (2) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (3) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (4) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (5) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (6) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (7) & $0$ & $0$ & $0$ \\
+%    \hline
+%    (8) & $0$ & $0$ & $0$ \\
+%    \hline
+%  \end{tabular}
+%\end{table}
 
-O k-NN também é sensível a ruídos, como atributos que prejudicam a acurácia
-de classificação quando são considerados. Portanto sua performance também é
-beneficiada pelo processo de seleção de atributos descrito na seção
-\ref{sec:selecao_atributos}.
+\subsubsection{Okapi BM25}
+
+\textit{Okapi BM25} é o modelo probabilístico considerado estado da arte em
+recuperação da informação \cite{Perez:09}. É amplamente utilizado no
+desenvolvimento de ferramentas de busca para os mais diversos domínios de
+aplicação. Tornou-se bastante popular em virtude de seu destaque nas avaliações
+do TREC\footnote{O \textit{Text Retrieval Conference (TREC)} é uma conferência
+anual realizada pelo \textit{U.S. National Institute of Standards and
+Technology (NIST)} que promove uma ampla competição em recuperação da
+informação de grandes coleções de texto com o intuito de incentivar pesquisas
+na área.}, sendo apontado como o melhor entre os esquemas de peso
+probabilísticos conhecidos \cite{Betts:07}. A título de ilustração,
+Xapian\footnote{\url{http://xapian.org/}} e
+Lucene\footnote{\url{http://lucene.apache.org/}}, bibliotecas livres para
+construção de motores de busca, são projetos de grande destaque na
+comunidade que utilizam o \textit{BM25} como medida de pesos. O nome
+\textit{Okapi} advém do primeiro sistema no qual foi implementado, denominado
+\textit{City Okapi}, enquanto \textit{BM} se refere à família de esquemas
+\textit{Best Match}.
+
+Embora seja comumente apresentado num contexto de busca em texto, o esquema não
+é específico para este domínio e pode ser usado na estimativa de relevância
+para qualquer tipo de recuperação de informação. A realização de consultas
+depende da descrição de itens e necessidades dos usuários, no entanto o modelo
+em princípio é compatível com inúmeras possibilidades de unidades descritivas
+\cite{Jones:00}. Todavia, formalmente o modelo se refere a descrições de
+documentos como $D$ e de consultas como $Q$, ambas podendo ser decompostas em
+unidades menores. Cada componente é um atributo $A_i$, que pode assumir
+valores do domínio $\{\mathit{presente, ausente}\}$ ou valores inteiros não
+negativos, representando o número de ocorrências do termo no documento ou na
+\textit{query}.
+
+A busca no modelo probabilístico fundamenta-se no \textit{Princípio de
+Ordenação por Probabilidade}, segundo o qual a maior eficácia de uma consulta
+num conjunto de dados é obtida quando os documentos recuperados são ordenados
+de maneira decrescente pela probabilidade de relevância em tal base de dados.
+\cite{Robertson:77}. No entanto, o ponto chave do Princípio é que a
+probabilidade de relevância não é o fim em si mesma, mas um meio de ordenar os
+documentos para apresentação ao usuário. Portanto, qualquer transformação
+desta probabilidade pode ser usada, desde que preserve a ordenação pela
+relevância \cite{Jones:00}.
+
+\newpage
+%\vspace{0.3cm}
+\hspace{-1.4cm}
+\textbf{Modelo formal}
+
+Dado um documento descrito por $D$ e uma \textit{query} $Q$, o modelo considera
+a ocorrência de dois eventos: $L = \{D \text{  é relevante para  } Q\}$ e
+$\overline L = \{D \text{  não é relevante para  } Q\}$. Para que a
+ordenação por relevância seja possível, calcula-se para cada documento a
+probabilidade $P(L|D)$. A aplicação do teorema de Bayes permite que $P(L|D)$
+seja expressa em função de $P(D|L)$ (equação \ref{eq:bayes-okapi}).
+
+\begin{equation}
+\label{eq:bayes-okapi}
+  P(L|D) = \frac{P(D|L)P(L)}{P(D)}
+\end{equation}
+
+Para evitar a expansão de $P(D)$, a chance de $(L|D)$ é utilizada ao invés da
+probabilidade. Na verdade, o logaritmo da chance é aplicado (equação
+\ref{eq:log-odd}), considerando que esta é uma transformação que satisfaz o
+Princípio de Ordenação \cite{Jones:00}. Ademais, dado que o último termo da
+fórmula é igual para todos os documentos, ele pode ser desconsiderado sem que
+isso altere a ordenação dos documentos. Desta forma, a equação \ref{eq:rprim}
+descreve uma pontuação por relevância referenciada como primária
+($\mathit{R\mhyphen PRIM_D}$).
+
+\begin{eqnarray}
+  \log \frac{P(L|D)}{P(\overline{L}|D)} & = &
+  \log \frac{P(D|L)P(L)}{P(D|\overline{L})P(\overline{L})} \nonumber \\
+  &=& \log \frac{P(D|L)}{P(D|\overline{L})} + \cancel{\log \frac{P(L)}
+                                                           {P(\overline{L})}}
+  \label{eq:log-odd} \\
+  \mathit{R\mhyphen PRIM_D} & = & \log \frac{P(D|L)}{P(D|\overline{L})}
+  \label{eq:rprim}
+\end{eqnarray}
+
+Assim como o modelo de classificação \textit{Bayes} ingênuo, o \textit{BM25}
+assume que os atributos dos documentos são estatisticamente independentes de
+todos os outros. \cite{Jones:00} justifica a suposição de independência de
+atributos pelos seguintes argumentos:
+\begin{enumerate}
+  \item Facilita o desenvolvimento formal e expressão do modelo;
+  \item Torna a instanciação do modelo tratável computacionalmente;
+  \item Ainda assim permite estratégias de indexação e busca com melhor
+    performance do que estratégias rudimentares, como o simples casamento de
+    padrões aplicados a termos da \textit{query} no documento.
+\end{enumerate}
+
+De acordo com a suposição de independência, a probabilidade de um documento
+pode ser trivialmente derivada a partir das probabilidade de seus atributos.
+Logo, $\mathit{R\mhyphen PRIM_D}$ poderia ser estimado como um somatório de
+probabilidades, cada uma relacionada a cada atributo da descrição $D$ (equação
+\ref{eq:rprim-atributos}).
+
+\begin{eqnarray}
+\label{eq:rprim-atributos}
+  \mathit{R\mhyphen PRIM_D} &=& \log \prod_{i} \frac{P(A_i=a_i|L)}
+                                          {P(A_1=a_1|\overline{L})} \nonumber \\
+                            &=& \sum_{i} \log \frac{P(A_i=a_i|L)}
+                                          {P(A_1=a_1|\overline{L})}
+\end{eqnarray}
+
+No entanto, a fórmula \ref{eq:rprim-atributos} pressupõe a consideração de um
+componente para cada valor do atributo, por exemplo, para presença de um termo
+assim como para sua ausência. Uma alternativa mais natural seria considerar
+apenas valores para a presença, contabilizando a ausência como um
+\textit{zero} natural. Desta forma, é subtraído da pontuação de cada
+documento o componente relativo a cada valor de atributo zerado (fórmula
+\ref{eq:rbasic}).
+
+\begin{eqnarray}
+  \mathit{R\mhyphen BASIC_D} &=& \mathit{R\mhyphen PRIM_D}
+                                 -\sum_{i} \log \frac{P(A_i=0|L)}
+                                 {P(A_1=0|\overline{L})} \nonumber \\
+  & = & \sum_{i} \Big (\log\frac{P(A_i=a_i|L)}{P(A_1=a_1|\overline{L})}
+                       -\log\frac{P(A_i=0|L)}{P(A_1=0|\overline{L})}
+                 \Big ) \nonumber \\
+  & = & \sum_{i} \log\frac{P(A_i=a_i|L)P(A_1=0|\overline{L})}
+                          {P(A_1=a_1|\overline{L})P(A_i=0|L)}
+  \label{eq:rbasic}
+\end{eqnarray}
+
+Considerando $W_i$ como um peso para cada termo $t_i$ do documento (equação
+\ref{eq:peso_termo}), $\mathit{R\mhyphen BASIC_D}$ pode ser então reescrito em
+função deste peso, como na equação \ref{eq:rbasic_peso_termo}.
+
+\begin{equation}
+\label{eq:peso_termo}
+  W_i = \displaystyle \log\frac{P(A_i=a_i|L)P(A_1=0|\overline{L})}
+                     {P(A_1=a_1|\overline{L})P(A_i=0|L)}
+\end{equation}
+
+\begin{equation}
+\label{eq:rbasic_peso_termo}
+\hspace{-2.5cm}
+  \mathit{R\mhyphen BASIC_D} = \sum_{i} W_i
+\end{equation}
+
+No caso em que os atributos $A_i$ restringem-se a exprimir a presença ou
+ausência do termo $t_i$ (atributos binários), pode-se dizer que {\small$P(A_1=0
+|L)=1-P(A_i=1|L)$}, o mesmo vale para $\overline L$. Portanto, considerando que
+$p_i = P(t_i \text{ ocorre }|L)$ e $\overline p_i = P(t_i \text{ ocorre }|
+\overline L)$, a fórmula \ref{eq:peso_termo} pode ser usada como um peso para
+presença de termos. A pontuação de relevância para um documento seria então a
+soma dos pesos $w_i$ dos termos da \textit{query} presentes no documento.
+
+\begin{equation}
+\label{eq:peso_termo_binario}
+  w_i = \log \frac{p_i(1-\overline{p_i})}{\overline{p_i}(1-p)}
+\end{equation}
+
+A seguir será apresentada a interpretação do modelo formal a partir de
+informações disponíveis sobre a coleção de documentos, com o intuito de
+definir funções de peso eficazes para a ordenação por relevância.
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Incidência dos termos e atestação de relevância}
+
+A incidência dos termos nos documentos da coleção é uma informação que pode ser
+facilmente coletada e pode ser utilizada como parâmetro no cálculo da
+probabilidade de relevância. O popular $idf_t$ (equação \ref{eq:idf}) é uma
+medida plausível e, apesar de ter sido proposta baseada apenas na frequência
+de incidência dos termos, também pode ser derivada da equação
+\ref{eq:peso_termo_binario} \cite{Jones:00}.
+
+No entanto, apenas a incidência dos termos é uma base fraca para a estimativa
+de probabilidades de relevância. As estimativas podem ser refinadas através
+da consideração de dados acerca da real relevância ou irrelevância de
+documentos, obtidos por exemplo através de procedimentos de \textit{atestação
+de relevância}\footnote{Mecanismo através do qual o usuário avalia o resultado
+da consulta, marcando os itens retornados como relevantes ou irrelevantes -- no
+idioma inglês, referenciado como \textit{relevance feedback}.}.
+
+A tabela de contingência da incidência dos termos é apresentada na tabela
+\ref{tab:bm25_contingencia}. $N$ representa o número total de documentos da
+coleção, enquanto $n$ representa o número de documentos nos quais o termo $t$
+da \textit{query} ocorre. Analogamente, $R$ é a quantidade de documentos
+relevantes para a consulta e $r$ a quantidade de documentos relevantes
+nos quais o termo ocorre.
+
+\begin{table}[h!]
+\caption{Tabela de contingência da incidência dos termos}
+\label{tab:bm25_contingencia}
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+                      & Relevante & Irrelevante & Incidência na coleção\\
+\hline
+$t$ ocorre            & $r$         &   $n-r$       & $n$   \\
+\hline
+$t$ não ocorre        & $R-r$       &   $N-n-R+r$   & $N-n$ \\
+\hline
+total de documentos   & $R$         &   $N-R$       & $N$   \\
+\hline
+\end{tabular}
+\end{table}
+
+Portanto, a probabilidade de um termo $t$ ocorrer num documento, dado que
+este é relevante para a \textit{query} é $p = \frac{r}{R}$. Analogamente,
+dado que o documento não é relevante, $\overline p = \frac{n-r}{N-R}$. Desta
+forma, a equação \ref{eq:peso_termo_binario} pode ser redefinida como a fórmula
+\ref{eq:peso_termo_contingencia}, que exprime o logaritmo da razão de chances
+de um termo ocorrer em documentos relevantes e irrelevantes.
+
+\begin{equation}
+\label{eq:peso_termo_contingencia}
+  w = \log \frac{r(N-n-R+r)}{(R-r)(n-r)}
+\end{equation}
+
+Por fim, o fator de correção $0.5$ é acrescido a cada termo central da fórmula
+para evitar que o peso seja zerado quando algum destes termos for
+$\mathit{zero}$.
+
+\begin{equation}
+\label{eq:RW}
+  \rW = \log \frac{(r+0.5)(N-n-R+r+0.5)}
+                               {(R-r+0.5)(n-r+0.5)}
+\end{equation}
+
+Se não houver informações provenientes da atestação de relevância, o $\idf_t$
+clássico pode ser utilizado (equação \ref{eq:idf}), ou ainda, uma variação de
+$\rW$ a partir do estabelecimento de que $R=r=0$
+(equação \ref{eq:RW_simples}).
+
+\begin{equation}
+\label{eq:RW_simples}
+  \rW = \log \frac{N-n+0.5}{n+0.5}
+\end{equation}
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Distribuição dos termos nos documentos}
+
+A incidência dos termos na coleção distingue os documentos com relação aos
+termos da \textit{query} no que diz respeito apenas à ocorrência ou ausência
+dos mesmos. Usando apenas esta medida não é possível portanto diferenciar
+dois documentos em relação a um termo se o mesmo ocorre em ambos. No caso
+em que dados de frequência dos termos são providos nas descrições dos
+documentos, esta informação pode contribuir para a estimativa de relevância do
+de um documento.
+
+Assume-se que cada termo é associado a um conceito, ao qual um determinado
+documento pode estar relacionado ou não. Logo, para cada conceito existe um
+conjunto de documentos que dizem respeito a ele e outro conjunto que não
+(complementar ao primeiro). A frequência de um termo em um documento
+caracteriza sua ocorrência quantitativamente, porém, uma frequência maior que
+$\mathit{zero}$ não significa que o documento esteja necessariamente
+relacionado com conceito do termo. Diante da impossibilidade de se prever esta
+relação conceitual, considera-se a distribuição de frequências dos termos nos
+documentos como uma mistura de duas distribuições, uma para cada um dos
+conjuntos \cite{Jones:00}.
+
+Essa distribuição pode ser entendida como originada num modelo de geração de
+texto: o autor se depara com as posições de palavras nos documentos e
+escolhe termos para ocupar tais posições. Se a probabilidade de escolha de
+cada termo for fixa e todos os documentos forem de igual comprimento,
+caracteriza-se uma distribuição de \textit{Poisson} para frequências dos termos
+nos documentos. Assume-se probabilidades diferentes para o conjunto de
+documentos relacionados ao conceito do termo e para o conjunto dos que não são
+-- esta é a razão para a mistura de duas distribuições \cite{Jones:00}.
+
+A derivação deste componente do peso é mais extensa e por esta razão foi
+omitida nete texto. A fórmula resultante é complexa, no entanto
+\cite{Robertson:94} examina o comportamento da mesma e propõe uma aproximação
+que apresenta comportamento similar à original, expressa pela equação
+\ref{eq:RD}.
+
+\begin{equation}
+\label{eq:RD}
+  \rD = \frac{\tf_{t,D}(k_1+1)}{k_1+\tf_{t,D}}
+\end{equation}
+
+A constante $k_1$ determina o quanto o peso do documento em relação ao termo
+deve ser afetado por um acréscimo no valor de $\tf_{t,D}$. Se $k_1=0$, então
+$\rD = 1$, e $\tf_{t,D}$ não interfere no peso final. Para valores altos de
+$k_1$, o peso passa a ter um crescimento linear com relação a $\tf_{t,D}$. De
+acordo com experimentos do TREC, valores entre $1.2$ e $2$ são os mais
+indicados, visto que implicam numa interferência altamente não linear de
+$\tf_{t,D}$, ou seja, após 3 ou 4 ocorrências o impacto de uma ocorrência
+adicional é mínimo \cite{Jones:00}.
+
+No entanto, a modelagem através distribuições de \textit{Poisson} assume que
+todos os documentos têm mesmo comprimento, o que não acontece na prática.
+Porém, uma interpretação ligeiramente estendida do modelo permite a
+consideração de documentos com comprimentos distintos.
+
+Os comprimentos dos documentos da coleção podem variar por inúmeros motivos.
+Todavia, nesta nova interpretação assume-se que quando dois documentos acerca
+do mesmo conceito têm tamanhos distintos, a razão é simplesmente que um é mais
+verboso que o outro. Em outras palavras, considera-se que a recorrência de
+palavras deve-se sempre à repetição, ao invés por exemplo da melhor elaboração
+do tema. Partindo desta suposição, é apropriado estender o modelo normalizando
+o valor de $\tf_{t,D}$ em função do comprimento do documento (equação
+\ref{eq:RD_nl}).
+
+\begin{equation}
+  \label{eq:RD_nl}
+  \rD =  \frac{\frac{\tf_{t,D}}{\mathit{NL}}(k_1+1)}
+              {k_1+\frac{\tf_{t,D}}{\mathit{NL}}} =
+         \frac{\tf_{t,D}(k_1+1)}{k_1*\mathit{NL}+\tf_{t,D}}
+\end{equation}
+
+Dado que o comprimento dos documentos pode ser medido de diversas formas
+(quantidade de palavras, caracteres e \textit{bytes}, considerando ou não
+\textit{stop words}), considera-se a medida uniformizada para normalização,
+obtida pelao razão entre o comprimento dos documentos e o comprimento médio dos
+documentos ($\frac{l_d}{l_{\mathit{avg}}}$). Ademais, uma normalização simples
+resultaria na mesma pontuação para um documento de comprimento $l$ no qual o
+termo ocorre $tf$ vezes e para outro de comprimento $2l$ que contém $2tf$
+ocorrências do termo. Este comportamento pode ser indesejável por exemplo
+quando se considera que a recorrência de palavras está geralmente associada ao
+aprofundamento do conceito, ao invés de mera repetição.
+
+A fórmula proposta \eqref{eq:nl} permite que a normalização ocorra em
+diferentes graus, de acordo com o ajuste do parâmetro constante $b$ que assume
+valores no intervalo $[0,1]$. Se a configuração for $b=1$, a normalização tem
+efeito completo (equivalente ao esquema \textit{BM11}). Valores menores reduzem
+este efeito, e se $b=0$ o comprimento do documento não afeta a pontuação final,
+(como no modelo \textit{BM15}).
+
+\begin{equation}
+  \label{eq:nl}
+  \mathit{NL} = ((1-b)+b\frac{l_d}{l_{\mathit{avg}}})
+\end{equation}
+
+\begin{equation}
+\label{eq:RD_l}
+  \rD = \frac{\tf_{t,D}(k_1+1)}
+                         {k_1((1-b)+b\frac{l_d}{l_{\mathit{avg}}})+\tf_{t,D}}
+\end{equation}
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Consultas longas}
+
+Em situações onde as consultas podem ser descritas por \textit{queries}
+longas, por exemplo, o caso em que um documento pode ser utilizado como
+base para a consulta, a consideração da frequência do termo na \textit{query}
+pode ser mais um fator contribuinte para a estimativa de relevância. O
+componente $\rQ$ também é derivado a partir da modelagem em distribuições de
+\textit{Poisson}, porém aplicadas ao conjunto de \textit{queries} ao invés do
+conjunto de documentos. O resultado é um peso semelhante ao $\rD$, porém com
+parâmetros constantes próprios (equação \ref{eq:RQ}). Todavia, para o caso de
+\textit{queries} com poucos termos, este componente do peso deve ser
+desconsiderado.
+
+\begin{equation}
+\label{eq:RQ}
+  \rQ = \frac{(k_3+1)\mathit{qtf}_{t,Q}}{k_3+\mathit{qtf}_{t,Q}}
+\end{equation}
+
+\vspace{0.3cm} \hspace{-1.4cm}
+\textbf{Estimativa de relevância}
+
+Finalmente, a relevância de um documento $D$ para uma consulta $Q$ pode ser
+obtida pelo somatório dos pesos dos termos da \textit{query} com relação a $D$.
+O peso de cada termo é obtido pelo produto dos componentes apresentados
+anteriormente, como indica a equação \ref{eq:bm25}.
+
+\begin{equation}
+\label{eq:bm25}
+R_{D,Q} = \sum_{t \in Q} \rW \cdot \rD \cdot \rQ
+\end{equation}
 
 % ver http://en.wikipedia.org/wiki/Neighbourhood_components_analysis
-
-%FIXME [Desenvolver o tema: agrupamento]
-%\subsubsection{Agrupamento}
-%
-%Agrupamento, \textit{clustering} em inglês, é uma técnica de aprendizado de
-%máquina não supervisionado, ou seja, tenta identificar algum padrão de
-%organização dos dados sem que haja uma classificação prévia dos exemplos.
-%
-%k-means: k sementes, agrupamento por similaridade, cálculo de novos centróides.
 
 \subsubsection{Apriori} \label{sec:apriori}
 
@@ -1119,17 +1467,17 @@ sequenciamento de DNA etc \cite{Hegland:03}.
 Os padrões frequentes podem ser descritos por conjuntos de itens que ocorrem
 simultaneamente ou por implicações na forma $X \Rightarrow Y$, denominadas de
 \textit{regras de associação}, sendo $X$ e $Y$ conjuntos de itens disjuntos ($X
-\cap Y = \emptyset$). \textit{Suporte} e \textit{confiança} são duas métricas para
-quantificar a força dos padrões de acordo com a sua representatividade no banco
-de dados de transações. O suporte de um conjunto de itens é a frequência
+\cap Y = \emptyset$). \textit{Suporte} e \textit{confiança} são duas métricas
+para quantificar a força dos padrões de acordo com a sua representatividade no
+banco de dados de transações. O suporte de um conjunto de itens é a frequência
 com a qual ele ocorre numa base de dados. Para uma regra de associação $X
 \Rightarrow Y$, mede-se o suporte do conjunto de itens $X \cup Y$. A confiança
 de uma regra é medida pela frequência de $Y$ nos registros que contém $X$,
 representando o grau de co-ocorrência de $X$ e $Y$.
 
-O \textit{Apriori} é um algoritmo para mineração de regras de associação
-sustentadas por medidas mínimas de suporte e confiança numa base de dados.
-Este problema é comumente decomposto em dois sub-problemas:
+O \textit{Apriori} é um algoritmo clássico para mineração de regras de
+associação sustentadas por medidas mínimas de suporte e confiança numa base de
+dados. Este problema é comumente decomposto em dois sub-problemas:
 
 \begin{enumerate}[(1)]
   \item Identificação de todos os conjuntos de itens que extrapolam um valor de
@@ -1143,16 +1491,16 @@ Este problema é comumente decomposto em dois sub-problemas:
     seu valor de confiança.
 \end{enumerate}
 
-O \textit{Apriori} foi o primeiro algoritmo eficiente para tratar do sub-problema
-\textit{(1)}, que de fato é o mais desafiador. Uma solução ingênua para tal
-problema seria: listar todos os conjuntos candidatos (conjunto das partes do
-universo de itens) e selecionar os conjuntos frequentes a partir do cálculo de
-suporte para cada um. No entanto, esta é uma estratégia extremamente custosa
-visto que o conjunto das partes de um conjunto com $n$ elementos contém $2^n$
-subconjuntos, inviabilizando o cálculo para domínios de aplicação com um
-universo de itens grande \cite{Hegland:03}. A figura \ref{fig:diagrama_hasse}
-ilustra através de um diagrama de Hasse o conjunto das partes do universo de
-itens $U=\{a,b,c\}$.
+O \textit{Apriori} foi o primeiro algoritmo a tratar do sub-problema
+\textit{(1)}, que de fato é o mais desafiador, de forma mais eficiente. Uma
+solução ingênua para tal problema seria: listar todos os conjuntos candidatos
+(conjunto das partes do universo de itens) e selecionar os conjuntos frequentes
+a partir do cálculo de suporte para cada um. No entanto, esta é uma estratégia
+extremamente custosa visto que o conjunto das partes de um conjunto com $n$
+elementos contém $2^n$ subconjuntos, inviabilizando o cálculo para domínios de
+aplicação com um universo de itens grande \cite{Hegland:03}. A figura
+\ref{fig:diagrama_hasse} ilustra através de um diagrama de Hasse o conjunto das
+partes do universo de itens $U=\{a,b,c\}$.
 
 \begin{figure}[ht]
 \centering
@@ -1180,10 +1528,10 @@ subconjunto de um conjunto frequente \cite{Agrawal:94}.
 A figura \ref{fig:diagrama_apriori} ilustra a descoberta dos conjuntos
 frequentes em contraposição com o conjunto das partes do conjunto $U =
 \{a,b,c,d,e\}$. Neste exemplo, os subconjuntos $\{e\}$, $\{a,b\}$ e $\{b,d\}$
-apresentaram suporte inferior ao limite, consequentemente todos os conjuntos
-dos quais estes são subconjuntos foram desconsiderados como conjuntos
-candidatos (nós em cinza na figura). Portanto, apenas os nós em branco teriam
-o suporte calculado.
+estão destacados por apresentarem suporte inferior ao limite. Consequentemente,
+todos os conjuntos dos quais estes são subconjuntos foram desconsiderados como
+conjuntos candidatos (nós com fundo cinza na figura). Portanto, apenas os nós
+com fundo branco teriam o suporte calculado.
 
 \begin{figure}[ht]
 \centering
@@ -1193,10 +1541,6 @@ o suporte calculado.
 \end{figure}
 
 %http://www.slidefinder.net/d/data_mining_association_analysis_basic/14431678
-
-%\vspace{0.3cm} \hspace{-1.4cm}
-%\textbf{Soluções alternativas para mineração de regras}
-%\label{sec:variacoes_apriori}
 
 A introdução do \textit{Apriori} representou um marco para o desenvolvimento de
 soluções para mineração de dados, motivando o surgimento de inúmeras variantes
@@ -1216,11 +1560,11 @@ binárias são algumas dessas estruturas \cite{Kotsiantis:06}.
 
 \subsection{Estratégias de recomendação} \label{sec:estrategias}
 
-Sistemas de recomendação são comumente classificados em três grandes grupos, de
-acordo com a estratégia utilizada para o cálculo de recomendações: \textit{(1)}
-baseada em conteúdo, \textit{(2)} colaborativa e \textit{(3)} híbrida.
-\cite{Cazella:10} propõe uma classificação um pouco mais abrangente, na qual
-este trabalho se baseou.
+\cite{Burke:02} distingue as diferentes estratégias de recomendação a partir
+da fonte de dados de onde é extraído o conhecimento para produzir as
+recomendações. \cite{Cazella:10} propõe uma classificação um pouco mais
+abrangente, considerando por exemplo a recomendação por reputação dos itens,
+que por não oferecer grandes desafios computacionais geralmente é omitida.
 
 \subsubsection{Reputação dos itens}
 
@@ -1237,7 +1581,7 @@ venda associada, apenas disponibilizam as avaliações. É o caso do
 \textit{Internet Movie Database} \footnote{\url{http://www.imdb.com/}},
 apresentado na figura \ref{fig:imdb}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \fbox{
   \includegraphics{fig/imdb.pdf}
@@ -1250,16 +1594,16 @@ apresentado na figura \ref{fig:imdb}.
 
 Esta abordagem parte do princípio de que os usuários tendem a se interessar por
 itens semelhantes aos que eles já se interessaram no passado
-\cite{Herlocker:2000}. O ponto chave desta estratégia é a caracterização dos
+\cite{Herlocker:00}. O ponto chave desta estratégia é a caracterização dos
 itens, por exemplo, através da identificação de atributos (autores e temas de
 livros, por exemplo). A partir dos atributos dos itens, aplica-se técnicas de
-recuperação da informação (por exemplo, \textit{tf-idf} e \textit{BM25}) para
+recuperação da informação (por exemplo, $\tfidf$ e \textit{BM25}) para
 encontrar itens semelhantes ou de classificação (por exemplo, \textit{Bayes
-ingênuo}) para encontrar itens relevantes. Em uma livraria, sugerir ao cliente
-outros livros do mesmo autor ou tema de livros previamente selecionados é uma
-estratégia amplamente adotada.
+ingênuo} e \textit{K-NN}) para encontrar itens relevantes. Em uma livraria,
+sugerir ao cliente outros livros do mesmo autor ou tema de livros previamente
+selecionados é uma estratégia amplamente adotada.
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{fig/rec_conteudo.pdf}
 \caption{Cenário de uma recomendação baseada em conteúdo}
@@ -1275,25 +1619,25 @@ recomendações estar limitada a itens similares aos já escolhidos pelos usuários.
 \subsubsection{Recomendação colaborativa}
 
 Esta estratégia não exige o reconhecimento semântico do conteúdo dos itens,
-pois é fundamentado na troca de experiências entre pessoas que possuem
+pois é fundamentado na troca de experiências entre indivíduos que possuem
 interesses em comum. A figura \ref{fig:rec_colaborativa} ilustra o cenário da
 recomendação colaborativa.
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{fig/rec_colaboracao.pdf}
 \caption{Cenário da recomendação colaborativa}
 \label{fig:rec_colaborativa}
 \end{figure}
 
-A estratégia do K-NN é comumente utilizada neste tipo de solução. Define-se
-uma função que representa a distância entre os usuários. Com base nesta medida,
-a vizinhança de um usuário $u$ é composta pelos que estiverem mais próximos
-a ele (com menor distância). Porém, ao invés de uma classe ser extraída da
-vizinhança, como descrito na seção \ref{sec:knn}, uma recomendação para o
-usuário $u$ é produzida a partir da análise dos itens que a vizinhança de $u$
-considera relevantes. Geralmente os itens que ocorrem com maior frequência
-na vizinhança compõem a recomendação.
+A técnica \textit{K-NN} é comumente utilizada neste tipo de solução. Define-se
+uma função que representa a proximidade entre os usuários. Com base nesta
+medida, a vizinhança de um determinado usuário é composta por outros $k$
+usuários que estiverem mais próximos a ele. Porém, ao invés de uma classe ser
+extraída da vizinhança, como descrito na seção \ref{sec:knn}, uma recomendação
+para o usuário é produzida a partir da análise dos itens que os usuários
+vizinhos consideram relevantes. Geralmente os itens que ocorrem com maior
+frequência na vizinhança compõem a recomendação.
 
 O problema da superespecialização é superado, visto que a recomendação neste
 caso não se baseia no histórico do próprio usuário, portanto pode apresentar
@@ -1301,50 +1645,38 @@ itens totalmente inesperados. Outra contribuição é a possibilidade de formação
 de comunidades de usuários pela identificação de seus interesses semelhantes
 \cite{Cazella:10}.
 
-\subsubsection{Estratégia híbrida}
+\subsubsection{Baseada em conhecimento}
 
-Consiste basicamente na combinação das abordagens colaborativa e baseada em
-conteúdo, unindo o melhor das duas técnicas na tentativa de eliminar as
-fraquezas de cada uma \cite{Cazella:10}.
-
-A figura \ref{fig:rec_hibrida} ilustra algumas possibilidades de combinação.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.7\textwidth]{fig/todo.pdf}
-\caption{Recomendação híbrida}
-\label{fig:rec_hibrida}
-\end{figure}
-
-%FIXME [Desenvolver o tema: uso de perfis]
-
-%\subsubsection{Filtragem baseada em outros contextos}
-%
-% Uso de perfis.
-
-\subsubsection{Regras de associação}
-
-A estratégia baseada em regras de associação tem como premissa o registro das
-escolhas dos usuários ao longo do tempo e utiliza técnicas de mineração de
-dados para extrair correlações e padrões frequentes no comportamento dos
-mesmos. Tal abordagem é frequentemente utilizada em recomendações implícitas,
-por exemplo, a definição do posicionamento de produtos numa prateleira ou a
+Esta estratégia tem como princípio a descoberta de conhecimento a partir da
+análise de uma base de dados de transações, que registra a escolha dos usuários
+ao longo do tempo. Técnicas de classificação e mineração de dados são
+utilizadas para extrair correlações e padrões frequentes no comportamento dos
+usuários. Tal abordagem é frequentemente utilizada em recomendações implícitas,
+por exemplo, na definição do posicionamento de produtos numa prateleira ou a
 realização de propagandas dirigidas \cite{Hegland:03}.
 
-Dado um conjunto de associações, a recomendação para determinado usuário é
-produzida de acordo com as regras satisfeitas pelo conjunto de itens que ele
-já tenha selecionado. Por exemplo, a regra ${A,B,C} \Rightarrow {D}$ seria
-satisfeita por usuários que possuem os itens $A$, $B$ e $C$, resultando na
-indicação do item $D$: \textit{``Clientes que compraram os itens A, B e C também
-compraram o item D''}.
+Agrupamento (\textit{clustering}, em inglês) é uma técnica de aprendizado de
+máquina não supervisionado. O algoritmo particiona a base de dados de forma a
+criar automaticamente grupos que reúnam usuários com comportamentos
+semelhantes. Uma das técnicas mais utilizadas é o $k\mhyphen means$, que
+consiste basicamente em: (1) seleção de $k$ usuários considerados sementes; (2)
+associar cada usuário da base de dados com a semente mais próxima dele; (3)
+calcular novos elementos centrais para cada grupo, entre os usuários que o
+compõem. O passo 3 é repetido até que não seja mais necessário calcular novos
+centróides. Desta forma, um sistema de recomendação poderia sugerir itens de
+acordo com as características de cada grupo \cite{Cazella:10}.
 
-As técnicas mais utilizadas na implementação desta classe de recomendadores são
+Para descoberta de regras de associação, as técnicas mais utilizadas são
 variações do algoritmos Apriori, apresentado na seção \ref{sec:apriori}
-\cite{Kotsiantis:06}. Um exemplo de recomendação por associação é encontrado na
-loja virtual da empresa \textit{Amazon}\footnote{\url{http://www.amazon.com/}}
-(figura \ref{fig:amazon}).
+\cite{Kotsiantis:06}. Dado um conjunto de associações, a recomendação para
+determinado usuário é produzida de acordo com as regras satisfeitas pelo
+conjunto de itens que ele já tenha selecionado. Por exemplo, a regra ${A,B,C}
+\Rightarrow {D}$ seria satisfeita por usuários que possuem os itens $A$, $B$ e
+$C$, resultando na indicação do item $D$: \textit{``Clientes que compraram os
+itens A, B e C também compraram o item D''}. Um exemplo de recomendação por
+associação é encontrado na loja virtual da empresa \textit{Amazon}\footnote{\url{http://www.amazon.com/}} (figura \ref{fig:amazon}).
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \fbox{
   \includegraphics{fig/amazon.pdf}
@@ -1353,28 +1685,77 @@ loja virtual da empresa \textit{Amazon}\footnote{\url{http://www.amazon.com/}}
 \label{fig:amazon}
 \end{figure}
 
+\subsubsection{Baseada em dados demográficos}
+
+A estratégia demográfica fundamenta-se na composição de perfis de usuários e
+identificação de nichos demográficos para produção de recomendações. Os dados
+pessoais geralmente são coletados de forma explícita, através de um cadastro
+do usuário, e podem englobar informações como idade, sexo, profissão e áreas de
+interesse. Dados demográficos, no entanto, geralmente são utilizados em
+combinação com outras fontes de dados e técnicas diversas, como parte de uma
+estratégia de recomendação híbrida.
+
+\subsubsection{Estratégia híbrida} \label{sec:estrategias_hibrida}
+
+Sistemas de recomendação híbridos combinam duas ou mais estratégias, com o
+intuito de obter melhor performance do que a que as estratégias oferecem
+individualmente. A tabela \ref{tab:metodos_hibridizacao} apresenta as
+principais técnicas de hibridização, segundo \cite{Burke:02}.
+
+\begin{table}[h!]
+\caption{Métodos de hibridização}
+\label{tab:metodos_hibridizacao}
+\small
+\begin{tabularx}{\textwidth}{| l | X |}
+\hline
+\normalsize{\textbf{\textit{Método}}} &
+\normalsize{\textbf{\textit{Descrição}}} \\
+\hline
+Ponderação & Pontuações de relevância oriundas de diversas técnicas de
+             recomendação são combinadas para compor uma única recomendação. \\
+\hline
+Revezamento & O sistema reveza entre técnicas de recomendação diversas, de
+              acordo com a situação do momento. \\
+\hline
+Combinação & Recomendações oriundas de diversos recomendadores diferentes são
+             apresentados de uma só vez. \\
+\hline
+Combinação de atributo & Um algoritmo de recomendação único coleta atributos
+                         de diferentes bases de dados para recomendação. \\
+\hline
+Cascata & Um recomendador refina a recomendação produzida por outro. \\
+\hline
+Acréscimo de atributo & O resultado de uma técnica é usado como atributo de
+                        entrada para outra. \\
+\hline
+Meta-nível & O modelo que um recomendador ``aprendeu'' é usado como entrada
+             para o outro. \\
+\hline
+\end{tabularx}
+\end{table}
+
 \subsection{Avaliação de sistemas de recomendação} \label{sec:avaliacao}
 
 A avaliação de sistemas de recomendação não é uma tarefa trivial,
-principalmente visto que não há consenso sobre quais atributos devem ser
-observados e quais métricas devem ser adotadas para cada atributo. Ademais,
-diferentes estratégias podem funcionar melhor ou pior de acordo com o domínio
-da aplicação e as propriedades dos dados \cite{Herlocker:2004}. Por exemplo,
-algoritmos projetados especificamente para conjuntos de dados com um número
-muito maior de usuários do que de itens podem se mostrar inapropriados em
-domínios onde há muito mais itens do que usuários. Recomenda-se que o
-processo de avaliação tenha início com a compreensão das ações para as quais
-o sistema foi projetado (ver seção \ref{sec:acoes}), como guia para as decisões
-metodológicas ao longo dos testes.
+principalmente porque não há consenso sobre quais atributos devem ser
+observados e quais métricas devem ser adotadas para cada atributo
+\cite{Herlocker:04}. Ademais, diferentes estratégias podem funcionar melhor
+ou pior de acordo com o domínio da aplicação e as propriedades dos dados.
+Por exemplo, algoritmos projetados especificamente para conjuntos de dados com
+um número muito maior de usuários do que de itens podem se mostrar
+inapropriados em domínios onde há muito mais itens do que usuários.
+Recomenda-se então que o processo de avaliação tenha início com a compreensão
+das ações para as quais o sistema foi projetado (ver seção \ref{sec:acoes}),
+como guia para as decisões metodológicas ao longo dos experimentos.
 
 \subsubsection{Seleção dos dados}
 
-A escolha do conjunto de dados adequado é um fator chave para uma investigação
-consistente. \cite{Herlocker:2004} classificam as avaliações de sistemas de
-recomendação como \textit{(a)} análises \textit{offline}, que utilizam bases de
-dados previamente coletadas e \textit{(b)} experimentos ``ao vivo'', realizados
-diretamente com usuários, seja num ambiente controlado (laboratório) ou em
-campo.
+A escolha do conjunto de dados adequado é fator chave para uma investigação
+consistente. Neste aspecto, as avaliações de recomendadores podem ser
+caracterizadas como (a) análises \textit{offline}, que utilizam bases de dados
+previamente coletadas e (b) experimentos ``ao vivo'', realizados diretamente
+com usuários, seja num ambiente controlado (laboratório) ou em campo
+\cite{Herlocker:04}.
 
 Análises \textit{offline} geralmente são objetivas, com foco na acurácia das
 predições e performance das soluções \cite{Vozalis:03}. Inicialmente os dados
@@ -1388,9 +1769,9 @@ a exatidão da recomendação de um item para um usuário se não existe uma
 avaliação prévia do usuário para tal item.
 
 Por outro lado, nos experimentos ``ao vivo'' os recomendadores são
-disponibilizados para uma comunidade de usuários e os dados são coletados
-na medida em que são produzidos. Neste caso, além de análises objetivas
-como a acurácia e performance das soluções, pode-se avaliar fatores
+disponibilizados para uma comunidade de usuários, cujas avaliações são
+coletadas na medida em que são produzidas. Neste caso, além de análises
+objetivas como a acurácia e performance das soluções, pode-se avaliar fatores
 comportamentais como a performance, participação e satisfação dos usuários.
 A esparsidade dos dados tem efeito menor neste tipo de experimento, visto
 que o usuário está disponível para avaliar se os itens recomendados são ou
@@ -1400,27 +1781,76 @@ Quando não existem dados previamente disponíveis ou quando não são adequados
 para o domínio ou a ação principal do sistema a ser avaliado, pode-se ainda
 optar pelo uso de dados sintéticos. O uso de dados artificiais é aceitável
 em fases preliminares de testes, porém, tecer conclusões comparativas é
-arriscado, visto que os dados produzidos podem se ajustar melhor para uma
-estratégia do que para outras \cite{Herlocker:2004}.
+arriscado visto que os dados produzidos podem se ajustar melhor para uma
+estratégia do que para outras \cite{Herlocker:04}.
 
 \subsection{Métricas} \label{sec:metricas}
 
-%FIXME [Detalhar cada metrica]
+A tabela \ref{tab:metricas} apresenta métricas utilizadas para avaliação de
+sistemas de recomendação.
 
-\begin{description}
+As métricas de acurácia medem o quanto as estimativas de relevância previstas
+pelo sistema se aproximam da real. Acurácia de classificação está relacionada
+com a frequência com a qual o sistema faz classificações corretas acerca da
+relevância dos itens, enquanto que a acurácia de predição pondera as
+diferenças entre as pontuações de relevância prevista e a real.
 
-\item[Acurácia de predição.] Medem o quanto pontuações previstas pelo
-recomendador se aproximam das pontuações reais dos usuários. Exemplos: Erro
-absoluto médio, erro quadrático médio, erro absoluto médio normalizado.
+Além de medidas de acurácia, são apresentados outras métricas para mensurar
+qualidades que proporcionam maior grau de satisfação do usuário ao utilizar um
+sistema de recomendação.
 
-\item[Acurácia de classificação.] Medem a frequência com a qual o sistema faz
-classificações corretas no que tange a relevância dos itens. Exemplos:
-precisão, lembrança, medida F1 e curva ROC.
-
-\item[Além da acurácia.] Cobertura, curva de aprendizado, novidade e surpresa,
-confiança, avaliação do usuário.
-
-\end{description}
+\begin{sidewaystable}
+\caption{Métricas para avaliação de sistemas recomendadores}
+\label{tab:metricas}
+\newcommand\T{\rule{0pt}{3.0ex}}
+\newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
+\begin{tabularx}{\textwidth}{| c | X | c | c |}
+\hline
+\textbf{\textit{Métrica}} & \textbf{\textit{Descrição}}
+  & \textbf{\textit{Fórmula}}  & \textbf{\textit{Categoria}} \\
+\hline
+\T Precisão & Proporção de itens relevantes entre os selecionados
+  & \multirow{2}{*}{$P = \frac{N_{\text{relevantes\ selecionados}}}
+                              {N_{\text{selecionados}}}$}
+  & \multirow{7}{*}{Acurácia de classificação} \\
+  & como tal \B & & \\
+\cline{1-3}
+\T Recuperação & Proporção de itens selecionados entre todos os
+  & \multirow{2}{*}{$R = \frac{N_{\text{relevantes\ selecionados}}}
+                              {N_{\text{relevantes}}}$} & \\
+  & relevantes \B & & \\
+\cline{1-3}
+\T Medida $F_1$ & Combinação de $P$ e $R$ numa mesma medida
+  & \T\B $F_1 = \frac{2PR}{P+R}$ & \\
+\cline{1-3}
+\T Curva \textit{ROC} & Mede o poder de distinção entre itens relevantes e
+  & \scriptsize{Análise gráfica}& \\
+  & irrelevantes \B & & \\
+\hline
+\T Erro absoluto médio & Desvio absoluto médio  entre pontuações previstas e
+ & \multirow{2}{*}{$|\overline E|=\frac{\sum_{i=1}^N |p_i-r_i|}{N} $}
+ & \multirow{4}{*}{Acurácia de predição} \\
+ \textit{(MAE)} & reais \B & & \\
+\cline{1-3}
+\T Erro quadrático médio & Desvio quadrático médio entre pontuações previstas e
+  & \multirow{2}{*}{$|\overline E|=\frac{\sum_{i=1}^N |p_i-r_i|^2}{N}$ }& \\
+  & reais \B & & \\
+\hline
+\T Cobertura & Proporção de itens passíveis de serem recomendados
+  & \multirow{2}{*}{$R = \frac{N_{\text{passíveis de recomendação}}}{N}$}
+  & \multirow{5}{*}{Além de acurácia} \\
+  & entre todos os disponíveis \B & & \\
+\cline{1-3}
+\T Curva de aprendizado & Taxa de aprendizado dos algoritmos na análise dos
+  & \multirow{2}{*}{$A = \frac{\Delta_\text{acurácia}}{\Delta_T}$} & \\
+  & dados de exemplo \B & & \\
+\cline{1-3}
+\T Novidade e surpresa & Qualidade do sistema de produzir recomendações
+  & \scriptsize{Avaliada pelo usuário} & \\
+  & não óbvias \B & & \\
+\hline
+\end{tabularx}
+\end{sidewaystable}
 
 \section{Distribuições GNU/Linux} \label{sec:distribuicoes}
 
@@ -1430,7 +1860,7 @@ alternativa ao UNIX\footnote{\url{http://www.unix.org/}} -- solução comercial
 amplamente difundida na indústria -- e que fosse compatível com os padrões
 POSIX\footnote{Acrônimo para \textit{Portable Operating System Interface}, é uma
 família de normas definidas pelo IEEE com foco na portabilidade entre sistemas
-operacionais.}\footnote{\url{http://standards.ieee.org/develop/wg/POSIX.html}}.
+operacionais. Disponível em \url{http://standards.ieee.org/develop/wg/POSIX.html}}.
 Nos anos 90 o projeto GNU já havia atraído muitos colaboradores, que num curto
 espaço de tempo haviam desenvolvido inúmeros aplicativos para compor o sistema
 operacional. No entanto, o desenvolvimento do núcleo do sistema (\textit{GNU
@@ -1446,12 +1876,13 @@ Com o anúncio de Torvalds, Stallman vislumbrou a possibilidade de acelerar o
 lançamento do sistema operacional livre, se os aplicativos GNU que já estavam
 prontos fossem combinados com o núcleo recém-lançado -- de fato, a primeira
 versão estável do GNU Hurd foi lançada apenas em 2001. Em 1992 o Linux foi
-licenciado sob a GNU GPL (\textit{General Public License\footnote{Suporte legal
-para a distribuição livre de softwares}}) e as equipes dos dois projetos
-começaram a trabalhar na adaptação do kernel Linux para o ambiente GNU. Este
-esforço conjunto desencadeou o surgimento das distribuições GNU/Linux, que
-são variações do sistema operacional composto por milhares de aplicativos
-majoritariamente desenvolvidos pelo projeto GNU e pelo kernel Linux.
+licenciado sob a GNU GPL\footnote{Acrônimo para \textit{General Public
+License}, é um suporte legal para a distribuição livre de softwares.} e as
+equipes dos dois projetos começaram a trabalhar na adaptação do kernel Linux
+para o ambiente GNU. Este esforço conjunto desencadeou o surgimento das
+distribuições GNU/Linux, que são variações do sistema operacional composto por
+milhares de aplicativos majoritariamente desenvolvidos pelo projeto GNU e pelo
+kernel Linux.
 
 Distribuições GNU/Linux, como Debian, Fedora, Mandriva e Ubuntu, oferecem
 diferentes ``sabores'' do sistema operacional, constituídos por aplicativos
@@ -1464,8 +1895,8 @@ através do encapsulamento de componentes de software em abstrações denominadas
 
 O processo de desenvolvimento e manutenção de uma distribuição varia bastante
 de uma para outra e está diretamente ligado à constituição do projeto. Quando
-são criadas por empresas, costumam receber colaboração dos usuários, mas de
-forma limitada, visto que as decisões chave são tomadas dentro da organização.
+são criadas por empresas, costumam receber colaboração dos usuários de
+forma limitada, visto que as decisões-chave são tomadas dentro da organização.
 Este é o modelo de desenvolvimento descrito por \cite{Raymond:99} como catedral.
 Por outro lado, os projetos criados independentemente, formam ao longo do tempo
 uma comunidade de desenvolvedores interessados em colaborar, sendo estes os
@@ -1480,8 +1911,8 @@ desenvolvedor é também usuário).
 
 A seleção e configuração dos aplicativos básicos de uma distribuição ficam
 sob a responsabilidade da equipe que a desenvolve, com diferentes níveis de
-interferência da comunidade, como descrito acima. Este é um ponto chave no
-desenvolvimento, pois é um dos fatores que mais influenciam a escolha dos
+interferência da comunidade, como descrito acima. Este é um ponto crucial do
+desenvolvimento, visto que é um dos fatores que mais influenciam a escolha dos
 usuários pela distribuição. O impacto que tal seleção tem para a comunidade de
 usuários resulta em frequentes polêmicas em torno do tema, como a gerada pelo
 anúncio de que o projeto \textit{Ubuntu} abandonaria o \textit{Gnome} como
@@ -1495,60 +1926,68 @@ assim, a seleção dos programas é de responsabilidade do usuário do sistema.
 
 \subsection{Escolha da plataforma}
 
-A escolha da distribuição na qual o desenvolvimento do trabalho será baseado
-foi pautada pelos seguintes critérios: \textit{(1)} Existência de um esquema
-consistente de distribuição de software; \textit{(2)} Existência de dados
-estatísticos referentes ao uso de pacotes por usuários e possibilidade de
-acesso aos mesmos; \textit{(3)} Possibilidade de integração dos resultados do
-trabalho com os serviços disponibilizados pela distribuição; \textit{(4)}
-Popularidade da distribuição.
-
-As seguir estão descritos os fatores que contribuíram para a opção pelo
-Debian GNU/Linux como plataforma de desenvolvimento.
+A distribuição escolhida como plataforma para o desenvolvimento deste trabalho
+foi o Debian GNU/Linux. Todavia, os resultados poderão facilmente ser adaptados
+para outros contextos, desde que as informações necessárias para o cálculo de
+recomendações estejam disponíveis. As seguir estão descritos os critérios que
+pautaram esta escolha.
 
 \begin{enumerate}
 
-\item O gerenciamento de pacotes em sistemas Debian GNU/Linux é realizado
-através do \textit{APT (Advanced Packaging
-Tool)}\footnote{\url{http://wiki.debian.org/Apt}}. Ações como a busca,
-obtenção, instalação, atualização e remoção de pacotes são disparadas pelo
-\textit{APT}, que num nível mais baixo faz uso do \textit{dpkg}, ferramenta que de
-fato realiza instalações e remoções de softwares. O \textit{APT} também gerencia
-de maneira eficiente as relações de conflito e dependência entre pacotes.
+\item \textbf{Esquema consistente de distribuição de aplicativos.} O
+  gerenciamento de pacotes em sistemas Debian GNU/Linux é realizado através do
+  \textit{APT (Advanced Packaging
+  Tool)}\footnote{\url{http://wiki.debian.org/Apt}}. Ações como a busca,
+  obtenção, instalação, atualização e remoção de pacotes são disparadas pelo
+  \textit{APT}, que num nível mais baixo faz uso do \textit{dpkg}, ferramenta
+  que de fato realiza instalações e remoções de softwares. O \textit{APT}
+  também gerencia de maneira eficiente as relações de conflito e dependência
+  entre pacotes. Ao receber um pedido de modificação da configuração do sistema
+  -- por exemplo, instalação de um novo componente -- o \textit{APT} tenta
+  satisfazer a requisição a partir do conhecimento de como obter os componentes
+  (endereço dos repositórios de pacotes) e das relações de dependência entre os
+  mesmos. Desta forma, o gerenciador promove a instalação de todas as
+  dependências de um pacote antes de instalá-lo, ao passo que não permite a
+  instalação de pacotes que conflitem com outros já instalados no sistema.
 
-\item O \textit{Popcon (Popularity Contest)}\footnote{\url{http://popcon.debian.org}}
-é a concurso de popularidade entre pacotes. Os usuários que aceitam participar
-do concurso enviam periodicamente a sua lista de pacotes instalados no sistema,
-que são armazenados no servidor do Popcon. Diariamente as listas recebidas são
-processadas e dados estatísticos acerca do uso dos pacotes são gerados e
-disponibilizados no website do projeto.
+\vspace{0.3cm}
+\item \textbf{Disponibilidade de dados estatísticos.} O \textit{Popcon
+  (Popularity Contest)}\footnote{\url{http://popcon.debian.org}} é a concurso
+  de popularidade entre pacotes. Os usuários que aceitam participar do concurso
+  enviam periodicamente a sua lista de pacotes instalados no sistema, que são
+  armazenados no servidor do Popcon. Diariamente as listas recebidas são
+  processadas e dados estatísticos acerca do uso dos pacotes são gerados e
+  disponibilizados no website do projeto.
 
-\item Segundo o \textit{contrato social
-Debian}\footnote{\url{http://www.debian.org/social_contract.pt.html}},
-o desenvolvimento do projeto é guiado pelas necessidades dos usuários e da
-comunidade. Portanto, as iniciativas de colaboradores individuais, sejam eles
-desenvolvedores oficiais ou não, serão igualmente consideradas e passarão a
-fazer parte da distribuição se seguirem os princípios do projeto e forem
-considerados úteis para a comunidade.
+\vspace{0.3cm}
+\item \textbf{Possibilidade de integração dos resultados do trabalho.} Segundo
+  o \textit{contrato social
+  Debian}\footnote{\url{http://www.debian.org/social_contract.pt.html}},
+  o desenvolvimento do projeto é guiado pelas necessidades dos usuários e da
+  comunidade. Portanto, as iniciativas de colaboradores individuais, sejam eles
+  desenvolvedores oficiais ou não, serão igualmente consideradas e passarão a
+  fazer parte da distribuição se seguirem os princípios do projeto e forem
+  considerados úteis para a comunidade.
 
-\item O Debian é um projeto de destaque no ecossistema do software livre. Desde
-o lançamento da primeira versão de sua distribuição, em 1993, o projeto cresceu
-bastante em termos de componentes de software (atualmente provê mais de 25.000
-pacotes), colaboradores e usuários. A \textit{Distrowatch}, que tem 323
-distribuições ativas em sua base de dados\footnote{Consulta realizada em 24 de
-janeiro de 2011.}, classifica o Debian GNU/Linux entre as 10 distribuições mais
-populares\footnote{\url{http://distrowatch.com/dwres.php?resource=major}}.
-O Debian aparece na quinta posição em suas estatísticas de páginas visitadas
-\footnote{\url{http://distrowatch.com/stats.php?section=popularity}}. Já o
-\textit{Linux Counter\footnote{\url{http://counter.li.org/reports/machines.php}}}
-apresenta o Debian como a segunda distribuição mais popular entre as máquinas
-cadastradas que rodam o kernel Linux ($16\%$), ficando atrás apenas do
-Ubuntu\footnote{\url{http://www.ubuntu.com/community/ubuntu-and-debian}}
-($24\%$), que é uma distribuição derivada do Debian. Nas pesquisas da
-\textit{W$^{\textrm{3}}$Techs} sobre tecnologias para serviços
-web\footnote{\url{http://w3techs.com/technologies/history_details/os-linux}}, o
-Debian aparece em segundo lugar, estando presente em $27\%$ dos servidores. Na
-primeira posição está o CentOS com $31\%$.
+\vspace{0.3cm}
+\item \textbf{Popularidade.} O Debian é um projeto de destaque no ecossistema
+  do software livre. Desde o lançamento da primeira versão de sua distribuição,
+  em 1993, o projeto cresceu bastante em termos de componentes de software
+  (atualmente provê mais de 25.000 pacotes), colaboradores e usuários. A
+  \textit{Distrowatch}, que tem 323 distribuições ativas em sua base de
+  dados\footnote{Consulta realizada em 24 de janeiro de 2011.}, classifica o
+  Debian GNU/Linux entre as 10 distribuições mais
+  populares\footnote{\url{http://distrowatch.com/dwres.php?resource=major}}.
+  O Debian aparece na quinta posição em suas estatísticas de páginas
+  visitadas\footnote{\url{http://distrowatch.com/stats.php?section=popularity}}.
+  Já o \textit{Linux Counter\footnote{\url{http://counter.li.org/reports/machines.php}}} apresenta o Debian como a segunda distribuição mais popular entre as
+  máquinas cadastradas que rodam o kernel Linux ($16\%$), ficando atrás apenas
+  do Ubuntu\footnote{\url{http://www.ubuntu.com/community/ubuntu-and-debian}}
+  ($24\%$), que é uma distribuição derivada do Debian. Nas pesquisas da
+  \textit{W$^{\textrm{3}}$Techs} sobre tecnologias para serviços
+  web\footnote{\url{http://w3techs.com/technologies/history_details/os-linux}},
+  o Debian aparece em segundo lugar, estando presente em $27\%$ dos servidores.
+  Na primeira posição está o CentOS com $31\%$.
 
 \end{enumerate}
 
@@ -1565,11 +2004,6 @@ discussão públicas. Não existe uma entidade formal ou qualquer tipo de
 organização que concentre, coordene ou defina as atividades do projeto. O que
 observa-se é um modelo de governança consolidado que emergiu naturalmente ao
 longo de sua história \cite{Ferraro:07}.
-
-Diante do exposto, optou-se pelo Debian GNU/Linux como ambiente de
-desenvolvimento, todavia, os resultados poderão facilmente ser adaptados para
-outros contextos, desde que as informações necessárias para o cálculo de
-recomendações estejam disponíveis.
 
 \section{Recomendação nas distribuições} \label{sec:rec_distro}
 
@@ -1596,7 +2030,7 @@ diponibilizar as informações ou meta-dados concernentes a esta estrutura
 
 A tabela \ref{tab:recDebian} relaciona algumas destas iniciativas que estão
 diretamente ligadas ao gerenciamento de pacotes. Vale ressaltar que a maioria
-destas soluções foi inicialmente desenvolvida num contexto extra-oficial, mas
+destas soluções foi inicialmente desenvolvida num contexto extra-oficial e
 ao passo que se mostraram úteis e eficientes foram absorvidas pela comunidade
 de usuários e desenvolvedores.
 
@@ -1672,82 +2106,105 @@ de usuários e desenvolvedores.
 
 \section{Desenvolvimento do trabalho} \label{sec:metodologia}
 
-Nesta seção serão apresentadas as fases do desenvolvimento deste trabalho,
-de acordo como estão planejadas até presente data.
-
-%O desenvolvimento deste trabalho será guiado pelos seguintes passos:
-%compreensão do problema; estabelecimento de método de estratégias e
-%técnicas para resolver o problema; codificação; avaliação das soluções
-%e resultados.
+Esta seção apresenta as fases de desenvolvimento deste trabalho, de acordo com
+seu planejamento até a presente data.
 
 \subsection{Caracterização do problema}
 
-Neste trabalho propõe-se desenvolver soluções para o problema da recomendação
-no contexto de componentes de software, em especial no âmbito de distribuições
-GNU/Linux. Neste cenário os pacotes são modelados como itens e os usuários da
-distribuição como clientes do recomendador.
+Este trabalho tem como proposta principal o desenvolvimento de soluções para o
+problema da recomendação no contexto de componentes de software, em especial no
+âmbito de distribuições GNU/Linux. Neste cenário, os aplicativos são modelados
+como itens e os usuários da distribuição como clientes do recomendador.
 
-Embora já seja pauta de discussões entre desenvolvedores um esquema de
-pontuação de pacotes como medida de avaliação pessoal dos usuários, não há
-previsão para tal solução de fato ser implementada \cite{Freedesktop:11}.
-No entanto, a presença de um componente no sistema do usuário pode ser
-considerado como indicativo de relevância. A pontuação neste caso é binária --
-um item pode ser relevante ou irrelevante -- e a recomendação é caracterizada
-da seguinte maneira: dada a lista de pacotes instalados no sistema de
-determinado usuário (como representação de sua identidade), o recomendador deve
-retornar uma lista de sugestão de pacotes, que representam pacotes de potencial
-interesse para tal usuário. Desta forma, a ação principal do sistema é definida
-como \textit{encontrar itens relevantes} (ver seção \ref{sec:acoes}).
+Embora já faça parte da pauta de discussões entre desenvolvedores um esquema de
+pontuação de pacotes como medida de avaliação pessoal e comentários dos
+usuários, não há previsão para tal solução de fato ser implementada
+\cite{Freedesktop:11}. No entanto, a presença de um componente no sistema do
+usuário pode ser considerado como indicativo de relevância. A pontuação neste
+caso é binária -- um item pode ser relevante ou irrelevante -- e o processo de
+recomendação é caracterizado da seguinte maneira: dada a lista de pacotes
+instalados no sistema de determinado usuário (como representação de sua
+identidade), o recomendador deve retornar uma lista de pacotes sugeridos, que
+representam aplicativos de potencial interesse para tal usuário. Desta forma, a
+ação principal do sistema será \textit{encontrar itens relevantes} (ver seção
+\ref{sec:acoes}).
 
-Neste trabalho as recomendações devem ser geradas a partir do comportamento do
-usuário. Não serão consideradas informações registradas no BTS, fóruns ou em
-listas de discussão. Pretende-se calcular a recomendação a partir de dados do
-\textit{Popcon}, que contém listas de pacotes instalados de milhares de sistemas
-em produção, e do \textit{Debtags}, como fonte de metadados sobre os pacotes. O
-uso de perfis também está sendo considerado, através do preenchimento de um
-formulário simples com macro-temas de interesse do usuário.
+As recomendações devem ser produzidas a partir do comportamento do usuário.
+Neste trabalho não serão consideradas por exemplo informações registradas no
+BTS, PTS ou em listas de discussão. A computação será principalmente realizada
+com base em dados do \textit{Popcon} (listas de pacotes de milhares de sistemas
+em produção), e do \textit{Debtags} e \textit{UDD} como fonte de metadados
+sobre os pacotes (atributos). A utilização de dados demográficos também está
+sendo considerada. Por exemplo, a declaração explícita por parte do usuário de
+que não tem interesse por determinado nicho de aplicativos eliminaria de
+antemão uma série de pacotes que a princípio seriam considerados. De certa
+forma, o uso de perfis pode ser entendido como uma seleção de atributos
+específica para cada usuário.
 
-
-Uma característica peculiar da recomendação neste contexto é que, diferentemente
-de outras instâncias do problema, onde os itens não se relacionam entre si, os
-componentes de software que são objeto desta pesquisa podem declarar
-explicitamente requisitos em seu conteúdo. Requisitos positivos representam
-relações de dependência, enquanto que os negativos caracterizam as relações de
-conflito entre os pacotes, podendo ser definidos em diversos graus:
-dependência, sugestão, recomendação, conflito, substituição, quebra etc
-\cite{Cosmo:09}. Por exemplo, se um componente $A$ depende de $B$, significa
-dizer que $B$ deve ser instalado no sistema para que $A$ funcione como
-previsto. Por outro lado, se $A$ conflita com $C$, a instalação de ambos os
-programas pode provocar um comportamento anômalo ou até comprometer o
-funcionamento de todo o sistema.
-
-O sistema de gerenciamento de pacotes (no caso do Debian, o \textit{APT}), ao
-receber um pedido de modificação da configuração do sistema -- por exemplo,
-a instalação de um novo componente -- tenta satisfazer a requisição a partir
-do conhecimento de como obter os componentes (endereço dos repositórios de
-pacotes) e das relações de dependência entre os mesmos. Desta forma, o
-gerenciador promove a instalação de todas as dependências de um pacote antes de
-instalá-lo, ao passo que não permite a instalação de pacotes que conflitem com
-outros já instalados no sistema.
-
+\subsubsection{Considerações acerca da dependência entre pacotes}
 %FIXME [Investigar a utilidade do Debtags pra selecao de atributos]
+
+Uma característica peculiar da recomendação neste contexto é que,
+diferentemente de outros domínios nos quais os itens não se relacionam entre
+si, os componentes de software objeto desta pesquisa podem declarar requisitos
+em seu conteúdo (dependência, sugestão, recomendação, conflito, substituição,
+quebra etc). Requisitos positivos representam relações de dependência,
+enquanto os negativos caracterizam relações de conflito entre os pacotes
+ \cite{Cosmo:09}. Por exemplo, se um componente $a$ depende de $b$, significa
+que $b$ deve ser instalado no sistema para que $a$ funcione como previsto. Por
+outro lado, se $a$ conflita com $c$, a instalação de ambos os aplicativos pode
+provocar um comportamento anômalo ou até comprometer o funcionamento de todo o
+sistema.
+
 As relações entre componentes também devem ser consideradas pelo recomendador
 de pacotes. Intuitivamente, numa mesma recomendação não faz sentido sugerir
 pacotes dependentes, visto que ao aceitar a recomendação de um determinado
 componente e prosseguir com a instalação do mesmo, o usuário já está
-implicitamente aceitando a recomendação de todas as suas dependências. Uma
-exceção seria o caso em que as características intrínsecas do componente
-sejam a causa da recomendação e o usuário possa se interessar apenas pela
-dependência.
+implicitamente aceitando a recomendação de todas as suas dependências. No
+entanto, um recomendação que contenha por exemplo os pacotes $a$ e $b$, dado
+que $a$ depende de $b$, se $a$ obtiver uma alta estimativa de relevância em
+virtude de seus atributos (por estratégias baseadas em conteúdo), esta
+recomendação não deve ser descartada. No caso de pacotes ``guarda-chuva'',
+que possuem muitos dependências, é comum que o usuário se interesse apenas
+por uma de suas dependências.
 
-Outro ponto a considerar no caso de busca por associação é que o fato de
-pacotes com alguma relação de dependência estarem presentes concomitantemente
-em grande parte dos sistemas não é uma coincidência, e sim uma consequência da
-dependência. Por outro lado, teriam grande valor as regras de associação
-mineradas a partir da análise dos dados estatísticos relacionando componentes
-que não apresentam relação alguma de dependência. Neste cenário, novos graus de
+Para mineração de conhecimento da base de dados, um ponto importante a
+considerar é que o fato de pacotes com alguma relação de dependência estarem
+presentes concomitantemente em grande parte dos sistemas não é uma
+coincidência, e sim uma consequência direta da dependência. Por outro lado,
+teriam grande valor as associações que relacionassem componentes que por
+definição não apresentam relação alguma. Neste cenário, novos graus de
 relacionamento poderiam ser estabelecidos, baseados não na dependência mas na
-colaboração dos componentes.
+colaboração entre os componentes.
+
+\subsubsection{Considerações acerca da necessidade dos usuários}
+
+Um sistema de recomendação de pacotes tem como principal função sugerir novos
+pacotes a partir de escolhas anteriores do usuário, assumindo que os
+recomendados são os que melhor satisfazem às suas necessidades. Todavia, o
+conceito de \textit{pacote} já é uma abstração, e nem sempre a necessidade de um
+usuário pode ser mapeada diretamente na instalação de pacotes específicos.
+
+A necessidade do usuário diz respeito às funcionalidades que os aplicativos
+oferecem. Visto que aplicativos diferentes podem executar a mesma função,
+(resguardadas as devidas peculiaridades), o mais apropriado seria representar
+a necessidade ou desejo do usuário (analogamente, sua identidade) como um
+conjunto de funcionalidades, ao invés de um conjunto de pacotes específicos.
+
+Algumas funcionalidades de pacotes podem ser extraídas a partir da lista de
+pacotes virtuais\footnote{http://www.debian.org/doc/packaging-manuals/virtual-package-names-list.txt}. Este conceito foi criado especialmente para situações
+em que diversos pacotes diferentes oferecem um conjunto de funcionalidades
+semelhantes. Pacotes virtuais não existem fisicamente no repositório, são
+apenas mencionados no campo \textit{Provides} da definição de outros pacotes
+(``concretos''). Desta forma, quando uma dependência se refere a um pacote
+virtual, ela pode ser satisfeita com a instalação de qualquer pacote que provê
+o mesmo.
+
+No entanto, a lista de pacotes virtuais é controlada e relativamente pequena.
+Acredita-se porém que uma análise detalhada da base do \textit{Debtags} pode
+revelar novas funcionalidades como abstrações de conjuntos de \textit{tags},
+que poderão eventualmente ser utilizadas para refinar o cálculo das
+recomendações.
 
 \subsection{Metodologia}
 
@@ -1767,12 +2224,19 @@ geradas e um resumo de todas as submissões são disponibilizados diariamente.
 No entanto, este trabalho é desenvolvido com o apoio de desenvolvedores
 oficiais Debian, o que possibilitará o acesso aos dados necessários.
 
+No entanto, as bases de dados do \textit{UDD} e do \textit{Debtags} são
+públicas, não havendo impedimento algum para acessá-las. Por fim, perfis de
+usuários podem ser formados com base no preenchimento facultativo de um
+formulário antes da utilização do recomendador.
+
 \subsubsection{Seleção de atributos}
 
 A seleção de atributos geralmente proporciona ganhos na eficiência e qualidade
-das recomendações, na medida em que diminui o ruído e a ordem de grandeza dos
-dados. Existem peculiaridades do domínio de componentes de software que se
-consideradas podem ampliar estes ganhos.
+das recomendações, na medida em que diminui o ruído e o montante de dados a
+ser considerado. Além da aplicação de métodos clássicos de seleção,
+apresentados na seção \ref{sec:selecao_atributos}, existem peculiaridades do
+domínio de componentes de software que podem ampliar tais benefícios se
+consideradas.
 
 Seja qual for o sistema operacional ou distribuição GNU/Linux, existe um
 conjunto de componentes que fazem parte da instalação padrão, selecionados
@@ -1781,8 +2245,8 @@ utilizam um sistema funcional, existem dois casos a considerar: (1) todo o
 conjunto de componentes da instalação padrão está instalado no sistema e (2)
 alguns componentes não estão presentes porque foram propositalmente removidos
 pelo usuário. Em ambos os casos a recomendação de tais pacotes certamente não
-interessaria ao usuário, portanto todos eles podem ser desconsiderados sem
-prejuízo.
+interessaria ao usuário, portanto acredita-se que todos eles possam ser
+desconsiderados sem prejuízo para a recomendação.
 
 Os dados coletados pelo \textit{Popcon} também possuem informações temporais.
 A data de instalação do pacote no sistema é obtida através do atributo
@@ -1794,9 +2258,6 @@ de uso dos mesmo será investigada. Seria interessante, por exemplo, atribuir
 pesos diferentes para pacotes que são usados com muita frequência pelo usuário
 em detrimento de outros que foram acessados pela última vez logo após serem
 instalados.
-
-Na última etapa da seleção de atributos serão utilizados métodos clássicos
-apresentados na seção \ref{sec:selecao_atributos}.
 
 \subsubsection{Estratégias de recomendação}
 
@@ -1822,7 +2283,7 @@ que analisem as escolhas de pacotes de outros usuários para compor a sua lista
 de sugestões, com base na técnica \textit{K-NN}.
 
 \hspace{1cm}O \textit{Popcon} é a fonte de dados disponível atualmente para
-soluções colaborativas de recomendação. Neste caso, listas de pacotes
+soluções colaborativas de recomendação. Neste contexto, listas de pacotes
 representam a identidade do usuário, que receberá recomendações com base
 no que outros usuários com interesses semelhantes aos dele têm instalado
 em seus sistemas e ele não tem.
@@ -1830,28 +2291,52 @@ em seus sistemas e ele não tem.
 \vspace{0.3cm}
   \item \textbf{Híbrida}
 
-A primeira estratégia híbrida a ser implementada será uma recomendação
-colaborativa a partir das \textit{tags} dos pacotes de cada usuário (como
-representação de conteúdo). Outras soluções híbridas podem ser projetadas à
-medida que os recomendadores das estratégias puras forem sendo implementados
-e posteriormente combinados.
-
-\hspace{1cm}Estratégias mistas podem considerar também novos fatores para
+No sentido de refinar as recomendações produzidas através das estratégias
+colaborativa e baseada em conteúdo, algumas implementações híbridas serão
+experimentadas. Além das listas de pacotes provenientes do \textit{Popcon} e
+informações do \textit{Debtags}, outros fatores podem ser considerados para
 composição das sugestões, alguns dos quais são descritos abaixo.
 
-\begin{description}
-  \item[Áreas de interesse:] a composição de um perfil de usuário que indique
-    suas áreas de interesse diminuiria a ocorrência de anomalias como, por
-    exemplo, a indicação de bibliotecas de desenvolvimento de software para um
-    usuário que não é programador;
-  \item[Popularidade:] pacotes que figuram entre os mais populares no
-    \textit{Popcon} devem receber maior pontuação nos cálculos, ainda que este seja
-    apenas um critério de desempate;
-  \item[Bugs:] muitos \textit{bugs} abertos são um indicativo de problemas,
-    principalmente se forem \textit{bugs} graves. Devido ao número reduzido de
-    pacotes em cada recomendação, deve-se dar prioridade à incluir aqueles que
-    recebem atenção constante de seu mantenedor.
-\end{description}
+\begin{itemize}
+  \item \textbf{Áreas de interesse do usuário:} a composição de um perfil de
+    usuário que indique suas áreas de interesse poderia refinar as sugestões e
+    diminuir a ocorrência de anomalias como, por exemplo, a indicação de
+    bibliotecas de desenvolvimento de software para um usuário que não é
+    programador;
+  \item \textbf{Popularidade dos pacotes:} aplicativos que figuram entre os mais
+    populares no \textit{Popcon} poderiam receber maior pontuação nos cálculos
+    de relevância, ainda que como critério de desempate;
+  \item \textbf{Bugs:} muitos relatórios de erro abertos para uma pacote são um
+    indicativo de problema, principalmente se forem \textit{bugs} graves.
+    Devido ao número reduzido de pacotes em cada recomendação, deve-se dar
+    prioridade à incluir aqueles que recebem atenção constante de seu
+    mantenedor.
+\end{itemize}
+
+\hspace{1cm}A consideração de um perfil de usuário caracteriza a estratégia com
+base em dados demográficos, enquanto que popularidade e \textit{bugs} abertos
+podem ser entendidos como uma modelagem de reputação dos itens. Ambas as
+estratégias podem ser utilizadas para refinar os resultados obtidos com os
+recomendadores básicos, caracterizando uma hibridização em \textit{cascata}
+(ver seção \ref{sec:estrategias_hibrida}).
+
+\hspace{1cm}Neste contexto é possível também produzir recomendações de forma
+colaborativa com base em conteúdo, o que caracteriza um sistema híbrido
+\textit{meta-nível}. Ao invés de a identidade dos usuários ser representada
+por uma lista de itens, seria representada pela caracterização destes itens. No caso dos pacotes, a estratégia colaborativa seria realizada a partir das
+\textit{tags} dos pacotes e não das listas de pacotes originais.
+
+\hspace{1cm}Outra possibilidade seria a elaboração de estratégias para
+\textit{revezamento} entre os sistemas básicos, de acordo com o resultado do
+processo de seleção de atributos. O recomendador híbrido neste caso analisaria
+as características dos dados que seriam a entrada do algoritmo de recomendação
+e escolheria a técnica que melhor se adequaria a esta entrada.
+
+\hspace{1cm}Por fim, a hibridização por \textit{combinação} teria implementação
+trivial dado que os recomendadores básicos já existissem, pois consiste
+basicamente na apresentação em conjunto dos resultados de múltiplos
+recomendadores. De certa forma, a combinação vai acontecer na apresentação do
+\textit{survey} para o usuário.
 
 \end{enumerate}
 
@@ -1869,7 +2354,7 @@ para esta escolha.
 \subsection{Avaliação}
 
 Diante da inexistência de dados que possibilitem a análise \textit{offline}
-de acurácia das recomendação, optou-se pela realização de experimentos
+da acurácia de recomendações, optou-se pela realização de experimentos
 diretamente com usuários, por meio de um \textit{survey} eletrônico. Algumas
 ferramentas estão sendo avaliadas para a construção do \textit{survey}, entre
 elas, o \textit{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
@@ -1878,15 +2363,16 @@ A consulta será guiada através dos seguintes passos:
 \begin{enumerate}
   \item O usuário envia uma lista de pacotes, como representação de sua
     identidade. Se desejar, fornece informações adicionais para composição de
-    um perfil baseado em seus interesses pessoais;
+    um perfil baseado em seus interesses pessoais, além de indicar a quantidade
+    de pacotes que deseja receber como sugestão;
   \item O sistema realiza a computação necessária para gerar recomendações
     utilizando diferentes estratégias;
   \item As recomendações são apresentadas ao usuário, juntamente com
     informações detalhadas de cada item e explicação acerca dos procedimentos
     realizados;
   \item O usuário avalia as recomendações apresentadas;
-  \item A análise desta recomendação é realizada com base na aplicação das
-    métricas apresentadas na seção \ref{sec:metricas}.
+  \item A análise desta recomendação é realizada com base na aplicação de
+    algumas métricas apresentadas na seção \ref{sec:metricas}.
 \end{enumerate}
 
 Ao término do período de aplicação do \textit{survey}, os dados de avaliações
@@ -1896,10 +2382,18 @@ e considerações resultantes serão apresentados na versão final deste trabalho.
 \subsection{Plano de execução}
 
 O desenvolvimento deste trabalho está previsto para acontecer entre os meses
-de janeiro e julho de 2011. Considerando o macro objetivo do projeto, metas
-intermediárias foram estabelecidas e apresentadas na tabela \ref{tab:plano}.
+de janeiro e julho de 2011. Foram estabelecidas metas intermediárias para
+cumprimento da proposta, as quais são apresentadas na tabela \ref{tab:plano}.
 
-\begin{table}[h]
+Vale ressaltar que este planejamento considera as datas de realização do
+\textit{Fórum Internacional de Software Livre (FISL)}, como um momento oportuno
+para apresentação do trabalho e divulgação do \textit{survey}, que deve estar
+em fase de aplicação. O evento acontecerá entre os dias 29 de junho e 02 de
+julho de 2011. Sua última edição contou com a participação de mais de $7.500$,
+entre estudantes, profissionais, empresários e gestores
+públicos vindos de 16 países\footnote{\url{http://softwarelivre.org/fisl11/noticias/fisl11-recebeu-mais-de-7.500-pessoas-do-brasil-e-do-exterior}}.
+
+\begin{table}[h!]
   \centering
   \caption{Plano de execução}
   \label{tab:plano}
@@ -1927,7 +2421,8 @@ intermediárias foram estabelecidas e apresentadas na tabela \ref{tab:plano}.
 
 A conclusão do trabalho será pautada pela análise dos resultados obtidos com
 a aplicação do \textit{survey}, seguida por uma proposta de integração de um
-recomendador com a infraestrutura de pacotes do projeto Debian.
+recomendador com a infraestrutura de pacotes do projeto Debian, vislumbrando
+uma solução multi-distribuição.
 
 \bibliographystyle{sbc}
 \bibliography{quali-tassia}
