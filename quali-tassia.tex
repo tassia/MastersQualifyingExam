@@ -21,15 +21,19 @@
 \setlength{\abovecaptionskip}{6pt}   % 0.5cm as an example
 \setlength{\belowcaptionskip}{6pt}   % 0.5cm as an example
 
+% Fonte para identificadores no modo matemático
+\DeclareMathAlphabet{\mathsfsl}{OT1}{cmss}{m}{sl}
+%\def\mathid#1{\ensuremath{\mathcode"2D="72D\mathsfsl{#1}}}
+
 % Definição de identificadores
 \mathchardef\mhyphen="2D
-\newcommand\tfidf{\mathit{tf\mhyphen idf}}
-\newcommand\tf{\mathit{tf}}
-\newcommand\idf{\mathit{idf}}
-\newcommand\df{\mathit{df}}
-\newcommand\rW{\mathit{RW}_{t}}
-\newcommand\rD{\mathit{RD}_{t,D}}
-\newcommand\rQ{\mathit{RQ}_{t,Q}}
+\newcommand\tfidf{\mathsfsl{tf\mhyphen idf}}
+\newcommand\tf{\mathsfsl{tf}}
+\newcommand\idf{\mathsfsl{idf}}
+\newcommand\df{\mathsfsl{df}}
+\newcommand\rW{\mathsfsl{RW}_{t}}
+\newcommand\rD{\mathsfsl{RD}_{t,D}}
+\newcommand\rQ{\mathsfsl{RQ}_{t,Q}}
 
 \sloppy
 %FIXME [Definir titulo]
@@ -37,7 +41,7 @@
 \title{Aplicação de Estratégias de \\
        Recomendação ao Domínio de \\
        Componentes de Software}
-
+%\title{AppRecommender:\\um Recomendador de\\aplicativos GNU/Linux}
 \author{Tássia Camões Araújo \inst{1} }
 
 \address{Instituto de Matemática e Estatística \\
@@ -353,19 +357,19 @@ suporte às estratégias apresentadas na seção \ref{sec:estrategias}.
 \textit{K-nearest neighbors (k-NN)}, em português \textit{k vizinhos mais
 próximos}, é mais um algoritmo de aprendizado supervisionado para
 classificação. Este método baseia-se no conceito de vizinhança, que representa
-um conjunto de objetos que estão próximos no espaço.
+um conjunto de objetos que estão próximos no espaço de busca.
 
 O \textit{K-NN} não exige nenhum treinamento prévio com os dados de exemplo,
 que podem ser diretamente armazenados como vetores de atributos acompanhados
 por suas devidas classes. A classificação de um novo objeto parte do cálculo da
 vizinhança do mesmo, que é composta por $k$ objetos.
 
-A determinação da vizinha está diretamente relacionada com o conceito de
+A determinação da vizinhança está diretamente relacionada com o conceito de
 proximidade entre objetos, que pode ser expressa em termos de similaridade ou
 de distância entre os mesmos (quanto maior a distância, menor a similaridade).
 Existem diversas medidas para mensurar estes conceitos, deve-se adotar a
-métrica que melhor se adequa ao domínio da aplicação e conjunto de dados.
-A tabalea \ref{tab:knn_distancia} apresenta algumas dessas medidas. Os objetos
+métrica que melhor se adeque ao domínio da aplicação e conjunto de dados.
+A tabela \ref{tab:knn_distancia} apresenta algumas dessas medidas. Os objetos
 $X$ e $Y$ são representados por seus vetores $\vec{X} = (x_1,...,x_n)$ e
 $\vec{Y} = (y_1,...,y_n)$.
 
@@ -378,19 +382,23 @@ $\vec{Y} = (y_1,...,y_n)$.
   \begin{tabular}{| l | l |}
     \hline
     Distância euclidiana &
-    \T\B$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    \T\B$\mathsfsl{D}(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
     \hline
     Similaridade de cosseno &
-    $\mathit{sim}(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
+    $\mathsfsl{sim}(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
                        = \frac{\textstyle \sum_{1\leq i \leq n} x_i y_i}
                               {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}
                                \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
     \hline
     Coeficiente de \textit{Pearson} &
-    $p(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
+    $\mathsfsl{P}(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
                                      (y_i-\bar{y})}
                    {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
                     \sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
+    \hline
+    Coeficiente de \textit{Tanimoto} &
+    $\mathsfsl{T}(X,Y) = \frac{\T\textstyle\vec{X} \cdot \vec{Y}}
+                              {\textstyle |\vec{X}|^2 + |\vec{Y}|^2 - \vec{X} \cdot \vec{Y}}$\\
     \hline
   \end{tabular}
 \end{table}
@@ -461,7 +469,7 @@ partir dos dados de treinamento.
 
 \begin{equation}
 \label{eq:map}
-  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
+  \mathsfsl{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
 \end{equation}
 
 A equação \ref{eq:bayes} aplica o Teorema de Bayes para probabilidades
@@ -471,7 +479,7 @@ $\operatorname{arg\ max}$ (equação \ref{eq:bayes_no_deno}).
 
 \begin{eqnarray}
 \label{eq:bayes}
-  c_{\mathit{map}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
+  \mathsfsl{c_{MAP}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
                          \frac{\hat{P}(x|c) \hat{P}(c)}{\cancel{\hat{P}(x)}} \\
                 {} & {} & {} \nonumber \\
 \label{eq:bayes_no_deno}
@@ -497,7 +505,7 @@ enquanto que $\hat{P}(c)$ é a frequência relativa da classe $c$.
 
 \begin{equation}
 \label{eq:bayes_prod}
-  c_{\mathit{map}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
+  \mathsfsl{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
                      \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
 \end{equation}
 
@@ -761,12 +769,12 @@ onde a disposição das palavras é ignorada e apenas a quantidade de ocorrências
 para cada termo é considerada.
 
 Uma medida de relevância baseada simplesmente na incidência dos termos da
-\textit{query} nos documentos (\textit{RI}) poderia ser calculada através da
+\textit{query} nos documentos ($\mathsfsl{RI}$) poderia ser calculada através da
 equação \ref{eq:relevancia_tf}.
 
 \begin{equation}
 \label{eq:relevancia_tf}
-  \mathit{RI}_{d,q} = \sum_{t \in q} \tf_{t,d}
+  \mathsfsl{RI}_{d,q} = \sum_{t \in q} \tf_{t,d}
 \end{equation}
 
 No entanto, alguns termos têm pouco poder de discriminação na determinação
@@ -838,12 +846,12 @@ A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
 
 A medida de relevância apresentada na equação \ref{eq:relevancia_tf} pode ser
 refinada para somar os pesos $\tfidf$ do documento $d$ com relação aos termos
-da \textit{query} $q$, resultando na media $R_{d,q}$ apresentada na equação
+da \textit{query} $q$, resultando na media $\mathsfsl{R}_{d,q}$ apresentada na equação
 \ref{eq:relevancia} \cite{Manning:09}.
 
 \begin{equation}
 \label{eq:relevancia}
-R_{d,q} = \sum_{t \in q} \tfidf_{t,d}
+\mathsfsl{R}_{d,q} = \sum_{t \in q} \tfidf_{t,d}
 \end{equation}
 
 A tabela \ref{tab:tfidf-resultado} apresenta a ordenação dos documentos da
@@ -862,9 +870,9 @@ obtidos a partir da equação \ref{eq:tfidf}, com os pesos das tabelas
   \footnotesize
   \begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c | c |}
     \cline{1-3}\cline{5-8}\cline{10-14}
-    \multirow{2}{*}{\textbf{doc}} & $\boldsymbol{q_1}$ & \multirow{2}{*}{$\boldsymbol{R_{d,q}}$} & &
-    \multirow{2}{*}{\textbf{doc}} & \multicolumn{2}{|c|}{$\boldsymbol{q_2}$} & \multirow{2}{*}{$\boldsymbol{R_{d,q}}$} &&
-    \multirow{2}{*}{\textbf{doc}} & \multicolumn{3}{|c|}{$\boldsymbol{q_3}$} & \multirow{2}{*}{$\boldsymbol{R_{d,q}}$} \\
+    \multirow{2}{*}{\textbf{doc}} & $\boldsymbol{q_1}$ & \multirow{2}{*}{$\boldsymbol{\mathsfsl{R}_{d,q}}$} & &
+    \multirow{2}{*}{\textbf{doc}} & \multicolumn{2}{|c|}{$\boldsymbol{q_2}$} & \multirow{2}{*}{$\boldsymbol{\mathsfsl{R}_{d,q}}$} &&
+    \multirow{2}{*}{\textbf{doc}} & \multicolumn{3}{|c|}{$\boldsymbol{q_3}$} & \multirow{2}{*}{$\boldsymbol{\mathsfsl{R}_{d,q}}$} \\
     \cline{2-2}\cline{6-7}\cline{11-13}
     & \textit{morena} & & & &
       \textit{morena} & \textit{bobagem} & & & &
@@ -918,7 +926,7 @@ para atenuar o crescimento do peso para valores crescentes de frequência
 
 \begin{equation}
   \label{eq:tfsub}
-  \mathit{tf\mhyphen sub}_{t,d} =
+  \mathsfsl{tf\mhyphen sub}_{t,d} =
   \begin{cases}
     1+\log \tf_{t,d} & \text{, se}\ \tf_{t,d}>0 \\
     0                & \text{, caso contrário}
@@ -929,7 +937,9 @@ Outras abordagens alternativas utilizam normalizações por diversas medidas:
 comprimento do documento, comprimento médio dos documentos da coleção, $\tf$
 máximo ou médio entre os $\tf$s de todos os termos do documento, entre outros.
 
-\vspace{0.3cm} \hspace{-1.4cm}
+\newpage
+%\vspace{0.3cm}
+\hspace{-1.4cm}
 \textbf{Modelo de espaço vetorial}
 
 Uma coleção de documentos pode ser representada por um conjunto de vetores,
@@ -978,8 +988,8 @@ representada no modelo de espaço vetorial pela matriz da tabela
   \end{tabular}
 \end{table}
 
-\newpage
-%\vspace{0.3cm}
+%\newpage
+\vspace{0.3cm}
 \hspace{-1.4cm}
 \textbf{Similaridade de cosseno}
 
@@ -997,14 +1007,14 @@ os mesmos.
 
 \begin{equation}
 \label{eq:sim-cos}
-  \mathit{sim}(d_1,d_2) = \cos(\theta)
+  \mathsfsl{sim}(d_1,d_2) = \cos(\theta)
                         = \frac{\vec{V(d_1)} \cdot \vec{V(d_2)}}
                                {|\vec{V(d_1)}| |\vec{V(d_2)}|}
 \end{equation}
 
 Dado um documento $d$, para encontrar os documentos de uma coleção que mais se
 assemelham a este, basta encontrar aqueles com maior similaridade de cosseno
-com $d$. Para tanto, pode-se calcular os valores $\mathit{sim}(d,d_i)$ entre
+com $d$. Para tanto, pode-se calcular os valores $\mathsfsl{sim}(d,d_i)$ entre
 $d$ e os demais $d_i$ documentos da coleção e os maiores valores indicarão os
 documentos mais semelhantes.
 
@@ -1018,7 +1028,7 @@ similares a determinada \textit{query} são os mais relevantes para a mesma
 
 \begin{equation}
 \label{eq:tfidf_r_sim}
-  R_{d,q} = \mathit{sim}(d,q)
+  \mathsfsl{R}_{d,q} = \mathsfsl{sim}(d,q)
 \end{equation}
 
 \begin{table}[h!]
@@ -1127,8 +1137,8 @@ documentos para apresentação ao usuário. Portanto, qualquer transformação
 desta probabilidade pode ser usada, desde que preserve a ordenação pela
 relevância \cite{Jones:00}.
 
-\newpage
-%\vspace{0.3cm}
+%\newpage
+\vspace{0.3cm}
 \hspace{-1.4cm}
 \textbf{Modelo formal}
 
@@ -1151,7 +1161,7 @@ Princípio de Ordenação \cite{Jones:00}. Ademais, dado que o último termo da
 fórmula é igual para todos os documentos, ele pode ser desconsiderado sem que
 isso altere a ordenação dos documentos. Desta forma, a equação \ref{eq:rprim}
 descreve uma pontuação por relevância referenciada como primária
-($\mathit{R\mhyphen PRIM_D}$).
+($\mathsfsl{R\mhyphen PRIM_D}$).
 
 \begin{eqnarray}
   \log \frac{P(L|D)}{P(\overline{L}|D)} & = &
@@ -1159,7 +1169,7 @@ descreve uma pontuação por relevância referenciada como primária
   &=& \log \frac{P(D|L)}{P(D|\overline{L})} + \cancel{\log \frac{P(L)}
                                                            {P(\overline{L})}}
   \label{eq:log-odd} \\
-  \mathit{R\mhyphen PRIM_D} & = & \log \frac{P(D|L)}{P(D|\overline{L})}
+  \mathsfsl{R\mhyphen PRIM_D} & = & \log \frac{P(D|L)}{P(D|\overline{L})}
   \label{eq:rprim}
 \end{eqnarray}
 
@@ -1177,13 +1187,13 @@ atributos pelos seguintes argumentos:
 
 De acordo com a suposição de independência, a probabilidade de um documento
 pode ser trivialmente derivada a partir das probabilidade de seus atributos.
-Logo, $\mathit{R\mhyphen PRIM_D}$ poderia ser estimado como um somatório de
+Logo, $\mathsfsl{R\mhyphen PRIM_D}$ poderia ser estimado como um somatório de
 probabilidades, cada uma relacionada a cada atributo da descrição $D$ (equação
 \ref{eq:rprim-atributos}).
 
 \begin{eqnarray}
 \label{eq:rprim-atributos}
-  \mathit{R\mhyphen PRIM_D} &=& \log \prod_{i} \frac{P(A_i=a_i|L)}
+  \mathsfsl{R\mhyphen PRIM_D} &=& \log \prod_{i} \frac{P(A_i=a_i|L)}
                                           {P(A_1=a_1|\overline{L})} \nonumber \\
                             &=& \sum_{i} \log \frac{P(A_i=a_i|L)}
                                           {P(A_1=a_1|\overline{L})}
@@ -1198,7 +1208,7 @@ documento o componente relativo a cada valor de atributo zerado (fórmula
 \ref{eq:rbasic}).
 
 \begin{eqnarray}
-  \mathit{R\mhyphen BASIC_D} &=& \mathit{R\mhyphen PRIM_D}
+  \mathsfsl{R\mhyphen BASIC_D} &=& \mathsfsl{R\mhyphen PRIM_D}
                                  -\sum_{i} \log \frac{P(A_i=0|L)}
                                  {P(A_1=0|\overline{L})} \nonumber \\
   & = & \sum_{i} \Big (\log\frac{P(A_i=a_i|L)}{P(A_1=a_1|\overline{L})}
@@ -1210,7 +1220,7 @@ documento o componente relativo a cada valor de atributo zerado (fórmula
 \end{eqnarray}
 
 Considerando $W_i$ como um peso para cada termo $t_i$ do documento (equação
-\ref{eq:peso_termo}), $\mathit{R\mhyphen BASIC_D}$ pode ser então reescrito em
+\ref{eq:peso_termo}), $\mathsfsl{R\mhyphen BASIC_D}$ pode ser então reescrito em
 função deste peso, como na equação \ref{eq:rbasic_peso_termo}.
 
 \begin{equation}
@@ -1222,7 +1232,7 @@ função deste peso, como na equação \ref{eq:rbasic_peso_termo}.
 \begin{equation}
 \label{eq:rbasic_peso_termo}
 \hspace{-2.5cm}
-  \mathit{R\mhyphen BASIC_D} = \sum_{i} W_i
+  \mathsfsl{R\mhyphen BASIC_D} = \sum_{i} W_i
 \end{equation}
 
 No caso em que os atributos $A_i$ restringem-se a exprimir a presença ou
@@ -1383,16 +1393,16 @@ o valor de $\tf_{t,D}$ em função do comprimento do documento (equação
 
 \begin{equation}
   \label{eq:RD_nl}
-  \rD =  \frac{\frac{\tf_{t,D}}{\mathit{NL}}(k_1+1)}
-              {k_1+\frac{\tf_{t,D}}{\mathit{NL}}} =
-         \frac{\tf_{t,D}(k_1+1)}{k_1*\mathit{NL}+\tf_{t,D}}
+  \rD =  \frac{\frac{\tf_{t,D}}{\mathsfsl{NL}}(k_1+1)}
+              {k_1+\frac{\tf_{t,D}}{\mathsfsl{NL}}} =
+         \frac{\tf_{t,D}(k_1+1)}{k_1*\mathsfsl{NL}+\tf_{t,D}}
 \end{equation}
 
 Dado que o comprimento dos documentos pode ser medido de diversas formas
 (quantidade de palavras, caracteres e \textit{bytes}, considerando ou não
 \textit{stop words}), considera-se a medida uniformizada para normalização,
 obtida pelao razão entre o comprimento dos documentos e o comprimento médio dos
-documentos ($\frac{l_d}{l_{\mathit{avg}}}$). Ademais, uma normalização simples
+documentos ($\frac{l_d}{l_{\mathsfsl{avg}}}$). Ademais, uma normalização simples
 resultaria na mesma pontuação para um documento de comprimento $l$ no qual o
 termo ocorre $tf$ vezes e para outro de comprimento $2l$ que contém $2tf$
 ocorrências do termo. Este comportamento pode ser indesejável por exemplo
@@ -1408,13 +1418,13 @@ este efeito, e se $b=0$ o comprimento do documento não afeta a pontuação final,
 
 \begin{equation}
   \label{eq:nl}
-  \mathit{NL} = ((1-b)+b\frac{l_d}{l_{\mathit{avg}}})
+  \mathsfsl{NL} = ((1-b)+b\frac{l_d}{l_{\mathsfsl{avg}}})
 \end{equation}
 
 \begin{equation}
 \label{eq:RD_l}
   \rD = \frac{\tf_{t,D}(k_1+1)}
-                         {k_1((1-b)+b\frac{l_d}{l_{\mathit{avg}}})+\tf_{t,D}}
+                         {k_1((1-b)+b\frac{l_d}{l_{\mathsfsl{avg}}})+\tf_{t,D}}
 \end{equation}
 
 \vspace{0.3cm} \hspace{-1.4cm}
@@ -1433,10 +1443,12 @@ desconsiderado.
 
 \begin{equation}
 \label{eq:RQ}
-  \rQ = \frac{(k_3+1)\mathit{qtf}_{t,Q}}{k_3+\mathit{qtf}_{t,Q}}
+  \rQ = \frac{(k_3+1)\mathsfsl{qtf}_{t,Q}}{k_3+\mathsfsl{qtf}_{t,Q}}
 \end{equation}
 
-\vspace{0.3cm} \hspace{-1.4cm}
+\newpage
+%\vspace{0.3cm}
+\hspace{-1.4cm}
 \textbf{Estimativa de relevância}
 
 Finalmente, a relevância de um documento $D$ para uma consulta $Q$ pode ser
@@ -1446,7 +1458,7 @@ anteriormente, como indica a equação \ref{eq:bm25}.
 
 \begin{equation}
 \label{eq:bm25}
-R_{D,Q} = \sum_{t \in Q} \rW \cdot \rD \cdot \rQ
+\mathsfsl{R}_{D,Q} = \sum_{t \in Q} \rW \cdot \rD \cdot \rQ
 \end{equation}
 
 % ver http://en.wikipedia.org/wiki/Neighbourhood_components_analysis
@@ -1564,7 +1576,8 @@ binárias são algumas dessas estruturas \cite{Kotsiantis:06}.
 da fonte de dados de onde é extraído o conhecimento para produzir as
 recomendações. \cite{Cazella:10} propõe uma classificação um pouco mais
 abrangente, considerando por exemplo a recomendação por reputação dos itens,
-que por não oferecer grandes desafios computacionais geralmente é omitida.
+que por não oferecer grandes desafios computacionais é omitida por algumas
+taxonomias.
 
 \subsubsection{Reputação dos itens}
 
@@ -1852,6 +1865,7 @@ sistema de recomendação.
 \end{tabularx}
 \end{sidewaystable}
 
+\newpage
 \section{Distribuições GNU/Linux} \label{sec:distribuicoes}
 
 Em 1983 Richard Stallman criou o projeto GNU\footnote{\url{hhtp://www.gnu.org}}
@@ -1926,11 +1940,11 @@ assim, a seleção dos programas é de responsabilidade do usuário do sistema.
 
 \subsection{Escolha da plataforma}
 
-A distribuição escolhida como plataforma para o desenvolvimento deste trabalho
-foi o Debian GNU/Linux. Todavia, os resultados poderão facilmente ser adaptados
-para outros contextos, desde que as informações necessárias para o cálculo de
-recomendações estejam disponíveis. As seguir estão descritos os critérios que
-pautaram esta escolha.
+A distribuição escolhida como base para o desenvolvimento deste trabalho
+foi o Debian GNU/Linux. No entanto, a codificação será realizada com o maior
+grau possível de independência de plataforma, com o intuito de que os
+resultados sejam facilmente adaptáveis para outros contextos. As seguir estão
+descritos os critérios que pautaram esta escolha.
 
 \begin{enumerate}
 
@@ -2072,6 +2086,15 @@ de usuários e desenvolvedores.
     \hline
   \end{tabularx}
 \end{sidewaystable}
+
+Duas iniciativas de desenvolvimento de recomendadores de pacotes Debian foram
+identificadas, porém nenhuma delas teve continuidade. A primeira foi o
+\textit{PopSuggest}\footnote{http://www.enricozini.org/2007/debtags/popcon-play/},
+que oferecia recomendações a partir de dados do \textit{Popcon} como uma
+ilustração das possibilidades de uso dos dados coletados. A outra foi o
+\textit{Debommender}\footnote{http://ostatic.com/debommender}, também um
+desenvolvido como prova de conceito no âmbito de um trabalho de graduação,
+que não foi integrado aos serviços da distribuição.
 
 %FIXME [Descrever o software-center e outras solucoes]
 % http://distributions.freedesktop.org/wiki/Meetings/AppInstaller2011
@@ -2347,17 +2370,28 @@ programação \textit{Python}\footnote{\url{http://www.python.org/}},
 principalmente pela facilidade de integração com outras ferramentas do Debian
 também desenvolvidas nesta linguagem. Ademais, a vasta documentação e grande
 variedade de bibliotecas de utilidade para o trabalho, a exemplo da
-\textit{NLTK}\footnote{\url{http://www.nltk.org/}}
+\textit{Nke
+LTK}\footnote{\url{http://www.nltk.org/}}
 e \textit{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que contribuiram
 para esta escolha.
 
 \subsection{Avaliação}
 
-Diante da inexistência de dados que possibilitem a análise \textit{offline}
-da acurácia de recomendações, optou-se pela realização de experimentos
-diretamente com usuários, por meio de um \textit{survey} eletrônico. Algumas
-ferramentas estão sendo avaliadas para a construção do \textit{survey}, entre
-elas, o \textit{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
+Uma avaliação preliminar das diferentes estratégias de recomendação, diferentes
+abordagens de seleção de atributos, bem como o ajuste de parâmetros dos
+algoritmos será realizada através de rodadas de validação cruzada. Dado que o
+conjunto de pacotes instalados em um sistema é sabidamente relevante para o
+mesmo, pode-se selecionar aleatoriamente um conjunto de pacotes de teste e
+utilizar o conjunto restante para treinamento dos algoritmos. As métricas de
+avaliação são então aplicadas a partir dos resultados obtidos para uma série de
+testes.
+
+Finalmente, optou-se pela realização de experimentos diretamente com usuários
+por meio de um \textit{survey} eletrônico, diante da inexistência de dados que
+possibilitassem a análise \textit{offline} da acurácia de recomendações
+(avaliação real). Algumas ferramentas estão sendo avaliadas para a construção
+do \textit{survey}, entre elas, o
+\textit{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
 
 A consulta será guiada através dos seguintes passos:
 \begin{enumerate}
