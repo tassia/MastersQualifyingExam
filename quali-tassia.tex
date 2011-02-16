@@ -369,9 +369,14 @@ proximidade entre objetos, que pode ser expressa em termos de similaridade ou
 de distância entre os mesmos (quanto maior a distância, menor a similaridade).
 Existem diversas medidas para mensurar estes conceitos, deve-se adotar a
 métrica que melhor se adeque ao domínio da aplicação e conjunto de dados.
-A tabela \ref{tab:knn_distancia} apresenta algumas dessas medidas. Os objetos
-$X$ e $Y$ são representados por seus vetores $\vec{X} = (x_1,...,x_n)$ e
-$\vec{Y} = (y_1,...,y_n)$.
+A tabela \ref{tab:knn_distancia} apresenta algumas dessas medidas, onde os
+objetos $X$ e $Y$ são representados por seus vetores $\vec{X} = (x_1,...,x_n)$
+e $\vec{Y} = (y_1,...,y_n)$. A similaridade de cosseno mede a similaridade de
+dois vetores através do cosseno do ângulo entre os mesmos. O coeficiente de
+\textit{Pearson} é equivalente ao cosseno do ângulo entre os vetores
+centralizados na média. E o coeficiente de \textit{Tanimoto} é uma extensão da
+similaridade de cossenos que resulta no índice de \textit{Jaccard} para
+atributos binários.
 
 \begin{table}[h!]
   \caption{K-NN: Medidas de distância e similaridade entre objetos}
@@ -408,7 +413,9 @@ Após a definição de vizinhança, a classe mais frequente entre seus $k$ vizinhos
 entendida como grau de influência entre os objetos. Os objetos mais semelhantes
 a um novo objeto terão maior influência no cálculo de sua classificação.
 
-\vspace{0.3cm} \hspace{-1.4cm}
+\newpage
+%\vspace{0.3cm}
+\hspace{-1.4cm}
 \textbf{Seleção de atributos} \label{sec:selecao_atributos}
 
 Uma grande quantidade de atributos a ser considerada resulta em alta
@@ -1358,7 +1365,7 @@ documentos relacionados ao conceito do termo e para o conjunto dos que não são
 -- esta é a razão para a mistura de duas distribuições \cite{Jones:00}.
 
 A derivação deste componente do peso é mais extensa e por esta razão foi
-omitida nete texto. A fórmula resultante é complexa, no entanto
+omitida neste texto. A fórmula resultante é complexa, no entanto
 \cite{Robertson:94} examina o comportamento da mesma e propõe uma aproximação
 que apresenta comportamento similar à original, expressa pela equação
 \ref{eq:RD}.
@@ -1401,7 +1408,7 @@ o valor de $\tf_{t,D}$ em função do comprimento do documento (equação
 Dado que o comprimento dos documentos pode ser medido de diversas formas
 (quantidade de palavras, caracteres e \textit{bytes}, considerando ou não
 \textit{stop words}), considera-se a medida uniformizada para normalização,
-obtida pelao razão entre o comprimento dos documentos e o comprimento médio dos
+obtida pela razão entre o comprimento dos documentos e o comprimento médio dos
 documentos ($\frac{l_d}{l_{\mathsfsl{avg}}}$). Ademais, uma normalização simples
 resultaria na mesma pontuação para um documento de comprimento $l$ no qual o
 termo ocorre $tf$ vezes e para outro de comprimento $2l$ que contém $2tf$
@@ -1511,13 +1518,13 @@ a partir do cálculo de suporte para cada um. No entanto, esta é uma estratégia
 extremamente custosa visto que o conjunto das partes de um conjunto com $n$
 elementos contém $2^n$ subconjuntos, inviabilizando o cálculo para domínios de
 aplicação com um universo de itens grande \cite{Hegland:03}. A figura
-\ref{fig:diagrama_hasse} ilustra através de um diagrama de Hasse o conjunto das
-partes do universo de itens $U=\{a,b,c\}$.
+\ref{fig:diagrama_hasse} ilustra através de um diagrama de \emph{Hasse} o
+conjunto das partes do universo de itens $U=\{a,b,c\}$.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=.4\textwidth]{fig/diagrama_hasse.pdf}
-\caption{Conjunto das partes ilustrado por um diagrama de Hasse}
+\caption{Conjunto das partes ilustrado por um diagrama de \emph{Hasse}}
 \label{fig:diagrama_hasse}
 \end{figure}
 
@@ -1528,9 +1535,9 @@ consegue detectar todos os conjuntos frequentes sem a necessidade de calcular o
 suporte para todos os $2^n$ subconjuntos possíveis.
 
 A descoberta de conjuntos frequentes acontece por níveis, como uma busca em
-largura no diagrama de Hasse começando pelos conjuntos unitários. Ao invés de
-gerar os conjuntos candidatos a partir da base de dados, a cada nível da busca
-é feita uma combinação dos elementos para gerar os candidatos do nível
+largura no diagrama de \emph{Hasse} começando pelos conjuntos unitários. Ao
+invés de gerar os conjuntos candidatos a partir da base de dados, a cada nível
+da busca é feita uma combinação dos elementos para gerar os candidatos do nível
 seguinte. Neste ponto a solução se beneficia do seguinte princípio: qualquer
 subconjunto de um conjunto frequente também é um conjunto frequente. Portanto,
 só devem participar da nova combinação os elementos que apresentarem um suporte
@@ -1572,6 +1579,7 @@ binárias são algumas dessas estruturas \cite{Kotsiantis:06}.
 
 \subsection{Estratégias de recomendação} \label{sec:estrategias}
 
+Neste trabalho considera-se uma classificação mista dos seguintes autores.
 \cite{Burke:02} distingue as diferentes estratégias de recomendação a partir
 da fonte de dados de onde é extraído o conhecimento para produzir as
 recomendações. \cite{Cazella:10} propõe uma classificação um pouco mais
@@ -1655,7 +1663,7 @@ frequência na vizinhança compõem a recomendação.
 O problema da superespecialização é superado, visto que a recomendação neste
 caso não se baseia no histórico do próprio usuário, portanto pode apresentar
 itens totalmente inesperados. Outra contribuição é a possibilidade de formação
-de comunidades de usuários pela identificação de seus interesses semelhantes
+de comunidades de usuários pela identificação de interesses semelhantes
 \cite{Cazella:10}.
 
 \subsubsection{Baseada em conhecimento}
@@ -2039,7 +2047,7 @@ iniciativas pioneiras no campo de gerenciamento de aplicações \cite{Zini:11}.
 Diante da complexa e crescente estrutura do projeto, observa-se um esforço por
 parte dos desenvolvedores, principalmente da equipe responsável pelo controle
 de qualidade\footnote{\url{http://qa.debian.org}}, de reunir, organizar e
-diponibilizar as informações ou meta-dados concernentes a esta estrutura
+disponibilizar as informações ou meta-dados concernentes a esta estrutura
 \cite{Nussbaum:10}.
 
 A tabela \ref{tab:recDebian} relaciona algumas destas iniciativas que estão
@@ -2087,14 +2095,14 @@ de usuários e desenvolvedores.
   \end{tabularx}
 \end{sidewaystable}
 
-Duas iniciativas de desenvolvimento de recomendadores de pacotes Debian foram
-identificadas, porém nenhuma delas teve continuidade. A primeira foi o
+Dois esforços anteriores de desenvolvimento de recomendadores de pacotes Debian
+foram identificados, porém ambos descontinuados. A primeira foi o
 \textit{PopSuggest}\footnote{http://www.enricozini.org/2007/debtags/popcon-play/},
 que oferecia recomendações a partir de dados do \textit{Popcon} como uma
 ilustração das possibilidades de uso dos dados coletados. A outra foi o
-\textit{Debommender}\footnote{http://ostatic.com/debommender}, também um
-desenvolvido como prova de conceito no âmbito de um trabalho de graduação,
-que não foi integrado aos serviços da distribuição.
+\textit{Debommender}\footnote{http://ostatic.com/debommender}, desenvolvido
+como prova de conceito no âmbito de um trabalho de graduação, não sendo porém
+integrado aos serviços da distribuição.
 
 %FIXME [Descrever o software-center e outras solucoes]
 % http://distributions.freedesktop.org/wiki/Meetings/AppInstaller2011
@@ -2161,8 +2169,8 @@ sobre os pacotes (atributos). A utilização de dados demográficos também está
 sendo considerada. Por exemplo, a declaração explícita por parte do usuário de
 que não tem interesse por determinado nicho de aplicativos eliminaria de
 antemão uma série de pacotes que a princípio seriam considerados. De certa
-forma, o uso de perfis pode ser entendido como uma seleção de atributos
-específica para cada usuário.
+forma, o uso de perfis pode possibilitar a realização de uma seleção de
+atributos específica para cada usuário.
 
 \subsubsection{Considerações acerca da dependência entre pacotes}
 %FIXME [Investigar a utilidade do Debtags pra selecao de atributos]
@@ -2188,14 +2196,14 @@ entanto, um recomendação que contenha por exemplo os pacotes $a$ e $b$, dado
 que $a$ depende de $b$, se $a$ obtiver uma alta estimativa de relevância em
 virtude de seus atributos (por estratégias baseadas em conteúdo), esta
 recomendação não deve ser descartada. No caso de pacotes ``guarda-chuva'',
-que possuem muitos dependências, é comum que o usuário se interesse apenas
+que possuem muitas dependências, é comum que o usuário se interesse apenas
 por uma de suas dependências.
 
-Para mineração de conhecimento da base de dados, um ponto importante a
-considerar é que o fato de pacotes com alguma relação de dependência estarem
-presentes concomitantemente em grande parte dos sistemas não é uma
-coincidência, e sim uma consequência direta da dependência. Por outro lado,
-teriam grande valor as associações que relacionassem componentes que por
+No que diz respeito à mineração de conhecimento a partir de uma base de dados,
+um ponto importante a considerar é que o fato de pacotes com alguma relação de
+dependência estarem presentes concomitantemente em grande parte dos sistemas
+não é uma coincidência, e sim uma consequência direta da dependência. Por outro
+lado, teriam grande valor as associações que relacionassem componentes que por
 definição não apresentam relação alguma. Neste cenário, novos graus de
 relacionamento poderiam ser estabelecidos, baseados não na dependência mas na
 colaboração entre os componentes.
@@ -2370,10 +2378,9 @@ programação \textit{Python}\footnote{\url{http://www.python.org/}},
 principalmente pela facilidade de integração com outras ferramentas do Debian
 também desenvolvidas nesta linguagem. Ademais, a vasta documentação e grande
 variedade de bibliotecas de utilidade para o trabalho, a exemplo da
-\textit{Nke
-LTK}\footnote{\url{http://www.nltk.org/}}
-e \textit{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que contribuiram
-para esta escolha.
+\textit{NLTK}\footnote{\url{http://www.nltk.org/}}
+e \textit{Xapian}\footnote{\url{http://xapian.org/}}, são fatores que
+contribuíram para esta escolha.
 
 \subsection{Avaliação}
 
@@ -2386,11 +2393,12 @@ utilizar o conjunto restante para treinamento dos algoritmos. As métricas de
 avaliação são então aplicadas a partir dos resultados obtidos para uma série de
 testes.
 
-Finalmente, optou-se pela realização de experimentos diretamente com usuários
-por meio de um \textit{survey} eletrônico, diante da inexistência de dados que
+As soluções que apresentarem melhores resultados nos testes preliminares serão
+avaliados por meio de uma consulta pública. Diante da inexistência de dados que
 possibilitassem a análise \textit{offline} da acurácia de recomendações
-(avaliação real). Algumas ferramentas estão sendo avaliadas para a construção
-do \textit{survey}, entre elas, o
+(avaliação real), optou-se pela realização de experimentos diretamente com
+usuários por meio de um \textit{survey} eletrônico. Algumas ferramentas estão
+sendo avaliadas para a construção do \textit{survey}, entre elas, o
 \textit{LimeSurvey}\footnote{\url{http://www.limesurvey.org/}}.
 
 A consulta será guiada através dos seguintes passos:
