@@ -1,0 +1,295 @@
+\documentclass{quali}
+
+\title[Recomendação de Componentes]
+{Aplicação de Estratégias de Recomendação
+ ao Domínio de Componentes de Software}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Roteiro}
+  \tableofcontents
+\end{frame}
+
+\section{Introdução}
+\begin{frame}{Introdução}
+  \begin{itemize}[<+->]
+    \item Panorama atual: consumidores produtores
+    \item Desenvolvimento software livre
+    \item Importância de recomendações (``mais é menos'')
+    \item Sistemas recomendadores
+  \end{itemize}
+\end{frame}
+
+\section{Sistemas de Recomendação}
+\begin{frame}{Sistemas de Recomendação}
+  \begin{itemize}
+    \item Ações
+    \pause
+    \item Desafios
+    \pause
+    \item Técnicas
+    \item Estratégias
+    \item Avaliação
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Técnicas {\small \href{quali-tecnicas.pdf}{\ \ \color{Blue}{[+]}}}}
+  \begin{itemize}[<+->]
+    \item K-NN
+    \item Bayes ingênuo
+    \item Tf-idf
+    \item BM25
+    \item Apriori
+  \end{itemize}
+  \vspace{-1cm}\hspace{5cm}
+    \begin{picture}(0.1,0.1)
+      \includegraphics<1>[width=3cm]{fig/knn.pdf}
+    \end{picture}
+      \invisible<1,3-5>{\mbox{\footnotesize $\mathsfsl{c_{MAP}} =
+                        \underset{c \in C}{\operatorname{arg\ max}} \ \
+                        \hat{P}(c) \displaystyle \prod_{1 \le i \le n}
+                        \hat{P}(x_i|c)$}}
+      \invisible<1-2,4-5>{\hspace{-5cm}\mbox{\footnotesize
+                          $\mathsfsl{tf\mhyphen idf}_{t,d}= \mathsfsl{tf}_{t,d}
+                          \cdot \log \frac{N}{\mathsfsl{df}_{t}}$}}
+      \invisible<1-3,5>{\mbox{\scriptsize
+                         $\mathsfsl{R}_{d,q} = \displaystyle \sum_{t \in q}
+                          \log \frac{(r+0.5)(N-n-R+r+0.5)}
+                                    {(R-r+0.5)(n-r+0.5)} \cdot
+                          \frac{\mathsfsl{tf}_{t,D}(k_1+1)}
+                               {k_1((1-b)+b\frac{l_d}
+                                                {l_{\mathsfsl{avg}}})
+                                         +\mathsfsl{tf}_{t,D}} \cdot
+                          \frac{(k_3+1)\mathsfsl{qtf}_{t,Q}}
+                               {k_3+\mathsfsl{qtf}_{t,Q}}$}}
+  \vspace{-1cm}\hspace{-8cm}
+    \begin{picture}(0.1,0.1)
+      \includegraphics<5>[width=8cm]{../fig/diagrama_apriori.pdf}
+    \end{picture}
+\end{frame}
+
+\begin{frame}{Estratégias de Recomendação}
+  \begin{itemize}[<+->]
+    \item Reputação dos itens
+    \item Baseada em conteúdo
+    \item Colaborativa
+    \item Baseada em conhecimento
+    \item Baseada em dados demográficos
+    \item Híbrida \\
+      \invisible<1-5>{
+        \begin{itemize}
+          \item ponderação, revezamento, combinação, combinação de atributos,
+          \\ cascata, acréscimo de atributos e meta-nível
+        \end{itemize}}
+  \end{itemize}
+  \vspace{1.0cm}\hspace{2.3cm}
+    \begin{picture}(0.1,0.1)
+      \includegraphics<1>[width=9.5cm]{../fig/imdb.pdf}
+      \includegraphics<2>[width=7cm]{../fig/rec_conteudo.pdf}
+      \includegraphics<3>[width=7cm]{../fig/rec_colaborativa.pdf}
+      \includegraphics<4>[width=9cm]{../fig/amazon.pdf}
+    \end{picture}
+\end{frame}
+
+\begin{frame}{Avaliação de Recomendadores {\small \href{quali-avaliacao.pdf}{\ \ \color{Blue}{[+]}}}}
+  \begin{itemize}[<+->]
+    \item Seleção dos dados
+    \begin{itemize}
+      \item Análise \textit{offline}
+            \textit{vs} experimentos \textit{``ao vivo''}
+      \item Dados reais \textit{vs} sintéticos
+    \end{itemize}
+    \item Métricas
+    \begin{itemize}
+      \item Acurácia de classificação
+      \item Acurácia de predição
+      \item Cobertura, curva de aprendizado, novidade,
+            surpresa
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Distribuições GNU/Linux}
+\begin{frame}{Distribuições GNU/Linux}
+  \begin{itemize}[<+->]
+    \item Aplicativos GNU + kernel Linux
+    \item Seleção e configuração de softwares
+    \item Escolha do Debian GNU/Linux como plataforma
+    \begin{itemize}
+      \item Esquema consistente de distribuição de aplicativos: APT
+      \item Disponibilidade de dados estatísticos: Popcon
+      \item Possibilidade de integração dos resultados
+      \item Popularidade
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Recomendação nas distribuições}
+\begin{frame}{Recomendação nas Distribuições
+              {\small \href{quali-recdistro.pdf}{\ \ \color{Blue}{[+]}}}}
+  \begin{itemize}[<+->]
+    \item \textit{Cross-distribution Meeting on Application Installer}
+    \item Destaque para \textit{Debtags} e \textit{Apt-xapian-index}
+    \item Fontes de informação no Debian \\
+    \begin{itemize}
+      \item {\footnotesize BTS, Popcon, PTS, UDD, Debtags}
+    \end{itemize}
+    \item Iniciativas descontinuadas \\
+    \begin{itemize}
+      \item {\footnotesize \textit{PopSuggest} e \textit{Debommender}}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Desenvolvimento do Trabalho}
+\begin{frame}{Desenvolvimentos do Trabalho}
+  \begin{itemize}[<+->]
+    \item Caracterização do problema
+    \item Metodologia
+    \item Plano de execução
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Caracterização do Problema}
+  \begin{itemize}[<+->]
+    \item Modelagem de usuários e itens
+    \item Ação do recomendador: encontrar itens relevantes 
+    \item Pontuação binária \textit{vs} multi-valorada
+    \begin{itemize}
+      \item \textit{Open Collaboration Services}
+            {\small \href{quali-ocs.pdf}{\ \ \color{Blue}{[+]}}}
+    \end{itemize}
+    \item Considerações sobre dependências
+    \item Necessidades modeladas como funcionalidades
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Metodologia}
+  \begin{itemize}
+    \item Coleta de dados
+    \begin{itemize}
+      \item \textit{Popcon}, \textit{UDD} e \textit{Debtags}
+    \end{itemize}
+    \pause
+    \item Seleção de atributos
+    \begin{itemize}
+      \item Dependência entre pacotes
+      \item Dados temporais
+    \end{itemize}
+    \pause
+    \item Estratégias de recomendação
+    \item Codificação
+    \item Avaliação
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Metodologia}
+  \framesubtitle{Estratégias de recomendação}
+  \begin{itemize}[<+->]
+    \item Baseada em conteúdo
+    \begin{itemize}
+      \item Técnicas: \textit{BM25} e \textit{Bayes} ingênuo
+      \item Dados: \textit{tags} e descrições dos pacotes
+    \end{itemize}
+    \item Colaborativa
+    \begin{itemize}
+      \item Técnica: \textit{K-NN}
+      \item Dados: listas de pacotes instalados
+    \end{itemize}
+    \item Híbrida
+    \begin{itemize}
+      \item Cascata: refinamento de resultados a partir de \\
+            \hspace{1.5cm} dados demográficos e reputação dos itens
+      \item Meta-nível: colaboração por conteúdo
+      \item Revezamento: decisão a partir da seleção de atributos
+      \item Combinação dos resultados
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Metodologia}
+  \framesubtitle{Codificação}
+  \begin{itemize}[<+->]
+    \item Linguagem \textit{Python}
+    \item Bibliotecas: \textit{Xapian} e \textit{NLTK}
+    \item Documentação: \textit{Doxygen}
+    \item Controle de versão: \textit{Git}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Metodologia}
+  \framesubtitle{Avaliação}
+  \begin{itemize}[<+->]
+    \item Testes preliminares: validação cruzada
+    \item Seleção de estratégias e ajustes das soluções
+    \item Consulta pública: \textit{survey} eletrônico
+    \begin{enumerate}
+      \item Composição da identidade do usuário
+      \item Produção das recomendações por diversas estratégias
+      \item Apresentação dos resultados
+      \item Avaliação pelo usuário
+      \item Aplicação de métricas
+    \end{enumerate}
+    \item Compilação dos resultados globais
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Plano de Execução}
+\begin{table}
+  \centering
+  \footnotesize
+  \newcommand\T{\rule{0pt}{2.6ex}}
+  \newcommand\B{\rule[-1.5ex]{0pt}{0pt}}
+  \begin{tabularx}{11cm}{| X | c | c | c | c | c | c | c |}
+    \hline
+    \T\B \textbf{\textit{Atividade}} & \textbf{\textit{Jan}} &
+         \textbf{\textit{Fev}} & \textbf{\textit{Mar}} & \textbf{\textit{Abr}}&
+         \textbf{\textit{Mai}} & \textbf{\textit{Jun}} & \textbf{\textit{Jul}}\\
+    \hline \T
+    Preparação e realização da qualificação & \multirow{2}{*}{X} &
+      \multirow{2}{*}{X} & & & & & \\
+    \hline \T
+    Implementação de diferentes estratégias e técnicas & \multirow{3}{*}{X} &
+      \multirow{3}{*}{X} & \multirow{3}{*}{X} & \multirow{3}{*}{X} & & & \\
+    \hline \T
+    Testes e ajustes na implementação & & & & \multirow{2}{*}{X} &
+      \multirow{2}{*}{X} & & \\
+    \hline \T
+    Preparação e aplicação do \textit{survey} & & & & & \multirow{2}{*}{X} &
+      \multirow{2}{*}{X} & \\
+    \hline \T\B
+    Escrita da dissertação & & & & & X & X & X \\
+    \hline
+  \end{tabularx}
+\end{table}
+\end{frame}
+
+\section{Conclusão}
+\begin{frame}{Conclusão}
+  \begin{itemize}[<+->]
+    \item Acompanhamento das discussões no \textit{FreeDesktop}
+    \item Desenvolvimento nos padrões \textit{OCS}
+    \item Conclusão pautada pelos resultados do \textit{survey}
+    \item Meta++: integração de um recomendador na estrutura do
+      \textit{software-center}
+  \end{itemize}
+\end{frame}
+
+\section*{Referências}
+\begin{frame}{Referências}
+  \begin{itemize}
+    \small
+    \item Araújo, T. C. \emph{Aplicação de Estratégias de Recomendação ao
+          Domínio de Componentes de Software}. 2011. Disponível em
+          \url{https://github.com/tassia/QualificacaoMestrado}
+    \item Araújo, T. C. \emph{AppRecommender: Application Recommender for
+          GNU/Linux Systems}. 2011. Disponível em
+          \url{https://github.com/tassia/AppRecommender}
+  \end{itemize}
+\end{frame}
+
+\end{document}
