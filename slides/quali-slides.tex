@@ -17,11 +17,15 @@
 \section{Introdução}
 \begin{frame}{Introdução}
   \begin{itemize}[<+->]
-    \item Panorama atual: consumidores produtores
-    \item Desenvolvimento software livre
-    \item Importância de recomendações (``mais é menos'')
-    \item Sistemas recomendadores
+    \item Pluralidade de opções
+    \item Infinidade de interesses
+    \item Consumidores produtores: Wikipedia, Flickr, youtube, FOSS
+    \item Sobrecarga gera insatisfação (``mais é menos'')
+    \item Recomendações auxiliam a escolha
+    \item Sistemas recomendadores \\
+    \item \invisible<1-6>{Recomendação de componentes de software}
   \end{itemize}
+
 \end{frame}
 
 \section{Sistemas de Recomendação}
@@ -82,11 +86,11 @@
     \item Híbrida \\
       \invisible<1-5>{
         \begin{itemize}
-          \item ponderação, revezamento, combinação, combinação de atributos,
-          \\ cascata, acréscimo de atributos e meta-nível
+          \item ponderação, revezamento, combinação, cascata,
+          \\ combinação ou acréscimo de atributos e meta-nível
         \end{itemize}}
   \end{itemize}
-  \vspace{1.0cm}\hspace{2.3cm}
+  \vspace{1cm}\hspace{2.3cm}
     \begin{picture}(0.1,0.1)
       \includegraphics<1>[width=9.5cm]{../fig/imdb.pdf}
       \includegraphics<2>[width=7cm]{../fig/rec_conteudo.pdf}
@@ -95,8 +99,9 @@
     \end{picture}
 \end{frame}
 
-\begin{frame}{Avaliação de Recomendadores {\small \href{quali-avaliacao.pdf}{\ \ \color{Blue}{[+]}}}}
+\begin{frame}{Avaliação de Recomendadores {\small \href{quali-metricas.pdf}{\ \ \color{Blue}{[+]}}}}
   \begin{itemize}[<+->]
+    \item Ações como guia de metodologia
     \item Seleção dos dados
     \begin{itemize}
       \item Análise \textit{offline}
@@ -109,6 +114,7 @@
       \item Acurácia de predição
       \item Cobertura, curva de aprendizado, novidade,
             surpresa
+      \item Performance
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -117,7 +123,8 @@
 \begin{frame}{Distribuições GNU/Linux}
   \begin{itemize}[<+->]
     \item Aplicativos GNU + kernel Linux
-    \item Seleção e configuração de softwares
+    \item Encapsulamento de componentes em pacotes
+    \item Seleção e configuração de aplicativos
     \item Escolha do Debian GNU/Linux como plataforma
     \begin{itemize}
       \item Esquema consistente de distribuição de aplicativos: APT
@@ -130,13 +137,20 @@
 
 \section{Recomendação nas distribuições}
 \begin{frame}{Recomendação nas Distribuições
-              {\small \href{quali-recdistro.pdf}{\ \ \color{Blue}{[+]}}}}
+              {\small\ \ \color{Blue}{[+]}}} % browser com links abertos
   \begin{itemize}[<+->]
-    \item \textit{Cross-distribution Meeting on Application Installer}
-    \item Destaque para \textit{Debtags} e \textit{Apt-xapian-index}
+    \item AppInstaller
+    \begin{itemize}
+      \item \textit{Cross-distro Meeting on Application Installer (2011)}
+      \item Padrões de instalação e gerenciamento de meta-dados
+      \begin{itemize}
+        \item \textit{Open Collaboration Services}
+      \end{itemize}
+      \item Destaque para \textit{Debtags} e \textit{Apt-xapian-index}
+    \end{itemize}
     \item Fontes de informação no Debian \\
     \begin{itemize}
-      \item {\footnotesize BTS, Popcon, PTS, UDD, Debtags}
+      \item {\footnotesize BTS, Popcon, PTS, UDD, Debtags, axi}
     \end{itemize}
     \item Iniciativas descontinuadas \\
     \begin{itemize}
@@ -146,8 +160,8 @@
 \end{frame}
 
 \section{Desenvolvimento do Trabalho}
-\begin{frame}{Desenvolvimentos do Trabalho}
-  \begin{itemize}[<+->]
+\begin{frame}{Desenvolvimento do Trabalho}
+  \begin{itemize}
     \item Caracterização do problema
     \item Metodologia
     \item Plano de execução
@@ -156,15 +170,20 @@
 
 \begin{frame}{Caracterização do Problema}
   \begin{itemize}[<+->]
-    \item Modelagem de usuários e itens
-    \item Ação do recomendador: encontrar itens relevantes 
+    \item Modelagem de clientes e itens
+    \item Ação do recomendador: encontrar itens relevantes
     \item Pontuação binária \textit{vs} multi-valorada
+    \item Sobre dependências:
     \begin{itemize}
-      \item \textit{Open Collaboration Services}
-            {\small \href{quali-ocs.pdf}{\ \ \color{Blue}{[+]}}}
+        \item Na mesma recomendação
+        \item Em associações
     \end{itemize}
-    \item Considerações sobre dependências
-    \item Necessidades modeladas como funcionalidades
+    \item Sobre necessidade dos usuários:
+    \begin{itemize}
+        \item Modelagem como funcionalidades
+        \item Pacotes virtuais e tags
+    \end{itemize}
+
   \end{itemize}
 \end{frame}
 
@@ -176,8 +195,12 @@
     \end{itemize}
     \pause
     \item Seleção de atributos
+    \pause
     \begin{itemize}
+      \item Instalação padrão
+      \pause
       \item Dependência entre pacotes
+      \pause
       \item Dados temporais
     \end{itemize}
     \pause
@@ -197,7 +220,7 @@
     \end{itemize}
     \item Colaborativa
     \begin{itemize}
-      \item Técnica: \textit{K-NN}
+      \item Técnica: \textit{K-NN} e \textit{K-means}
       \item Dados: listas de pacotes instalados
     \end{itemize}
     \item Híbrida
@@ -206,7 +229,7 @@
             \hspace{1.5cm} dados demográficos e reputação dos itens
       \item Meta-nível: colaboração por conteúdo
       \item Revezamento: decisão a partir da seleção de atributos
-      \item Combinação dos resultados
+      \item Combinação: sugestão de múltiplos recomendadores
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -250,11 +273,11 @@
          \textbf{\textit{Fev}} & \textbf{\textit{Mar}} & \textbf{\textit{Abr}}&
          \textbf{\textit{Mai}} & \textbf{\textit{Jun}} & \textbf{\textit{Jul}}\\
     \hline \T
-    Preparação e realização da qualificação & \multirow{2}{*}{X} &
-      \multirow{2}{*}{X} & & & & & \\
+    Preparação e realização da qualificação & \multirow{2}{*}{\tick} &
+      \multirow{2}{*}{\tick} & & & & & \\
     \hline \T
-    Implementação de diferentes estratégias e técnicas & \multirow{3}{*}{X} &
-      \multirow{3}{*}{X} & \multirow{3}{*}{X} & \multirow{3}{*}{X} & & & \\
+    Implementação de diferentes estratégias e técnicas & \multirow{3}{*}{} &
+      \multirow{3}{*}{\tick} & \multirow{3}{*}{X} & \multirow{3}{*}{X} & & & \\
     \hline \T
     Testes e ajustes na implementação & & & & \multirow{2}{*}{X} &
       \multirow{2}{*}{X} & & \\
@@ -266,13 +289,15 @@
     \hline
   \end{tabularx}
 \end{table}
+\hspace{0.7cm}
+{\footnotesize Eventos: FISL12 (jun), Debconf11 (jul) e OSS2011 (out)}
 \end{frame}
 
 \section{Conclusão}
 \begin{frame}{Conclusão}
   \begin{itemize}[<+->]
     \item Acompanhamento das discussões no \textit{FreeDesktop}
-    \item Desenvolvimento nos padrões \textit{OCS}
+    \item Conformidade com padrões
     \item Conclusão pautada pelos resultados do \textit{survey}
     \item Meta++: integração de um recomendador na estrutura do
       \textit{software-center}

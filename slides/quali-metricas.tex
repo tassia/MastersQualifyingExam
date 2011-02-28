@@ -1,0 +1,54 @@
+\documentclass{quali}
+
+\title[Métricas]{Métricas para Avaliação de Recomendadores}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Métricas}
+\begin{frame}{Métricas}
+
+\begin{table}[h!]
+\scriptsize
+\newcommand\T{\rule{0pt}{3.0ex}}
+\newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
+\begin{tabular}{| c | c | c |}
+\hline
+\textbf{\textit{Métrica}} & \textbf{\textit{Fórmula}}
+ & \textbf{\textit{Categoria}} \\
+\hline
+\T Precisão & $P = \frac{N_{\text{relevantes\ selecionados}}}
+                                        {\B N_{\text{selecionados}}}$
+  & \multirow{7}{*}{Acurácia de classificação} \\
+\cline{1-2}
+\T Recuperação & $R = \frac{N_{\text{relevantes\ selecionados}}}
+                              {\B N_{\text{relevantes}}}$ & \\
+\cline{1-2}
+\T Medida $F_1$ & \T\B $F_1 = \frac{2PR}{P+R}$ & \\
+\cline{1-2}
+\T Curva \textit{ROC} & \B \scriptsize{Análise gráfica}& \\
+\hline
+\T Erro absoluto médio
+ & $|\overline E|=\frac{\sum_{i=1}^N |p_i-r_i|}{\B N}$
+ & \multirow{4}{*}{Acurácia de predição} \\
+\cline{1-2}
+\T Erro quadrático médio &
+ $|\overline E|=\frac{\sum_{i=1}^N |p_i-r_i|^2}{\B N}$ & \\
+\hline
+\T Cobertura
+  & $C = \frac{N_{\text{passíveis de recomendação}}}{\B N}$
+  & \multirow{5}{*}{Além de acurácia} \\
+\cline{1-2}
+\T Curva de aprendizado
+  & $A = \frac{\Delta_\text{acurácia}}{\B \Delta_T}$ & \\
+\cline{1-2}
+\T Novidade e surpresa & \B \scriptsize{Avaliada pelo usuário} & \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+\end{document}

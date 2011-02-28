@@ -11,40 +11,226 @@
 \section{Técnicas}
 \begin{frame}{K-NN}
   \begin{itemize}
-    \item
+    \item Aprendizado de máquina supervisionado
+    \item Proximidade entre objetos
+    \item Vizinhança composta por k objetos
+    \item A classe mais frequente em sua vizinha é atribuída ao objeto
   \end{itemize}
+\end{frame}
+
+\begin{frame}{K-NN}
+ \framesubtitle{Medidas de distância e similaridade entre objetos}
+\begin{table}[h!]
+  \centering
+  \scriptsize
+  \newcommand\T{\rule{0pt}{2.8ex}}
+  \newcommand\B{\rule[-1.8ex]{0pt}{0pt}}
+  \begin{tabular}{| l | l |}
+    \hline
+    Distância euclidiana &
+    \T\B$\mathsfsl{D}(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    \hline
+    Similaridade de cosseno &
+    $\mathsfsl{sim}(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
+                       = \frac{\textstyle \sum_{1\leq i \leq n} x_i y_i}
+                              {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}
+                               \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
+    \hline
+    Coeficiente de \textit{Pearson} &
+    $\mathsfsl{P}(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
+                                     (y_i-\bar{y})}
+                   {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
+                    \sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
+    \hline
+    Coeficiente de \textit{Tanimoto} &
+    $\mathsfsl{T}(X,Y) = \frac{\T\textstyle\vec{X} \cdot \vec{Y}}
+                              {\textstyle |\vec{X}|^2 + |\vec{Y}|^2 - \vec{X} \cdot \vec{Y}}$\\
+    \hline
+  \end{tabular}
+\end{table}
 \end{frame}
 
 \begin{frame}{Bayes ingênuo}
+
+\begin{eqnarray}
+  \mathsfsl{c_{MAP}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
+  \hat{P}(c|x) \\
+                  {} & {} & {} \nonumber \\
+                     & = & \underset{c \in C}{\operatorname{arg\ max}} \
+                         \frac{\hat{P}(x|c) \hat{P}(c)}{\cancel{\hat{P}(x)}} \\
+                  {} & {} & {} \nonumber \\
+                     & = & \underset{c \in C}{\operatorname{arg\ max}} \
+                           \hat{P}(x|c)  \hat{P}(c)
+\end{eqnarray}
+
+\vspace{0.5cm}
+\begin{equation}
+  \hat{P}(x|c) = \hat{P}(x_1,x_2,...,x_n|c)
+                 = \hat{P}(x_1|c) \hat{P}(x_2|c)\ ...\ \hat{P}(x_n|c)
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{Bayes Ingênuo}
+
+\begin{equation}
+  \mathsfsl{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
+                     \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
+\end{equation}
+
+\begin{equation}
+  \hat{P}(c) = \frac{N_c}{N}
+\end{equation}
+
+\begin{equation}
+  \hat{P}(x|c) = \frac{T_{\mathit{cx}}+1}
+                      {\displaystyle \sum_{x' \in V} T_{\mathit{cx}'}+1}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Medida $\tfidf$}
   \begin{itemize}
-    \item
+    \item Ordenação do resultado pela relevância dos documentos
+    \item Stop words e normalização
+    \item \textit{Term frequency} ($\tf_{t,d} =$ {\small
+                                                   \textit{\#ocorrências}})
+    \item \textit{Inverse document frequency} ($\idf_t = \log \frac{N}{\df_t}$)
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Tf-idf}
+\begin{frame}{Medida $\tfidf$}
   \begin{itemize}
-    \item
+    \item Peso composto: $\tfidf_{t,d} = \tf_{t,d} \cdot \idf_t$
+    \begin{itemize}
+      \item É alto: $t$ ocorre muitas vezes em $d$ e em poucos documentos
+      \item Diminui: $t$ ocorre menos vezes em $d$ ou em muitos documentos
+      \item É muito baixo: $t$ ocorre em quase todos os documentos
+    \end{itemize}
+    \item Relevância de $d$ para $q$
+    \begin{itemize}
+       \item $\mathsfsl{R}_{d,q} = \sum_{t \in q} \tfidf_{t,d}$
+    \end{itemize}
+    \item Modelo de espaço vetorial
+    \item Similaridade de cosseno
+    \item \textit{Queries} como documentos
   \end{itemize}
 \end{frame}
 
-\begin{frame}{BM25}
+\begin{frame}{Okapi \textit{BM25}}
   \begin{itemize}
-    \item
+    \item Princípio de Ordenação por Probabilidade
+    \item Evento $L$: $D$ é relevante para $Q$
+    \item Bayes: $  P(L|D) = \frac{P(D|L)P(L)}{P(D)}$
+    \item Log da chance satisfaz o princípio \\
+    \begin{eqnarray}
+      \log \frac{P(L|D)}{P(\overline{L}|D)} & = &
+      \log \frac{P(D|L)P(L)}{P(D|\overline{L})P(\overline{L})} \nonumber \\
+      &=& \log \frac{P(D|L)}{P(D|\overline{L})} + \cancel{\log \frac{P(L)}
+                                                    {P(\overline{L})}} \\
+      \mathsfsl{R\mhyphen PRIM_D} & = & \log \frac{P(D|L)}{P(D|\overline{L})}
+    \end{eqnarray}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Okapi \textit{BM25}}
+  \begin{itemize}
+    \item Suposição de independência de atributos \\
+    \begin{eqnarray}
+      \mathsfsl{R\mhyphen PRIM_D} &=& \log \prod_{i} \frac{P(A_i=a_i|L)}
+                                             {P(A_1=a_1|\overline{L})} \\
+                      &=& \sum_{i}
+                  \log \frac{P(A_i=a_i|L)}{P(A_1=a_1|\overline{L})}
+  \end{eqnarray}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Okapi \textit{BM25}}
+  \begin{itemize}
+    \item Contabilando ausência como \textit{zero} \\
+    \begin{eqnarray}
+       \mathsfsl{R\mhyphen BASIC_D} &=& \mathsfsl{R\mhyphen PRIM_D}
+                                -\sum_{i} \log \frac{P(A_i=0|L)}
+                                {P(A_1=0|\overline{L})} \\
+       & = & \sum_{i} \Big (\log\frac{P(A_i=a_i|L)}{P(A_1=a_1|\overline{L})}
+                       -\log\frac{P(A_i=0|L)}{P(A_1=0|\overline{L})}
+                                        \Big ) \\
+      & = & \sum_{i} \log\frac{P(A_i=a_i|L)P(A_1=0|\overline{L})}
+                                {P(A_1=a_1|\overline{L})P(A_i=0|L)}
+    \end{eqnarray}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Okapi \textit{BM25}}
+  \begin{itemize}
+    \item Peso $W_i$ para cada termo do documento \\ \hspace{1cm}
+         $W_i = log\frac{P(A_i=a_i|L)P(A_1=0|\overline{L})}
+                       {P(A_1=a_1|\overline{L})P(A_i=0|L)}$ \vspace{0.3cm}
+    \item $\mathsfsl{R\mhyphen BASIC_D} = \sum_{i} W_i$
+    \item $p_i = P(t_i ocorre|L)$ e $\overline p_i = P(t_i ocorre|\overline L)$
+    \item $w_i = \log \frac{p_i(1-\overline{p_i})}{\overline{p_i}(1-p)}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Okapi \textit{BM25}}
+ Tabela de contingência de incidência dos termos na coleção \\
+\begin{table}[h!]
+\scriptsize
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+    & Relevante & Irrelevante & Incidência na coleção\\
+     \hline
+     $t$ ocorre            & $r$         &   $n-r$       & $n$\\
+     \hline
+     $t$ não ocorre        & $R-r$       &   $N-n-R+r$   & $N-n$ \\
+     \hline
+     total de documentos   & $R$         &   $N-R$       & $N$     \\
+     \hline
+     \end{tabular}
+  \end{table}
+
+  \begin{itemize}
+    \item $p = \frac{r}{R}$ e $\overline p = \frac{n-r}{N-R}$
+    \item $w = \log \frac{r(N-n-R+r)}{(R-r)(n-r)}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Okapi \textit{BM25}}
+  \begin{itemize}
+    \item Introduzindo fator de correção \\\hspace{1cm}
+     $rW = \log \frac{(r+0.5)(N-n-R+r+0.5)}
+                                   {(R-r+0.5)(n-r+0.5)}$
+     \item Considerando frequência dos termos \\\hspace{1cm}
+     $\label{eq:RD_l}
+       \rD = \frac{\tf_{t,D}(k_1+1)}
+            {k_1((1-b)+b\frac{l_d}{l_{\mathsfsl{avg}}})+\tf_{t,D}}$
+     \item Consultas longas \\\hspace{1cm}
+     $\rQ = \frac{(k_3+1)\mathsfsl{qtf}_{t,Q}}{k_3+\mathsfsl{qtf}_{t,Q}}$
+     \item Estimativa de relevância \\\hspace{1cm}
+     $\mathsfsl{R}_{D,Q} = \sum_{t \in Q} \rW \cdot \rD \cdot \rQ$
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Apriori}
   \begin{itemize}
-    \item
+    \item Descoberta de correlações e padrões frequentes
+    \begin{itemize}
+      \item Identificação de conjuntos frequentes 
+      \item Geração de regras de associação
+    \end{itemize}
+    \item Suporte e confiança
+    \item Identificação de conjuntos frequentes sem analisar conjunto das
+    partes
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Seleção de atributos}
-  \begin{itemize}
-    \item
-  \end{itemize}
+\begin{frame}{Apriori}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{../fig/diagrama_apriori.pdf}
+\caption{Geração de conjuntos candidatos pelo algoritmo Apriori}
+\end{figure}
 \end{frame}
-
 \end{document}
 
 
