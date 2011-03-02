@@ -1,4 +1,5 @@
-\ProvidesClass{quali}
+\ProvidesClass{quali-slides}
+
 \LoadClass{beamer}
 \mode<presentation>{\usetheme{CambridgeUS} \setbeamercovered{transparent}}
 \RequirePackage[english]{babel}
