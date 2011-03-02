@@ -23,25 +23,27 @@
 
 % Fonte para identificadores no modo matemático
 \DeclareMathAlphabet{\mathsfsl}{OT1}{cmss}{m}{sl}
-%\def\mathid#1{\ensuremath{\mathcode"2D="72D\mathsfsl{#1}}}
+\def\mathid#1{\ensuremath{\mathcode"2D="2D\mathsfsl{#1}}}
 
 % Definição de identificadores
+\newcommand\tfidf{\mathid{tf-idf}}
+\newcommand\tf{\mathid{tf}}
+\newcommand\idf{\mathid{idf}}
+\newcommand\df{\mathid{df}}
+\newcommand\rW{\mathid{RW}_{t}}
+\newcommand\rD{\mathid{RD}_{t,D}}
+\newcommand\rQ{\mathid{RQ}_{t,Q}}
+
+% Definição do hífen para modo matemático
 \mathchardef\mhyphen="2D
-\newcommand\tfidf{\mathsfsl{tf\mhyphen idf}}
-\newcommand\tf{\mathsfsl{tf}}
-\newcommand\idf{\mathsfsl{idf}}
-\newcommand\df{\mathsfsl{df}}
-\newcommand\rW{\mathsfsl{RW}_{t}}
-\newcommand\rD{\mathsfsl{RD}_{t,D}}
-\newcommand\rQ{\mathsfsl{RQ}_{t,Q}}
 
 \sloppy
 %FIXME [Definir titulo]
 %\title{Recomendação de Componentes de Software}
+%\title{AppRecommender:\\um Recomendador de\\aplicativos GNU/Linux}
 \title{Aplicação de Estratégias de \\
        Recomendação ao Domínio de \\
        Componentes de Software}
-%\title{AppRecommender:\\um Recomendador de\\aplicativos GNU/Linux}
 \author{Tássia Camões Araújo \inst{1} }
 
 \address{Instituto de Matemática e Estatística \\
@@ -56,9 +58,6 @@ EXAME DE QUALIFICAÇÃO DE MESTRADO\\
 Programa: Ciência da Computação\\
 Orientador: Prof. Dr. Arnaldo Mandel
 \end{center}
-
-%\begin{abstract}
-%\end{abstract}
 
 \begin{resumo}
   A crescente expansão na oferta de serviços na rede mundial de computadores
@@ -387,23 +386,24 @@ atributos binários.
   \begin{tabular}{| l | l |}
     \hline
     Distância euclidiana &
-    \T\B$\mathsfsl{D}(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
+    \T\B$\mathid{D}(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}$\\
     \hline
     Similaridade de cosseno &
-    $\mathsfsl{sim}(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
+    $\mathid{sim}(X,Y) = \frac{\T\vec{X} \cdot \vec{Y}}{|\vec{X}| |\vec{Y}|}
                        = \frac{\textstyle \sum_{1\leq i \leq n} x_i y_i}
                               {\textstyle \sqrt{\sum_{1\leq i \leq n} x_i^2}
                                \sqrt{\sum_{1\leq i \leq n} y_i^2}\B}$\\
     \hline
     Coeficiente de \textit{Pearson} &
-    $\mathsfsl{P}(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
+    $\mathid{P}(X,Y) = \frac{\T\textstyle\sum_{1 \leq i \leq n} (x_i-\bar{x})
                                      (y_i-\bar{y})}
                    {\textstyle\sqrt{\sum_{1 \leq i \leq n} (x_i-\bar{x})^2}
                     \sqrt{\sum_{1 \leq i \leq n} (y_i-\bar{y})^2}\B}$\\
     \hline
     Coeficiente de \textit{Tanimoto} &
-    $\mathsfsl{T}(X,Y) = \frac{\T\textstyle\vec{X} \cdot \vec{Y}}
-                              {\textstyle |\vec{X}|^2 + |\vec{Y}|^2 - \vec{X} \cdot \vec{Y}}$\\
+    $\mathid{T}(X,Y) = \frac{\T\textstyle\vec{X} \cdot \vec{Y}}
+                            {\textstyle |\vec{X}|^2 + |\vec{Y}|^2 -
+                             \vec{X} \cdot \vec{Y}}$\\
     \hline
   \end{tabular}
 \end{table}
@@ -476,7 +476,7 @@ partir dos dados de treinamento.
 
 \begin{equation}
 \label{eq:map}
-  \mathsfsl{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
+  \mathid{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \hat{P}(c|x)
 \end{equation}
 
 A equação \ref{eq:bayes} aplica o Teorema de Bayes para probabilidades
@@ -486,7 +486,7 @@ $\operatorname{arg\ max}$ (equação \ref{eq:bayes_no_deno}).
 
 \begin{eqnarray}
 \label{eq:bayes}
-  \mathsfsl{c_{MAP}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
+  \mathid{c_{MAP}} & = & \underset{c \in C}{\operatorname{arg\ max}} \
                          \frac{\hat{P}(x|c) \hat{P}(c)}{\cancel{\hat{P}(x)}} \\
                 {} & {} & {} \nonumber \\
 \label{eq:bayes_no_deno}
@@ -512,7 +512,7 @@ enquanto que $\hat{P}(c)$ é a frequência relativa da classe $c$.
 
 \begin{equation}
 \label{eq:bayes_prod}
-  \mathsfsl{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
+  \mathid{c_{MAP}} = \underset{c \in C}{\operatorname{arg\ max}} \ \
                      \hat{P}(c) \prod_{1 \le i \le n} \hat{P}(x_i|c)
 \end{equation}
 
@@ -776,19 +776,19 @@ onde a disposição das palavras é ignorada e apenas a quantidade de ocorrências
 para cada termo é considerada.
 
 Uma medida de relevância baseada simplesmente na incidência dos termos da
-\textit{query} nos documentos ($\mathsfsl{RI}$) poderia ser calculada através da
+\textit{query} nos documentos ($\mathid{RI}$) poderia ser calculada através da
 equação \ref{eq:relevancia_tf}.
 
 \begin{equation}
 \label{eq:relevancia_tf}
-  \mathsfsl{RI}_{d,q} = \sum_{t \in q} \tf_{t,d}
+  \mathid{RI}_{d,q} = \sum_{t \in q} \tf_{t,d}
 \end{equation}
 
 No entanto, alguns termos têm pouco poder de discriminação na determinação
 de relevância de um documento, por estarem presentes em quase todos os
 documentos. Ao passo que existem outros muito raros que quando presentes
 são forte indicativo de relevância. No contexto da coleção da figura
-\ref{fig:colecao}, por exemplo, a \textit{query} $\{\mathsf{morena, bobagem}\}$
+\ref{fig:colecao}, por exemplo, a \textit{query} $\{\mathit{morena, bobagem}\}$
 é composta por um termo muito frequente e outro muito raro. Coincidentemente,
 os documentos $(3)$ e $(5)$, contém apenas um dos dois elementos da consulta,
 porém ambos apresentam $\tf_{t,d}=1$ para os respectivos termos. Todavia,
@@ -853,18 +853,18 @@ A medida $\tfidf_{t,d}$ combina as definições de $\tf$ e $\idf$ (equação
 
 A medida de relevância apresentada na equação \ref{eq:relevancia_tf} pode ser
 refinada para somar os pesos $\tfidf$ do documento $d$ com relação aos termos
-da \textit{query} $q$, resultando na media $\mathsfsl{R}_{d,q}$ apresentada na equação
+da \textit{query} $q$, resultando na media $\mathid{R}_{d,q}$ apresentada na equação
 \ref{eq:relevancia} \cite{Manning:09}.
 
 \begin{equation}
 \label{eq:relevancia}
-\mathsfsl{R}_{d,q} = \sum_{t \in q} \tfidf_{t,d}
+\mathid{R}_{d,q} = \sum_{t \in q} \tfidf_{t,d}
 \end{equation}
 
 A tabela \ref{tab:tfidf-resultado} apresenta a ordenação dos documentos da
 coleção como resultado do cálculo de relevância por $\tfidf$ para as
-consultas $q_1=\{\mathsf{morena}\}$, $q_2=\{\mathsf{morena, bobagem}\}$ e
-$q_3=\{\mathsf{morena, dona, rosa}\}$. Os valores $\tfidf_{t,d}$ foram
+consultas $q_1=\{\mathit{morena}\}$, $q_2=\{\mathit{morena, bobagem}\}$ e
+$q_3=\{\mathit{morena, dona, rosa}\}$. Os valores $\tfidf_{t,d}$ foram
 obtidos a partir da equação \ref{eq:tfidf}, com os pesos das tabelas
 \ref{tab:tf} e \ref{tab:idf}. Por exemplo, $\tfidf_{\mathit{morena,1}} =
 \tf_{\mathit{morena,1}} \cdot \idf_{\mathit{morena}} = 2 \cdot 0.12 = 0.24$.
@@ -933,7 +933,7 @@ para atenuar o crescimento do peso para valores crescentes de frequência
 
 \begin{equation}
   \label{eq:tfsub}
-  \mathsfsl{tf\mhyphen sub}_{t,d} =
+  \mathid{tf-sub}_{t,d} =
   \begin{cases}
     1+\log \tf_{t,d} & \text{, se}\ \tf_{t,d}>0 \\
     0                & \text{, caso contrário}
@@ -1014,14 +1014,14 @@ os mesmos.
 
 \begin{equation}
 \label{eq:sim-cos}
-  \mathsfsl{sim}(d_1,d_2) = \cos(\theta)
+  \mathid{sim}(d_1,d_2) = \cos(\theta)
                         = \frac{\vec{V(d_1)} \cdot \vec{V(d_2)}}
                                {|\vec{V(d_1)}| |\vec{V(d_2)}|}
 \end{equation}
 
 Dado um documento $d$, para encontrar os documentos de uma coleção que mais se
 assemelham a este, basta encontrar aqueles com maior similaridade de cosseno
-com $d$. Para tanto, pode-se calcular os valores $\mathsfsl{sim}(d,d_i)$ entre
+com $d$. Para tanto, pode-se calcular os valores $\mathid{sim}(d,d_i)$ entre
 $d$ e os demais $d_i$ documentos da coleção e os maiores valores indicarão os
 documentos mais semelhantes.
 
@@ -1035,7 +1035,7 @@ similares a determinada \textit{query} são os mais relevantes para a mesma
 
 \begin{equation}
 \label{eq:tfidf_r_sim}
-  \mathsfsl{R}_{d,q} = \mathsfsl{sim}(d,q)
+  \mathid{R}_{d,q} = \mathid{sim}(d,q)
 \end{equation}
 
 \begin{table}[h!]
@@ -1168,7 +1168,7 @@ Princípio de Ordenação \cite{Jones:00}. Ademais, dado que o último termo da
 fórmula é igual para todos os documentos, ele pode ser desconsiderado sem que
 isso altere a ordenação dos documentos. Desta forma, a equação \ref{eq:rprim}
 descreve uma pontuação por relevância referenciada como primária
-($\mathsfsl{R\mhyphen PRIM_D}$).
+($\mathid{R-PRIM_D}$).
 
 \begin{eqnarray}
   \log \frac{P(L|D)}{P(\overline{L}|D)} & = &
@@ -1176,7 +1176,7 @@ descreve uma pontuação por relevância referenciada como primária
   &=& \log \frac{P(D|L)}{P(D|\overline{L})} + \cancel{\log \frac{P(L)}
                                                            {P(\overline{L})}}
   \label{eq:log-odd} \\
-  \mathsfsl{R\mhyphen PRIM_D} & = & \log \frac{P(D|L)}{P(D|\overline{L})}
+  \mathid{R-PRIM_D} & = & \log \frac{P(D|L)}{P(D|\overline{L})}
   \label{eq:rprim}
 \end{eqnarray}
 
@@ -1194,13 +1194,13 @@ atributos pelos seguintes argumentos:
 
 De acordo com a suposição de independência, a probabilidade de um documento
 pode ser trivialmente derivada a partir das probabilidade de seus atributos.
-Logo, $\mathsfsl{R\mhyphen PRIM_D}$ poderia ser estimado como um somatório de
+Logo, $\mathid{R-PRIM_D}$ poderia ser estimado como um somatório de
 probabilidades, cada uma relacionada a cada atributo da descrição $D$ (equação
 \ref{eq:rprim-atributos}).
 
 \begin{eqnarray}
 \label{eq:rprim-atributos}
-  \mathsfsl{R\mhyphen PRIM_D} &=& \log \prod_{i} \frac{P(A_i=a_i|L)}
+  \mathid{R-PRIM_D} &=& \log \prod_{i} \frac{P(A_i=a_i|L)}
                                           {P(A_1=a_1|\overline{L})} \nonumber \\
                             &=& \sum_{i} \log \frac{P(A_i=a_i|L)}
                                           {P(A_1=a_1|\overline{L})}
@@ -1215,8 +1215,7 @@ documento o componente relativo a cada valor de atributo zerado (fórmula
 \ref{eq:rbasic}).
 
 \begin{eqnarray}
-  \mathsfsl{R\mhyphen BASIC_D} &=& \mathsfsl{R\mhyphen PRIM_D}
-                                 -\sum_{i} \log \frac{P(A_i=0|L)}
+  \mathid{R-BASIC_D} &=& {\mathid R-PRIM_D} - \sum_{i} \log \frac{P(A_i=0|L)}
                                  {P(A_1=0|\overline{L})} \nonumber \\
   & = & \sum_{i} \Big (\log\frac{P(A_i=a_i|L)}{P(A_1=a_1|\overline{L})}
                        -\log\frac{P(A_i=0|L)}{P(A_1=0|\overline{L})}
@@ -1227,8 +1226,8 @@ documento o componente relativo a cada valor de atributo zerado (fórmula
 \end{eqnarray}
 
 Considerando $W_i$ como um peso para cada termo $t_i$ do documento (equação
-\ref{eq:peso_termo}), $\mathsfsl{R\mhyphen BASIC_D}$ pode ser então reescrito em
-função deste peso, como na equação \ref{eq:rbasic_peso_termo}.
+\ref{eq:peso_termo}), $\mathid{R-BASIC_D}$ pode ser então reescrito em função
+deste peso, como na equação \ref{eq:rbasic_peso_termo}.
 
 \begin{equation}
 \label{eq:peso_termo}
@@ -1239,7 +1238,7 @@ função deste peso, como na equação \ref{eq:rbasic_peso_termo}.
 \begin{equation}
 \label{eq:rbasic_peso_termo}
 \hspace{-2.5cm}
-  \mathsfsl{R\mhyphen BASIC_D} = \sum_{i} W_i
+  \mathid{R-BASIC_D} = \sum_{i} W_i
 \end{equation}
 
 No caso em que os atributos $A_i$ restringem-se a exprimir a presença ou
@@ -1400,16 +1399,16 @@ o valor de $\tf_{t,D}$ em função do comprimento do documento (equação
 
 \begin{equation}
   \label{eq:RD_nl}
-  \rD =  \frac{\frac{\tf_{t,D}}{\mathsfsl{NL}}(k_1+1)}
-              {k_1+\frac{\tf_{t,D}}{\mathsfsl{NL}}} =
-         \frac{\tf_{t,D}(k_1+1)}{k_1*\mathsfsl{NL}+\tf_{t,D}}
+  \rD =  \frac{\frac{\tf_{t,D}}{\mathid{NL}}(k_1+1)}
+              {k_1+\frac{\tf_{t,D}}{\mathid{NL}}} =
+         \frac{\tf_{t,D}(k_1+1)}{k_1*\mathid{NL}+\tf_{t,D}}
 \end{equation}
 
 Dado que o comprimento dos documentos pode ser medido de diversas formas
 (quantidade de palavras, caracteres e \textit{bytes}, considerando ou não
 \textit{stop words}), considera-se a medida uniformizada para normalização,
 obtida pela razão entre o comprimento dos documentos e o comprimento médio dos
-documentos ($\frac{l_d}{l_{\mathsfsl{avg}}}$). Ademais, uma normalização simples
+documentos ($\frac{l_d}{l_{\mathid{avg}}}$). Ademais, uma normalização simples
 resultaria na mesma pontuação para um documento de comprimento $l$ no qual o
 termo ocorre $tf$ vezes e para outro de comprimento $2l$ que contém $2tf$
 ocorrências do termo. Este comportamento pode ser indesejável por exemplo
@@ -1425,13 +1424,13 @@ este efeito, e se $b=0$ o comprimento do documento não afeta a pontuação final,
 
 \begin{equation}
   \label{eq:nl}
-  \mathsfsl{NL} = ((1-b)+b\frac{l_d}{l_{\mathsfsl{avg}}})
+  \mathid{NL} = ((1-b)+b\frac{l_d}{l_{\mathid{avg}}})
 \end{equation}
 
 \begin{equation}
 \label{eq:RD_l}
   \rD = \frac{\tf_{t,D}(k_1+1)}
-                         {k_1((1-b)+b\frac{l_d}{l_{\mathsfsl{avg}}})+\tf_{t,D}}
+                         {k_1((1-b)+b\frac{l_d}{l_{\mathid{avg}}})+\tf_{t,D}}
 \end{equation}
 
 \vspace{0.3cm} \hspace{-1.4cm}
@@ -1450,7 +1449,7 @@ desconsiderado.
 
 \begin{equation}
 \label{eq:RQ}
-  \rQ = \frac{(k_3+1)\mathsfsl{qtf}_{t,Q}}{k_3+\mathsfsl{qtf}_{t,Q}}
+  \rQ = \frac{(k_3+1)\mathid{qtf}_{t,Q}}{k_3+\mathid{qtf}_{t,Q}}
 \end{equation}
 
 \newpage
@@ -1465,7 +1464,7 @@ anteriormente, como indica a equação \ref{eq:bm25}.
 
 \begin{equation}
 \label{eq:bm25}
-\mathsfsl{R}_{D,Q} = \sum_{t \in Q} \rW \cdot \rD \cdot \rQ
+\mathid{R}_{D,Q} = \sum_{t \in Q} \rW \cdot \rD \cdot \rQ
 \end{equation}
 
 % ver http://en.wikipedia.org/wiki/Neighbourhood_components_analysis
