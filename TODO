@@ -1,0 +1,36 @@
+Considerações para texto da dissertação
+-----------------------------------------
+
+- Rever críticas e sugestões da banca (quali-banca.txt)
+
+- Fazer análise de complexidade dos algoritmos
+
+- Reduzir lista de ações para um parágrafo
+
+- Apresentar trabalhos relacionados fora do Debian
+
+- Recomendador de aplicativos para Android:
+  http://pt.wikipedia.org/wiki/Android
+  http://www.readwriteweb.com/archives/this_app_recommender_would_like_to_use_your_locati.php
+
+- Falar de panorama atual, iniciativas multi-distribuições:
+  distromatch - casamento de nomes de pacotes entre distros
+  compartilhamento de meta-dados (por exmeplo, descrições e traduções)
+  http://mancoosi.org/~abate/package-managers-comparison
+
+- Do quê o usuário precisa?
+  . real necessidade x interesse comercial
+  . recomendação x publicidade
+  . recomendação explícita x implícita
+  . consciente x inconsciente (disposição dos produtos na prateleira do
+    mercado)
+  . estratégia de marketing: "expõe o que o cliente não precisa, descobre o que
+    ele precisa e mostra que só você tem a solução"
+
+- Teoria dos jogos utilidade (http://pt.wikipedia.org/wiki/Utilidade_(economia))
+  O jeito como as pessoas julgam valor: nao é linear, racional
+  Se este é um problema de otimização, queremos otimizar o quê?
+
+- Modelo de negócio da Apple App Store: Apple vende softwares desenvolvidos
+  por usuários
+

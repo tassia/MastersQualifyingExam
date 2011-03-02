@@ -1,0 +1,116 @@
+Críticas e sugestões da banca da qualificação (24/02/2011)
+-----------------------------------------------------------
+
+Gerosa
+-------
+
+- Pacotes e distribuições linux não entram no título?
+
+- "Domínio" ou grande volume de dados estatísticos?
+
+- Deixar claro a relação do trabalho com o fenomeno da web2.0 (inicio do texto)
+
+- Dependências e funcionalidades: tem que subir no texto, é o diferecial do seu
+  trabalho
+
+- Capítulo 2 muito genérico. Pra qualificação ok, mas a dissertação deve trazer
+  exemplos no contexto do trabalho.
+
+- Problemas no estilo da escrita, por exemplo, uso dos termos através, ao invés,
+  onde, este, esse, ...
+
+- Pra quê a lista de ações?
+
+- Figuras pouco ilustrativas: 6 e 7, cenários de rec_conteudo e rec_colaborativa
+
+- Discussão sobre a solução
+
+  - Considerar texto do codigo fonte (talvez como trabalho futuro)
+  - Recomendação por conteúdo não é muito obvia? Pra que recomendar aplicativos
+    com a mesma funcionalidade dos que o usuário já tem?
+  - Considerar interface gráfica instalada, por exemplo kde ou gnome, e
+    recomendar somente o que roda em um ou no outro
+    -> Uma idéia seria priorizar funcionalidades que não estão instaladas e
+       minimizar o impacto no sistema: priorizar o que precisa de menos
+    -> Como alternativa, fazer ecomendações com base na porcentagem de
+       satisfação: "vc já tem 70% das funcionalidades do pacote x, pq não
+       instalá-lo?"
+  - Considerar quando foi instalado e utilizado pela última vez
+    -? funcao de decaimento com relação ao tempo?
+  - Para quê perfis? Pra que perguntar ao usuário o tamanho da recomendação?
+
+- Ver o livro "Programando Inteligência Coletiva"
+
+- Ver Google forms para survey
+
+- Separar tabela das referências
+
+- Trabalhos relacionados que não foram mencionados:
+
+Contest.github
+    https://github.com/blog/466-the-2009-github-contest
+    "few academic projects (and free code) with implicit voting (instead of
+     ratings)"
+    https://github.com/blog/489-github-contest-winners
+    1st. 404
+    2nd. https://github.com/jeremybarnes/github_contest
+
+"Transformando dados em informação: um estudo através de exemplos"
+    Rafael de Holanda Barroso (mestrado, março de 2010)
+    404 - mandar email
+
+Projeto da Sun de recomendador genérico
+    404 - provavelmente desativado
+
+Prastava - An open source, ruby-based generic recommendation system
+    http://aye.comp.nus.edu.sg/~himanshu/pr/
+    "generate recommendations for any item user database"
+    404 - seção de downloads e cgi demo
+
+Netflix contest
+    Suspenso por questões de privacidade.
+    Pesquisadores demonstraram a possibilidade de identificar usuários
+    individuais. - ver detalhes
+
+
+Roberto
+--------
+
+- O trabalho relaciona pouco o que vc vai fazer com o que vc apresentou
+
+- Falta formalidade nos conceitos e símbolos, que nem sempre estão bem
+  apresentados. Por exemplo, vc não falou o que é uma query e já foi usando
+
+- Proposta demasiada grande para o tempo que vc tem. A avaliacao final com
+  usuários seria um plus, muito legal se desse tempo, mas só essa avaliação
+  preliminar já te daria dados suficientes
+
+- Talvez o usuário gostasse que o sistema fosse mais especifico, por exemplo:
+  "me recomende pacotes de ciencia e engenharia"
+  -> Atraves de tags e seções vc já pode pegar os mais populares de cada área
+
+
+Arnaldo
+--------
+
+- Problema na apresentação do texto: deve-se em primeiro lugar dizer qual é o
+  problema, público alvo, etc
+
+- Vantagens da recuperação da informação sobre a classificação
+  (relato histórico: yahoo versus google)
+
+- Classificadores/recomendadores devem ser plugáveis, como diferentes backends
+
+- Desafios da redução de dimensionalidade (projeção do vetor de entrada):
+  O que jogar fora e o que manter? Descobrir o que funciona melhor talvez não
+  seja tão óbvio, por isso o sistema deve permitir parametrização e testes.
+
+- Cada conceito duvidoso deve ser bastante explorado e experimentado
+
+- Algoritmos que usam funcionalidades devem ser independentes do que as produzem
+
+- Possibilidade: transformar espaço de pacotes em espaco de tags?
+-> investigar a relação das funcionalidades com o conjunto de tags
+
+- Definição de escopo: indique ao leitor quais componentes foram priorizados e
+  mais trabalhados
